@@ -1,0 +1,105 @@
+---
+openapi: 3.0.0
+info:
+  title: Abler API
+  description: |
+    This is the description of the Abler API
+  version: 1.0.0
+servers:
+- url: https://abler.api.com.br/v1
+paths:
+  /candidates:
+    get:
+      tags:
+      - candidates
+      summary: Returns a collection of the candidates
+      description: Returns a collection of the candidates
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candidate'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /vacancy:
+    get:
+      tags:
+      - vacancies
+      summary: Returns a collection of your vacancies
+      description: Returns a collection of your vacancies
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vacancy'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    Candidate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Matheus
+        email:
+          type: string
+          example: matheus@gmail.com
+        phone:
+          type: integer
+          example: 41988889999
+    Vacancy:
+      type: object
+      properties:
+        contracting_regime:
+          type: string
+          enum:
+          - clt
+          - pj
+        slug:
+          type: string
+        salary:
+          type: integer
+        working_journey:
+          type: string
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        status_code:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+        fields:
+          type: object
