@@ -22,13 +22,15 @@ tags:
     description: Rotas relacionadas aos webhooks subscriptions
 paths:
   /candidates:
-    $ref: paths/candidates.yaml
+    $ref: paths/candidates/index.yaml
   /customers:
-    $ref: paths/customers.yaml
+    $ref: paths/customers/index.yaml
   /vacancy:
-    $ref: paths/vacancy.yaml
+    $ref: paths/vacancies/index.yaml
   /subscriptions:
-    $ref: paths/subscriptions.yaml
+    $ref: paths/subscriptions/index_create.yaml
+  /subscriptions/{id}:
+    $ref: paths/subscriptions/subscription_resources.yaml
 components:
   securitySchemes:
     BearerToken:

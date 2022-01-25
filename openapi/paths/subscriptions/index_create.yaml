@@ -1,0 +1,96 @@
+get:
+  tags:
+    - Webhook Subscriptions
+  summary: Buscar
+  description: Busca de subscriptions
+  security:
+    - BearerToken: []
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/subscription/subscriptions.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+post:
+  tags:
+    - Webhook Subscriptions
+  summary: Cadastrar
+  description: Cadastrar webhook subscription
+  security:
+    - BearerToken: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            webhook_subscription:
+              type: object
+              properties:
+                event:
+                  type: string
+                  description: Evento
+                  required: true
+                  example: vacancy_created
+                  enum:
+                    - vacancy_created
+                    - vacancy_updated
+                    - vacancy_deleted
+                    - candidature_created
+                    - candidature_updated
+                    - candidature_disqualified
+                    - candidature_requalified
+                    - candidate_hired
+                url:
+                  type: string
+                  required: true
+                  example: https://webhook.com.br
+                  description: URL do webhook
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/subscription/subscription.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+

@@ -53,15 +53,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Candidate'
+                  $ref: '#/components/schemas/candidates'
         '401':
           description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api'
-        '404':
-          description: NotFound
           content:
             application/json:
               schema:
@@ -107,7 +101,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Customer'
+                  $ref: '#/components/schemas/customers'
         '401':
           description: Unauthorized
           content:
@@ -163,7 +157,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Vacancy'
+                  $ref: '#/components/schemas/vacancies'
         '401':
           description: Unauthorized
           content:
@@ -197,9 +191,239 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Subscription'
+                  $ref: '#/components/schemas/subscriptions'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    post:
+      tags:
+        - Webhook Subscriptions
+      summary: Cadastrar
+      description: Cadastrar webhook subscription
+      security:
+        - BearerToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhook_subscription:
+                  type: object
+                  properties:
+                    event:
+                      type: string
+                      description: Evento
+                      required: true
+                      example: vacancy_created
+                      enum:
+                        - vacancy_created
+                        - vacancy_updated
+                        - vacancy_deleted
+                        - candidature_created
+                        - candidature_updated
+                        - candidature_disqualified
+                        - candidature_requalified
+                        - candidate_hired
+                    url:
+                      type: string
+                      required: true
+                      example: https://webhook.com.br
+                      description: URL do webhook
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /subscriptions/{id}:
+    get:
+      tags:
+        - Webhook Subscriptions
+      summary: Buscar pelo id
+      description: Busca de subscription pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: Subscription id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    patch:
+      tags:
+        - Webhook Subscriptions
+      summary: Atualizar pelo id
+      description: Atualização de subscription pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: Subscription id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                webhook_subscription:
+                  type: object
+                  properties:
+                    event:
+                      type: string
+                      description: Evento
+                      required: false
+                      example: vacancy_created
+                      enum:
+                        - vacancy_created
+                        - vacancy_updated
+                        - vacancy_deleted
+                        - candidature_created
+                        - candidature_updated
+                        - candidature_disqualified
+                        - candidature_requalified
+                        - candidate_hired
+                    url:
+                      type: string
+                      required: false
+                      example: https://webhook.com.br
+                      description: URL do webhook
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    delete:
+      tags:
+        - Webhook Subscriptions
+      summary: Deletar pelo id
+      description: Deletar subscription pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: Subscription id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
           content:
             application/json:
               schema:
@@ -218,7 +442,7 @@ components:
       description: 'Authorization: Bearer {JWT}'
       bearerFormat: JWT
   schemas:
-    Candidate:
+    candidates:
       type: object
       properties:
         data:
@@ -280,139 +504,193 @@ components:
           type: string
         fields:
           type: object
-    Customer:
+    customers:
       type: object
       properties:
-        corporate_name:
-          type: string
-          description: Razão social
-        trading_name:
-          type: string
-          description: Nome fantasia
-        cnpj:
-          type: integer
-          description: CNPJ
-          example: 42434481000193
-        active:
-          type: boolean
-          description: Ativo
-        additional_info:
-          type: string
-          description: Informação adicional
-    Vacancy:
+        data:
+          description: Cliente serializado no formato JSON API
+          type: array
+          items:
+            type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          - id: 1
+            type: customer
+            attributes:
+              corporate_name: Razão social
+              trading_name: Nome Fantasia
+              cnpj: 42434481000193
+              active: true
+              additional_info: Informações adicionais
+          - id: 2
+            type: customer
+            attributes:
+              corporate_name: Razão social
+              trading_name: Nome Fantasia
+              cnpj: 42434481000193
+              active: true
+              additional_info: Informações adicionais
+        meta:
+          count: 2
+          items: 2
+          page: 1
+          prev: null
+          next: null
+          last: 1
+    vacancies:
       type: object
       properties:
-        title:
-          type: string
-          description: Cargo
-        salary:
-          type: integer
-          description: Salário
-          example: 2500
-        educational_level:
-          type: string
-          description: Nível de escolaridade
-          enum:
-            - ensino_fundamental
-            - ensino_medio
-            - ensino_medio_tecnico
-            - tecnico
-            - graduacao
-            - pos
-            - mba
-            - mestrado
-            - doutorado
-        contracting_regime:
-          type: string
-          description: Tipo de contrato
-          enum:
-            - avaliacao_psicologica
-            - clt
-            - pj
-            - contrato_hibrido
-            - estagiario
-            - freelancer
-            - intermitente
-            - periodo_determinado
-            - profissional_independente_contrato_societario
-            - staff
-            - temporario
-            - terceiro
-            - aprendiz
-        available_for_travel:
-          type: boolean
-          description: Viajar a trabalho
-        available_for_change:
-          type: boolean
-          description: Mudar de cidade
-        available_for_homeoffice:
-          type: boolean
-          description: Trabalhar home-office
-        working_journey:
-          type: string
-          description: Jornada de trabalho
-        quantity:
-          type: integer
-          description: Quantidade
-        educational_level_status:
-          type: string
-          description: Status de escolaridade
-          enum:
-            - cursando
-            - completo
-            - indiferente
-        slug:
-          type: string
-          description: URL (slug)
-        required_experience:
-          type: boolean
-          description: Experiência necessária
-        status:
-          type: string
-          description: Status
-          enum:
-            - draft
-            - waiting_approval
-            - ready_for_publish
-            - published
-            - stopped
-            - forwarded_by_customer
-            - finished
-            - canceled
-            - customer_request
-        released:
-          type: boolean
-          description: Em divulgação
-        requisition_type:
-          type: string
-          description: Tipo de requisição
-          enum:
-            - administracao_contrato
-            - alocacao
-            - banco_talentos
-            - expansao
-            - hunting
-            - reposicao
-            - substituicao
-        notify_feedback:
-          type: boolean
-          description: Notificar feedback
-        notify_invitation:
-          type: boolean
-          description: Notificar convite
-        description:
-          type: string
-          description: Descrição da vaga
-        created_at:
-          type: string
-          description: Criado em
-        updated_at:
-          type: string
-          description: Atualizado em
-    Subscription:
+        data:
+          description: Subscription serializada no formato JSON API
+          type: array
+          items:
+            type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          - id: 1
+            type: vacancy
+            attributes:
+              title: Cargo
+              salary: 2500
+              educational_level: graduacao
+              contracting_regime: clt
+              available_for_travel: true
+              available_for_change: true
+              available_for_homeoffice: true
+              working_journey: true
+              quantity: 2
+              educational_level_status: completo
+              slug: vaga-slug
+              required_experience: true
+              status: published
+              released: true
+              requisition_type: expansao
+              notify_feedback: true
+              notify_invitation: true
+              description: Descrição da vaga
+              created_at: '2022-01-06T16:22:39.230-03:00'
+              updated_at: '2022-01-06T16:22:39.230-03:00'
+        meta:
+          count: 1
+          items: 1
+          page: 1
+          prev: null
+          next: null
+          last: 1
+    subscriptions:
       type: object
       properties:
-        event:
-          type: string
-        url:
-          type: string
+        data:
+          description: Subscription serializada no formato JSON API
+          type: array
+          items:
+            type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          - id: 1
+            type: subscription
+            attributes:
+              event: vacancy_created
+              url: https://webhook.site/a679aac8-d684
+          - id: 2
+            type: subscription
+            attributes:
+              event: vacancy_deleted
+              url: https://webhook.site/a679aac8-d685
+        meta:
+          count: 2
+          items: 2
+          page: 1
+          prev: null
+          next: null
+          last: 1
+    subscription:
+      type: object
+      properties:
+        data:
+          description: Subscription serializada no formato JSON API
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+      example:
+        data:
+          id: 1
+          type: subscription
+          attributes:
+            event: vacancy_created
+            url: https://webhook.site/a679aac8-d684

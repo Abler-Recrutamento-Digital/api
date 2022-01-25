@@ -1,24 +1,32 @@
 get:
   tags:
-    - Clientes
+    - Vagas
   summary: Buscar
-  description: Busca de clientes
+  description: Busca de vagas
   security:
     - BearerToken: []
   parameters:
     - in: query
       name: include
-      description: >-
-        Quando um relacionamento precisar estar presente no dado serializado do
+      description:
+        "Quando um relacionamento precisar estar presente no dado serializado do
         cliente, apenas inclua usando esse parâmetro. Envie o `include` separado
         por vírgula para retornar mais que um. Exemplo:
-        `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`
+        `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`"
       schema:
         type: string
         enum:
+          - team
+          - company
+          - area_of_formation
+          - level_of_interest
+          - area_of_interests
+          - skills
+          - vacancies_benefits
+          - vacancies_languages
+          - complementary_formations
+          - vacancy_analysts
           - address
-          - customer_analysts
-          - vacancies
   responses:
     '200':
       description: successful operation
@@ -32,16 +40,16 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/customer/index.yaml
+              $ref: "../../components/schemas/vacancy/vacancies.yaml"
     '401':
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/response/api.yaml
+            $ref: "../../components/schemas/response/api.yaml"
     '422':
       description: Unprocessable Entity
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/response/api.yaml
+            $ref: "../../components/schemas/response/api.yaml"
