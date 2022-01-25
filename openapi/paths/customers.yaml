@@ -32,16 +32,16 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/Customer.yaml
+              $ref: ../components/schemas/customer/index.yaml
     '401':
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ApiResponse.yaml
+            $ref: ../components/schemas/response/api.yaml
     '422':
       description: Unprocessable Entity
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ApiResponse.yaml
+            $ref: ../components/schemas/response/api.yaml

@@ -1,0 +1,59 @@
+type: object
+properties:
+  data:
+    description: Subscription serializada no formato JSON API
+    type: array
+    items:
+      type: object
+    properties:
+      id:
+        type: integer
+        description: Id do resource
+      type:
+        type: string
+        description: Tipo do resource
+      attributes:
+        type: object
+        description: Atributos do resource
+      relationships:
+        type: object
+        description: Relacionamentos do resource
+  included:
+    type: array
+    description: Dados serializados do included no formato JSON API
+    items: []
+  meta:
+    type: object
+    description: Resource extra info
+example:
+  data:
+    - id: 1
+      type: vacancy
+      attributes:
+        title: Cargo
+        salary: 2500.0
+        educational_level: "graduacao"
+        contracting_regime: "clt"
+        available_for_travel: true
+        available_for_change: true
+        available_for_homeoffice: true
+        working_journey: true
+        quantity: 2
+        educational_level_status: "completo"
+        slug: "vaga-slug"
+        required_experience: true
+        status: "published"
+        released: true
+        requisition_type: "expansao"
+        notify_feedback: true
+        notify_invitation: true
+        description: "Descrição da vaga"
+        created_at: "2022-01-06T16:22:39.230-03:00"
+        updated_at: "2022-01-06T16:22:39.230-03:00"
+  meta:
+    count: 1
+    items: 1
+    page: 1
+    prev: null
+    next: null
+    last: 1

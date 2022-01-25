@@ -40,16 +40,16 @@ get:
           schema:
             type: array
             items:
-              $ref: ../components/schemas/Vacancy.yaml
+              $ref: ../components/schemas/vacancy/index.yaml
     '401':
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ApiResponse.yaml
+            $ref: ../components/schemas/response/api.yaml
     '422':
       description: Unprocessable Entity
       content:
         application/json:
           schema:
-            $ref: ../components/schemas/ApiResponse.yaml
+            $ref: ../components/schemas/response/api.yaml

@@ -32,7 +32,4 @@ paths:
 components:
   securitySchemes:
     BearerToken:
-      type: http
-      scheme: bearer
-      description: 'Authorization: Bearer {JWT}'
-      bearerFormat: JWT
+      $ref: "./components/securitySchemes/BearerToken.yaml"

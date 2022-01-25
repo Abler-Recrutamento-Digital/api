@@ -1,4 +1,3 @@
----
 openapi: 3.0.0
 info:
   title: Abler API
@@ -11,21 +10,21 @@ info:
     </ul>
   version: 1.0.0
 servers:
-- url: https://empresa.abler.com.br/api/public/v1
+  - url: https://empresa.abler.com.br/api/public/v1
 tags:
-- name: "Candidatos"
-  description: "Rotas relacionadas aos candidatos de sua empresa"
-- name: "Clientes"
-  description: "Rotas relacionadas aos clientes de sua empresa"
-- name: "Vagas"
-  description: "Rotas relacionadas as vagas de sua empresa"
-- name: "Webhook Subscriptions"
-  description: "Rotas relacionadas aos webhooks subscriptions"
+  - name: Candidatos
+    description: Rotas relacionadas aos candidatos de sua empresa
+  - name: Clientes
+    description: Rotas relacionadas aos clientes de sua empresa
+  - name: Vagas
+    description: Rotas relacionadas as vagas de sua empresa
+  - name: Webhook Subscriptions
+    description: Rotas relacionadas aos webhooks subscriptions
 paths:
   /candidates:
     get:
       tags:
-      - Candidatos
+        - Candidatos
       summary: Buscar
       description: Busca de candidatos
       security:
@@ -42,35 +41,41 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: successful operation
           headers:
             Authorization:
               schema:
                 type: string
-              description: "Bearer JWT"
+              description: Bearer JWT
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Candidate'
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        "422":
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/api'
   /customers:
     get:
       tags:
-      - Clientes
+        - Clientes
       summary: Buscar
       description: Busca de clientes
       security:
@@ -78,9 +83,11 @@ paths:
       parameters:
         - in: query
           name: include
-          description: "Quando um relacionamento precisar estar presente no dado serializado do cliente,
-            apenas inclua usando esse parâmetro. Envie o `include` separado por vírgula para retornar mais que um.
-            Exemplo: `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`"
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`
           schema:
             type: string
             enum:
@@ -88,35 +95,35 @@ paths:
               - customer_analysts
               - vacancies
       responses:
-        "200":
+        '200':
           description: successful operation
           headers:
             Authorization:
               schema:
                 type: string
-              description: "Bearer JWT"
+              description: Bearer JWT
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Customer'
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        "422":
+                $ref: '#/components/schemas/api'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/api'
   /vacancy:
     get:
       tags:
-      - Vagas
+        - Vagas
       summary: Buscar
       description: Busca de vagas
       security:
@@ -124,9 +131,11 @@ paths:
       parameters:
         - in: query
           name: include
-          description: "Quando um relacionamento precisar estar presente no dado serializado do cliente,
-            apenas inclua usando esse parâmetro. Envie o `include` separado por vírgula para retornar mais que um.
-            Exemplo: `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`"
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
           schema:
             type: string
             enum:
@@ -142,80 +151,73 @@ paths:
               - vacancy_analysts
               - address
       responses:
-        "200":
+        '200':
           description: successful operation
           headers:
             Authorization:
               schema:
                 type: string
-              description: "Bearer JWT"
+              description: Bearer JWT
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Vacancy'
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        "422":
+                $ref: '#/components/schemas/api'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/api'
   /subscriptions:
     get:
       tags:
-      - "Webhook Subscriptions"
+        - Webhook Subscriptions
       summary: Buscar
       description: Busca de subscriptions
       security:
         - BearerToken: []
       responses:
-        "200":
+        '200':
           description: successful operation
           headers:
             Authorization:
               schema:
                 type: string
-              description: "Bearer JWT"
+              description: Bearer JWT
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Subscription'
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        "422":
+                $ref: '#/components/schemas/api'
+        '422':
           description: Unprocessable Entity
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/api'
 components:
   securitySchemes:
     BearerToken:
       type: http
       scheme: bearer
-      description: "Authorization: Bearer {JWT}"
+      description: 'Authorization: Bearer {JWT}'
       bearerFormat: JWT
   schemas:
-    Subscription:
-      type: object
-      properties:
-        event:
-          type: string
-        url:
-          type: string
     Candidate:
       type: object
       properties:
@@ -237,10 +239,10 @@ components:
             relationships:
               type: object
               description: Relacionamentos do resource
-          included:
-            type: array
-            description: Dados serializados do included no formato JSON API
-            items: []
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
         meta:
           type: object
           description: Resource extra info
@@ -249,16 +251,35 @@ components:
           - id: 4
             type: candidate
             attributes:
-              name: Name
-              email: email@gmail.com
+              name: Matheus
+              email: matheus@gmail.com
               phone: 41988889999
+          - id: 5
+            type: candidate
+            attributes:
+              name: Carlos
+              email: carlos@gmail.com
+              phone: 41988887777
         meta:
-          count: 79
-          items: 15
+          count: 2
+          items: 2
           page: 1
           prev: null
-          next: 2
-          last: 6
+          next: null
+          last: 1
+    api:
+      type: object
+      properties:
+        status:
+          type: string
+        status_code:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+        fields:
+          type: object
     Customer:
       type: object
       properties:
@@ -287,7 +308,7 @@ components:
         salary:
           type: integer
           description: Salário
-          example: 2500.0
+          example: 2500
         educational_level:
           type: string
           description: Nível de escolaridade
@@ -388,16 +409,10 @@ components:
         updated_at:
           type: string
           description: Atualizado em
-    ApiResponse:
+    Subscription:
       type: object
       properties:
-        status:
+        event:
           type: string
-        status_code:
-          type: integer
-        title:
+        url:
           type: string
-        detail:
-          type: string
-        fields:
-          type: object

@@ -1,7 +1,7 @@
 type: object
 properties:
   data:
-    description: Candidato serializado no formato JSON API
+    description: Subscription serializada no formato JSON API
     type: array
     items:
       type: object
@@ -18,25 +18,29 @@ properties:
       relationships:
         type: object
         description: Relacionamentos do resource
-    included:
-      type: array
-      description: Dados serializados do included no formato JSON API
-      items: []
+  included:
+    type: array
+    description: Dados serializados do included no formato JSON API
+    items: []
   meta:
     type: object
     description: Resource extra info
 example:
   data:
-    - id: 4
-      type: candidate
+    - id: 1
+      type: subscription
       attributes:
-        name: Name
-        email: email@gmail.com
-        phone: 41988889999
+        event: vacancy_created
+        url: https://webhook.site/a679aac8-d684
+    - id: 2
+      type: subscription
+      attributes:
+        event: vacancy_deleted
+        url: https://webhook.site/a679aac8-d685
   meta:
-    count: 79
-    items: 15
+    count: 2
+    items: 2
     page: 1
     prev: null
-    next: 2
-    last: 6
+    next: null
+    last: 1
