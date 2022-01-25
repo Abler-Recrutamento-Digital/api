@@ -3,19 +3,33 @@ openapi: 3.0.0
 info:
   title: Abler API
   description: |
-    This is the description of the Abler API
+    Essa é a descrição da API da Abler (alterar)
+    <h4>Headers</h4>
+    <ul>
+      <li>Envie o header <b>Authorization</b> com o Bearer {JWT} para a autenticação.</li>
+      <li>Envie o header <b>Content-Language</b> para traduzir as mensagens [pt-BR, en]</li>
+    </ul>
   version: 1.0.0
 servers:
 - url: https://empresa.abler.com.br/api/public/v1
+tags:
+- name: "Candidatos"
+  description: "Rotas relacionadas aos candidatos de sua empresa"
+- name: "Clientes"
+  description: "Rotas relacionadas aos clientes de sua empresa"
+- name: "Vagas"
+  description: "Rotas relacionadas as vagas de sua empresa"
+- name: "Webhook Subscriptions"
+  description: "Rotas relacionadas aos webhooks subscriptions"
 paths:
   /candidates:
     get:
       tags:
-      - candidates
-      summary: Returns a collection of the candidates
-      description: Returns a collection of the candidates
+      - Candidatos
+      summary: Buscar
+      description: Busca de candidatos
       security:
-        - Bearer: []
+        - BearerToken: []
       parameters:
         - in: query
           name: name
@@ -29,7 +43,7 @@ paths:
             type: string
       responses:
         "200":
-          description: Successful Operation
+          description: successful operation
           headers:
             Authorization:
               schema:
@@ -56,12 +70,31 @@ paths:
   /customers:
     get:
       tags:
-      - customers
-      summary: Returns a collection of the customers
-      description: Returns a collection of the customers
+      - Clientes
+      summary: Buscar
+      description: Busca de clientes
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: include
+          description: "Quando um relacionamento precisar estar presente no dado serializado do cliente,
+            apenas inclua usando esse parâmetro. Envie o `include` separado por vírgula para retornar mais que um.
+            Exemplo: `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`"
+          schema:
+            type: string
+            enum:
+              - address
+              - customer_analysts
+              - vacancies
       responses:
         "200":
           description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: "Bearer JWT"
           content:
             application/json:
               schema:
@@ -83,12 +116,39 @@ paths:
   /vacancy:
     get:
       tags:
-      - vacancies
-      summary: Returns a collection of your vacancies
-      description: Returns a collection of your vacancies
+      - Vagas
+      summary: Buscar
+      description: Busca de vagas
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: include
+          description: "Quando um relacionamento precisar estar presente no dado serializado do cliente,
+            apenas inclua usando esse parâmetro. Envie o `include` separado por vírgula para retornar mais que um.
+            Exemplo: `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`"
+          schema:
+            type: string
+            enum:
+              - team
+              - company
+              - area_of_formation
+              - level_of_interest
+              - area_of_interests
+              - skills
+              - vacancies_benefits
+              - vacancies_languages
+              - complementary_formations
+              - vacancy_analysts
+              - address
       responses:
         "200":
           description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: "Bearer JWT"
           content:
             application/json:
               schema:
@@ -107,52 +167,130 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+  /subscriptions:
+    get:
+      tags:
+      - "Webhook Subscriptions"
+      summary: Buscar
+      description: Busca de subscriptions
+      security:
+        - BearerToken: []
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: "Bearer JWT"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
 components:
   securitySchemes:
-    Bearer:
+    BearerToken:
       type: http
       scheme: bearer
+      description: "Authorization: Bearer {JWT}"
       bearerFormat: JWT
   schemas:
+    Subscription:
+      type: object
+      properties:
+        event:
+          type: string
+        url:
+          type: string
     Candidate:
       type: object
       properties:
-        name:
-          type: string
-          description: Nome do candidato
-          example: Nome
-        email:
-          type: string
-          description: E-mail do candidato
-          example: email@gmail.com
-        phone:
-          type: integer
-          description: Telefone do candidato
-          example: 41988889999
+        data:
+          description: Candidato serializado no formato JSON API
+          type: array
+          items:
+            type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+          included:
+            type: array
+            description: Dados serializados do included no formato JSON API
+            items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          - id: 4
+            type: candidate
+            attributes:
+              name: Name
+              email: email@gmail.com
+              phone: 41988889999
+        meta:
+          count: 79
+          items: 15
+          page: 1
+          prev: null
+          next: 2
+          last: 6
     Customer:
       type: object
       properties:
         corporate_name:
           type: string
+          description: Razão social
         trading_name:
           type: string
+          description: Nome fantasia
         cnpj:
           type: integer
+          description: CNPJ
           example: 42434481000193
         active:
           type: boolean
+          description: Ativo
         additional_info:
           type: string
+          description: Informação adicional
     Vacancy:
       type: object
       properties:
         title:
           type: string
+          description: Cargo
         salary:
           type: integer
+          description: Salário
           example: 2500.0
         educational_level:
           type: string
+          description: Nível de escolaridade
           enum:
             - ensino_fundamental
             - ensino_medio
@@ -165,6 +303,7 @@ components:
             - doutorado
         contracting_regime:
           type: string
+          description: Tipo de contrato
           enum:
             - avaliacao_psicologica
             - clt
@@ -181,26 +320,35 @@ components:
             - aprendiz
         available_for_travel:
           type: boolean
+          description: Viajar a trabalho
         available_for_change:
           type: boolean
+          description: Mudar de cidade
         available_for_homeoffice:
           type: boolean
+          description: Trabalhar home-office
         working_journey:
           type: string
+          description: Jornada de trabalho
         quantity:
           type: integer
+          description: Quantidade
         educational_level_status:
           type: string
+          description: Status de escolaridade
           enum:
             - cursando
             - completo
             - indiferente
         slug:
           type: string
+          description: URL (slug)
         required_experience:
           type: boolean
+          description: Experiência necessária
         status:
           type: string
+          description: Status
           enum:
             - draft
             - waiting_approval
@@ -213,8 +361,10 @@ components:
             - customer_request
         released:
           type: boolean
+          description: Em divulgação
         requisition_type:
           type: string
+          description: Tipo de requisição
           enum:
             - administracao_contrato
             - alocacao
@@ -225,14 +375,19 @@ components:
             - substituicao
         notify_feedback:
           type: boolean
+          description: Notificar feedback
         notify_invitation:
           type: boolean
+          description: Notificar convite
         description:
           type: string
+          description: Descrição da vaga
         created_at:
           type: string
+          description: Criado em
         updated_at:
           type: string
+          description: Atualizado em
     ApiResponse:
       type: object
       properties:
