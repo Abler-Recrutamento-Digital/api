@@ -1,0 +1,18 @@
+type: object
+properties:
+  corporate_name:
+    type: string
+    description: Razão social
+  trading_name:
+    type: string
+    description: Nome fantasia
+  cnpj:
+    type: integer
+    description: CNPJ
+    example: 42434481000193
+  active:
+    type: boolean
+    description: Ativo
+  additional_info:
+    type: string
+    description: Informação adicional

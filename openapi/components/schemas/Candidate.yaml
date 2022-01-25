@@ -1,0 +1,42 @@
+type: object
+properties:
+  data:
+    description: Candidato serializado no formato JSON API
+    type: array
+    items:
+      type: object
+    properties:
+      id:
+        type: integer
+        description: Id do resource
+      type:
+        type: string
+        description: Tipo do resource
+      attributes:
+        type: object
+        description: Atributos do resource
+      relationships:
+        type: object
+        description: Relacionamentos do resource
+    included:
+      type: array
+      description: Dados serializados do included no formato JSON API
+      items: []
+  meta:
+    type: object
+    description: Resource extra info
+example:
+  data:
+    - id: 4
+      type: candidate
+      attributes:
+        name: Name
+        email: email@gmail.com
+        phone: 41988889999
+  meta:
+    count: 79
+    items: 15
+    page: 1
+    prev: null
+    next: 2
+    last: 6

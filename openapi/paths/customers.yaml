@@ -1,0 +1,47 @@
+get:
+  tags:
+    - Clientes
+  summary: Buscar
+  description: Busca de clientes
+  security:
+    - BearerToken: []
+  parameters:
+    - in: query
+      name: include
+      description: >-
+        Quando um relacionamento precisar estar presente no dado serializado do
+        cliente, apenas inclua usando esse parâmetro. Envie o `include` separado
+        por vírgula para retornar mais que um. Exemplo:
+        `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`
+      schema:
+        type: string
+        enum:
+          - address
+          - customer_analysts
+          - vacancies
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Customer.yaml
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ApiResponse.yaml
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ApiResponse.yaml

@@ -1,0 +1,55 @@
+get:
+  tags:
+    - Vagas
+  summary: Buscar
+  description: Busca de vagas
+  security:
+    - BearerToken: []
+  parameters:
+    - in: query
+      name: include
+      description: >-
+        Quando um relacionamento precisar estar presente no dado serializado do
+        cliente, apenas inclua usando esse parâmetro. Envie o `include` separado
+        por vírgula para retornar mais que um. Exemplo:
+        `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+      schema:
+        type: string
+        enum:
+          - team
+          - company
+          - area_of_formation
+          - level_of_interest
+          - area_of_interests
+          - skills
+          - vacancies_benefits
+          - vacancies_languages
+          - complementary_formations
+          - vacancy_analysts
+          - address
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Vacancy.yaml
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ApiResponse.yaml
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ApiResponse.yaml
