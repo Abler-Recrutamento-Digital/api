@@ -1,0 +1,12 @@
+type: object
+properties:
+  status:
+    type: string
+  status_code:
+    type: integer
+  title:
+    type: string
+  detail:
+    type: string
+  fields:
+    type: object

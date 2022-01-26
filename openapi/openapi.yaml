@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: Abler API
+  description: |
+    Essa é a descrição da API da Abler (alterar)
+    <h4>Headers</h4>
+    <ul>
+      <li>Envie o header <b>Authorization</b> com o Bearer {JWT} para a autenticação.</li>
+      <li>Envie o header <b>Content-Language</b> para traduzir as mensagens [pt-BR, en]</li>
+    </ul>
+  version: 1.0.0
+servers:
+  - url: 'https://empresa.abler.com.br/api/public/v1'
+tags:
+  - name: Candidatos
+    description: Rotas relacionadas aos candidatos de sua empresa
+  - name: Clientes
+    description: Rotas relacionadas aos clientes de sua empresa
+  - name: Vagas
+    description: Rotas relacionadas as vagas de sua empresa
+  - name: Webhook Subscriptions
+    description: Rotas relacionadas aos webhooks subscriptions
+paths:
+  /candidates:
+    $ref: paths/candidates/index.yaml
+  /customers:
+    $ref: paths/customers/index.yaml
+  /vacancy:
+    $ref: paths/vacancies/index.yaml
+  /subscriptions:
+    $ref: paths/webhook_subscriptions/index_create.yaml
+  /subscriptions/{id}:
+    $ref: paths/webhook_subscriptions/resources.yaml
+components:
+  securitySchemes:
+    BearerToken:
+      $ref: "./components/securitySchemes/BearerToken.yaml"

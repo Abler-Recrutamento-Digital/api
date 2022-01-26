@@ -1,0 +1,44 @@
+get:
+  tags:
+    - Candidatos
+  summary: Buscar
+  description: Busca de candidatos
+  security:
+    - BearerToken: []
+  parameters:
+    - in: query
+      name: name
+      description: Filtrar os candidatos pelo nome
+      schema:
+        type: string
+    - in: query
+      name: email
+      description: Filtrar os candidatos pelo e-mail
+      schema:
+        type: string
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/candidate/candidates.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"

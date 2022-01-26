@@ -1,0 +1,46 @@
+type: object
+properties:
+  data:
+    description: Webhook Subscription serializada no formato JSON API
+    type: array
+    items:
+      type: object
+    properties:
+      id:
+        type: integer
+        description: Id do resource
+      type:
+        type: string
+        description: Tipo do resource
+      attributes:
+        type: object
+        description: Atributos do resource
+      relationships:
+        type: object
+        description: Relacionamentos do resource
+  included:
+    type: array
+    description: Dados serializados do included no formato JSON API
+    items: []
+  meta:
+    type: object
+    description: Resource extra info
+example:
+  data:
+    - id: 1
+      type: webhook_subscription
+      attributes:
+        event: vacancy_created
+        url: https://webhook.site/a679aac8-d684
+    - id: 2
+      type: webhook_subscription
+      attributes:
+        event: vacancy_deleted
+        url: https://webhook.site/a679aac8-d685
+  meta:
+    count: 2
+    items: 2
+    page: 1
+    prev: null
+    next: null
+    last: 1

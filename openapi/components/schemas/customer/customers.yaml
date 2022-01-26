@@ -1,0 +1,52 @@
+type: object
+properties:
+  data:
+    description: Cliente serializado no formato JSON API
+    type: array
+    items:
+      type: object
+    properties:
+      id:
+        type: integer
+        description: Id do resource
+      type:
+        type: string
+        description: Tipo do resource
+      attributes:
+        type: object
+        description: Atributos do resource
+      relationships:
+        type: object
+        description: Relacionamentos do resource
+  included:
+    type: array
+    description: Dados serializados do included no formato JSON API
+    items: []
+  meta:
+    type: object
+    description: Resource extra info
+example:
+  data:
+    - id: 1
+      type: customer
+      attributes:
+        corporate_name: Razão social
+        trading_name: Nome Fantasia
+        cnpj: 42434481000193
+        active: true
+        additional_info: Informações adicionais
+    - id: 2
+      type: customer
+      attributes:
+        corporate_name: Razão social
+        trading_name: Nome Fantasia
+        cnpj: 42434481000193
+        active: true
+        additional_info: Informações adicionais
+  meta:
+    count: 2
+    items: 2
+    page: 1
+    prev: null
+    next: null
+    last: 1
