@@ -191,7 +191,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/subscriptions'
+                  $ref: '#/components/schemas/webhook_subscriptions'
         '401':
           description: Unauthorized
           content:
@@ -253,7 +253,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/subscription'
+                  $ref: '#/components/schemas/webhook_subscription'
         '401':
           description: Unauthorized
           content:
@@ -294,7 +294,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/subscription'
+                  $ref: '#/components/schemas/webhook_subscription'
         '401':
           description: Unauthorized
           content:
@@ -369,7 +369,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/subscription'
+                  $ref: '#/components/schemas/webhook_subscription'
         '401':
           description: Unauthorized
           content:
@@ -415,7 +415,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/subscription'
+                  $ref: '#/components/schemas/webhook_subscription'
         '401':
           description: Unauthorized
           content:
@@ -617,11 +617,11 @@ components:
           prev: null
           next: null
           last: 1
-    subscriptions:
+    webhook_subscriptions:
       type: object
       properties:
         data:
-          description: Subscription serializada no formato JSON API
+          description: Webhook Subscription serializada no formato JSON API
           type: array
           items:
             type: object
@@ -648,12 +648,12 @@ components:
       example:
         data:
           - id: 1
-            type: subscription
+            type: webhook_subscription
             attributes:
               event: vacancy_created
               url: https://webhook.site/a679aac8-d684
           - id: 2
-            type: subscription
+            type: webhook_subscription
             attributes:
               event: vacancy_deleted
               url: https://webhook.site/a679aac8-d685
@@ -664,11 +664,11 @@ components:
           prev: null
           next: null
           last: 1
-    subscription:
+    webhook_subscription:
       type: object
       properties:
         data:
-          description: Subscription serializada no formato JSON API
+          description: Webhook Subscription serializada no formato JSON API
           type: object
           properties:
             id:
@@ -690,7 +690,7 @@ components:
       example:
         data:
           id: 1
-          type: subscription
+          type: webhook_subscription
           attributes:
             event: vacancy_created
             url: https://webhook.site/a679aac8-d684
