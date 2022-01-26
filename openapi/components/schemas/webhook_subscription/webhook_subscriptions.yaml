@@ -1,7 +1,7 @@
 type: object
 properties:
   data:
-    description: Subscription serializada no formato JSON API
+    description: Webhook Subscription serializada no formato JSON API
     type: array
     items:
       type: object
@@ -28,12 +28,12 @@ properties:
 example:
   data:
     - id: 1
-      type: subscription
+      type: webhook_subscription
       attributes:
         event: vacancy_created
         url: https://webhook.site/a679aac8-d684
     - id: 2
-      type: subscription
+      type: webhook_subscription
       attributes:
         event: vacancy_deleted
         url: https://webhook.site/a679aac8-d685

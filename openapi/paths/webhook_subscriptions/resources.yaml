@@ -1,10 +1,17 @@
 get:
   tags:
     - Webhook Subscriptions
-  summary: Buscar
-  description: Busca de subscriptions
+  summary: Buscar pelo id
+  description: Busca de subscription pelo id
   security:
     - BearerToken: []
+  parameters:
+    - in: path
+      name: id
+      description: Subscription id
+      required: true
+      schema:
+        type: integer
   responses:
     '200':
       description: successful operation
@@ -18,9 +25,15 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/subscription/subscriptions.yaml"
+              $ref: "../../components/schemas/webhook_subscription/webhook_subscription.yaml"
     '401':
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '404':
+      description: NotFound
       content:
         application/json:
           schema:
@@ -31,13 +44,20 @@ get:
         application/json:
           schema:
             $ref: "../../components/schemas/response/api.yaml"
-post:
+patch:
   tags:
     - Webhook Subscriptions
-  summary: Cadastrar
-  description: Cadastrar webhook subscription
+  summary: Atualizar pelo id
+  description: Atualização de subscription pelo id
   security:
     - BearerToken: []
+  parameters:
+    - in: path
+      name: id
+      description: Subscription id
+      required: true
+      schema:
+        type: integer
   requestBody:
     required: true
     content:
@@ -51,7 +71,7 @@ post:
                 event:
                   type: string
                   description: Evento
-                  required: true
+                  required: false
                   example: vacancy_created
                   enum:
                     - vacancy_created
@@ -64,7 +84,7 @@ post:
                     - candidate_hired
                 url:
                   type: string
-                  required: true
+                  required: false
                   example: https://webhook.com.br
                   description: URL do webhook
   responses:
@@ -80,9 +100,15 @@ post:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/subscription/subscription.yaml"
+              $ref: "../../components/schemas/webhook_subscription/webhook_subscription.yaml"
     '401':
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '404':
+      description: NotFound
       content:
         application/json:
           schema:
@@ -93,4 +119,49 @@ post:
         application/json:
           schema:
             $ref: "../../components/schemas/response/api.yaml"
-
+delete:
+  tags:
+    - Webhook Subscriptions
+  summary: Deletar pelo id
+  description: Deletar subscription pelo id
+  security:
+    - BearerToken: []
+  parameters:
+    - in: path
+      name: id
+      description: Subscription id
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/webhook_subscription/webhook_subscription.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '404':
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"

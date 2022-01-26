@@ -28,9 +28,9 @@ paths:
   /vacancy:
     $ref: paths/vacancies/index.yaml
   /subscriptions:
-    $ref: paths/subscriptions/index_create.yaml
+    $ref: paths/webhook_subscriptions/index_create.yaml
   /subscriptions/{id}:
-    $ref: paths/subscriptions/subscription_resources.yaml
+    $ref: paths/webhook_subscriptions/resources.yaml
 components:
   securitySchemes:
     BearerToken:
