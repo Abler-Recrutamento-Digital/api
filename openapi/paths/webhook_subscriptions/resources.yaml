@@ -8,7 +8,7 @@ get:
   parameters:
     - in: path
       name: id
-      description: Subscription id
+      description: Webhook Subscription id
       required: true
       schema:
         type: integer
@@ -54,7 +54,7 @@ patch:
   parameters:
     - in: path
       name: id
-      description: Subscription id
+      description: Webhook Subscription id
       required: true
       schema:
         type: integer
@@ -129,7 +129,7 @@ delete:
   parameters:
     - in: path
       name: id
-      description: Subscription id
+      description: Webhook Subscription id
       required: true
       schema:
         type: integer

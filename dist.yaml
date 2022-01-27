@@ -12,8 +12,6 @@ info:
 servers:
   - url: https://empresa.abler.com.br/api/public/v1
 tags:
-  - name: Candidatos
-    description: Rotas relacionadas aos candidatos de sua empresa
   - name: Clientes
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
@@ -21,51 +19,6 @@ tags:
   - name: Webhook Subscriptions
     description: Rotas relacionadas aos webhooks subscriptions
 paths:
-  /candidates:
-    get:
-      tags:
-        - Candidatos
-      summary: Buscar
-      description: Busca de candidatos
-      security:
-        - BearerToken: []
-      parameters:
-        - in: query
-          name: name
-          description: Filtrar os candidatos pelo nome
-          schema:
-            type: string
-        - in: query
-          name: email
-          description: Filtrar os candidatos pelo e-mail
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            Authorization:
-              schema:
-                type: string
-              description: Bearer JWT
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/candidates'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api'
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api'
   /customers:
     get:
       tags:
@@ -114,7 +67,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api'
-  /vacancy:
+  /vacancies:
     get:
       tags:
         - Vagas
@@ -158,6 +111,110 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/vacancies'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /vacancies/{id}/candidates:
+    get:
+      tags:
+        - Vagas
+      summary: Buscar candidato
+      description: Busca candidato da vaga pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: ID da vaga
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: candidate_id
+          description: ID do candidato
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/candidate'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /vacancies/{id}/candidates/{candidate_id}:
+    get:
+      tags:
+        - Vagas
+      summary: Buscar candidatos
+      description: Busca candidatos da vaga
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: ID da vaga
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: candidate_id
+          description: ID do candidato
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: name
+          description: Filtrar os candidatos pelo nome
+          schema:
+            type: string
+        - in: query
+          name: email
+          description: Filtrar os candidatos pelo e-mail
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/candidates'
         '401':
           description: Unauthorized
           content:
@@ -277,7 +334,7 @@ paths:
       parameters:
         - in: path
           name: id
-          description: Subscription id
+          description: Webhook Subscription id
           required: true
           schema:
             type: integer
@@ -323,7 +380,7 @@ paths:
       parameters:
         - in: path
           name: id
-          description: Subscription id
+          description: Webhook Subscription id
           required: true
           schema:
             type: integer
@@ -398,7 +455,7 @@ paths:
       parameters:
         - in: path
           name: id
-          description: Subscription id
+          description: Webhook Subscription id
           required: true
           schema:
             type: integer
@@ -442,68 +499,6 @@ components:
       description: 'Authorization: Bearer {JWT}'
       bearerFormat: JWT
   schemas:
-    candidates:
-      type: object
-      properties:
-        data:
-          description: Candidato serializado no formato JSON API
-          type: array
-          items:
-            type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
-        included:
-          type: array
-          description: Dados serializados do included no formato JSON API
-          items: []
-        meta:
-          type: object
-          description: Resource extra info
-      example:
-        data:
-          - id: 4
-            type: candidate
-            attributes:
-              name: Matheus
-              email: matheus@gmail.com
-              phone: 41988889999
-          - id: 5
-            type: candidate
-            attributes:
-              name: Carlos
-              email: carlos@gmail.com
-              phone: 41988887777
-        meta:
-          count: 2
-          items: 2
-          page: 1
-          prev: null
-          next: null
-          last: 1
-    api:
-      type: object
-      properties:
-        status:
-          type: string
-        status_code:
-          type: integer
-        title:
-          type: string
-        detail:
-          type: string
-        fields:
-          type: object
     customers:
       type: object
       properties:
@@ -557,6 +552,19 @@ components:
           prev: null
           next: null
           last: 1
+    api:
+      type: object
+      properties:
+        status:
+          type: string
+        status_code:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+        fields:
+          type: object
     vacancies:
       type: object
       properties:
@@ -613,6 +621,86 @@ components:
         meta:
           count: 1
           items: 1
+          page: 1
+          prev: null
+          next: null
+          last: 1
+    candidate:
+      type: object
+      properties:
+        data:
+          description: Candidato serializado no formato JSON API
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+      example:
+        data:
+          id: 4
+          type: candidate
+          attributes:
+            name: Matheus
+            email: matheus@gmail.com
+            phone: 41988889999
+    candidates:
+      type: object
+      properties:
+        data:
+          description: Candidato serializado no formato JSON API
+          type: array
+          items:
+            type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          - id: 4
+            type: candidate
+            attributes:
+              name: Matheus
+              email: matheus@gmail.com
+              phone: 41988889999
+          - id: 5
+            type: candidate
+            attributes:
+              name: Carlos
+              email: carlos@gmail.com
+              phone: 41988887777
+        meta:
+          count: 2
+          items: 2
           page: 1
           prev: null
           next: null
