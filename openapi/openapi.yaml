@@ -21,6 +21,8 @@ tags:
 paths:
   /customers:
     $ref: paths/customers/index.yaml
+  /customers/{id}:
+    $ref: paths/customers/show.yaml
   /vacancies:
     $ref: paths/vacancies/index.yaml
   /vacancies/{id}/candidates:
