@@ -41,6 +41,7 @@ paths:
               - address
               - customer_analysts
               - vacancies
+              - customer_contacts
       responses:
         '200':
           description: successful operation
@@ -67,71 +68,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api'
-  /vacancies:
-    get:
-      tags:
-        - Vagas
-      summary: Buscar
-      description: Busca de vagas
-      security:
-        - BearerToken: []
-      parameters:
-        - in: query
-          name: include
-          description: >-
-            Quando um relacionamento precisar estar presente no dado serializado
-            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
-            separado por vírgula para retornar mais que um. Exemplo:
-            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
-          schema:
-            type: string
-            enum:
-              - team
-              - company
-              - area_of_formation
-              - level_of_interest
-              - area_of_interests
-              - skills
-              - vacancies_benefits
-              - vacancies_languages
-              - complementary_formations
-              - vacancy_analysts
-              - address
-<<<<<<< HEAD
-=======
-              - customer_analysts
-              - vacancies
-              - customer_contacts
->>>>>>> Add customer endpoints
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            Authorization:
-              schema:
-                type: string
-              description: Bearer JWT
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/vacancies'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api'
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/api'
-<<<<<<< HEAD
-  /vacancies/{id}/candidates:
-=======
   /customers/{id}:
     get:
       tags:
@@ -187,8 +123,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api'
-  /vacancy:
->>>>>>> Add customer endpoints
+  /vacancies:
+    get:
+      tags:
+        - Vagas
+      summary: Buscar
+      description: Busca de vagas
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: include
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+          schema:
+            type: string
+            enum:
+              - team
+              - company
+              - area_of_formation
+              - level_of_interest
+              - area_of_interests
+              - skills
+              - vacancies_benefits
+              - vacancies_languages
+              - complementary_formations
+              - vacancy_analysts
+              - address
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vacancies'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /vacancies/{id}/candidates:
     get:
       tags:
         - Vagas
@@ -602,6 +593,13 @@ components:
               cnpj: 42434481000193
               active: true
               additional_info: Informações adicionais
+              created_at: '2022-01-07T14:30:19.403-03:00'
+              updated_at: '2022-01-07T14:30:19.403-03:00'
+            relationships:
+              address: {}
+              customer_analysts: {}
+              vacancies: {}
+              customer_contacts: {}
           - id: 2
             type: customer
             attributes:
@@ -610,6 +608,13 @@ components:
               cnpj: 42434481000193
               active: true
               additional_info: Informações adicionais
+              created_at: '2022-01-07T14:30:19.403-03:00'
+              updated_at: '2022-01-07T14:30:19.403-03:00'
+            relationships:
+              address: {}
+              customer_analysts: {}
+              vacancies: {}
+              customer_contacts: {}
         meta:
           count: 2
           items: 2
@@ -630,101 +635,6 @@ components:
           type: string
         fields:
           type: object
-    vacancies:
-      type: object
-      properties:
-        data:
-          description: Subscription serializada no formato JSON API
-          type: array
-          items:
-            type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
-        included:
-          type: array
-          description: Dados serializados do included no formato JSON API
-          items: []
-        meta:
-          type: object
-          description: Resource extra info
-      example:
-        data:
-          - id: 1
-<<<<<<< HEAD
-            type: vacancy
-            attributes:
-              title: Cargo
-              salary: 2500
-              educational_level: graduacao
-              contracting_regime: clt
-              available_for_travel: true
-              available_for_change: true
-              available_for_homeoffice: true
-              working_journey: true
-              quantity: 2
-              educational_level_status: completo
-              slug: vaga-slug
-              required_experience: true
-              status: published
-              released: true
-              requisition_type: expansao
-              notify_feedback: true
-              notify_invitation: true
-              description: Descrição da vaga
-              created_at: '2022-01-06T16:22:39.230-03:00'
-              updated_at: '2022-01-06T16:22:39.230-03:00'
-=======
-            type: customer
-            attributes:
-              corporate_name: Razão social
-              trading_name: Nome Fantasia
-              cnpj: 42434481000193
-              active: true
-              additional_info: Informações adicionais
-              created_at: '2022-01-07T14:30:19.403-03:00'
-              updated_at: '2022-01-07T14:30:19.403-03:00'
-            relationships:
-              address: {}
-              customer_analysts: {}
-              vacancies: {}
-              customer_contacts: {}
-          - id: 2
-            type: customer
-            attributes:
-              corporate_name: Razão social
-              trading_name: Nome Fantasia
-              cnpj: 42434481000193
-              active: true
-              additional_info: Informações adicionais
-              created_at: '2022-01-07T14:30:19.403-03:00'
-              updated_at: '2022-01-07T14:30:19.403-03:00'
-            relationships:
-              address: {}
-              customer_analysts: {}
-              vacancies: {}
-              customer_contacts: {}
->>>>>>> Add customer endpoints
-        meta:
-          count: 1
-          items: 1
-          page: 1
-          prev: null
-          next: null
-          last: 1
-<<<<<<< HEAD
-    candidate:
-=======
     customer:
       type: object
       properties:
@@ -766,7 +676,66 @@ components:
             vacancies: {}
             customer_contacts: {}
     vacancies:
->>>>>>> Add customer endpoints
+      type: object
+      properties:
+        data:
+          description: Subscription serializada no formato JSON API
+          type: array
+          items:
+            type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          - id: 1
+            type: vacancy
+            attributes:
+              title: Cargo
+              salary: 2500
+              educational_level: graduacao
+              contracting_regime: clt
+              available_for_travel: true
+              available_for_change: true
+              available_for_homeoffice: true
+              working_journey: true
+              quantity: 2
+              educational_level_status: completo
+              slug: vaga-slug
+              required_experience: true
+              status: published
+              released: true
+              requisition_type: expansao
+              notify_feedback: true
+              notify_invitation: true
+              description: Descrição da vaga
+              created_at: '2022-01-06T16:22:39.230-03:00'
+              updated_at: '2022-01-06T16:22:39.230-03:00'
+        meta:
+          count: 1
+          items: 1
+          page: 1
+          prev: null
+          next: null
+          last: 1
+    candidate:
       type: object
       properties:
         data:
