@@ -1,0 +1,46 @@
+get:
+  tags:
+    - Vagas
+  summary: Buscar candidato
+  description: Busca candidato da vaga pelo id
+  security:
+    - BearerToken: []
+  parameters:
+    - in: path
+      name: id
+      description: ID da vaga
+      required: true
+      schema:
+        type: integer
+    - in: path
+      name: candidate_id
+      description: ID do candidato
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/candidate/candidate.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
