@@ -1,8 +1,8 @@
 get:
   tags:
     - Clientes
-  summary: Buscar
-  description: Busca de clientes
+  summary: Buscar pelo id
+  description: Busca de clientes pelo id
   security:
     - BearerToken: []
   parameters:
@@ -33,9 +33,15 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/customer/customers.yaml"
+              $ref: "../../components/schemas/customer/customer.yaml"
     '401':
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '404':
+      description: NotFound
       content:
         application/json:
           schema:

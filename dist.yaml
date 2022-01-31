@@ -41,6 +41,7 @@ paths:
               - address
               - customer_analysts
               - vacancies
+              - customer_contacts
       responses:
         '200':
           description: successful operation
@@ -57,6 +58,61 @@ paths:
                   $ref: '#/components/schemas/customers'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /customers/{id}:
+    get:
+      tags:
+        - Clientes
+      summary: Buscar pelo id
+      description: Busca de clientes pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: include
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`
+          schema:
+            type: string
+            enum:
+              - address
+              - customer_analysts
+              - vacancies
+              - customer_contacts
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/customer'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
           content:
             application/json:
               schema:
@@ -537,6 +593,13 @@ components:
               cnpj: 42434481000193
               active: true
               additional_info: Informações adicionais
+              created_at: '2022-01-07T14:30:19.403-03:00'
+              updated_at: '2022-01-07T14:30:19.403-03:00'
+            relationships:
+              address: {}
+              customer_analysts: {}
+              vacancies: {}
+              customer_contacts: {}
           - id: 2
             type: customer
             attributes:
@@ -545,6 +608,13 @@ components:
               cnpj: 42434481000193
               active: true
               additional_info: Informações adicionais
+              created_at: '2022-01-07T14:30:19.403-03:00'
+              updated_at: '2022-01-07T14:30:19.403-03:00'
+            relationships:
+              address: {}
+              customer_analysts: {}
+              vacancies: {}
+              customer_contacts: {}
         meta:
           count: 2
           items: 2
@@ -565,6 +635,46 @@ components:
           type: string
         fields:
           type: object
+    customer:
+      type: object
+      properties:
+        data:
+          description: Cliente serializado no formato JSON API
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+      example:
+        data:
+          id: 1
+          type: customer
+          attributes:
+            corporate_name: Razão social
+            trading_name: Nome Fantasia
+            cnpj: 42434481000193
+            active: true
+            additional_info: Informações adicionais
+            created_at: '2022-01-07T14:30:19.403-03:00'
+            updated_at: '2022-01-07T14:30:19.403-03:00'
+          relationships:
+            address: {}
+            customer_analysts: {}
+            vacancies: {}
+            customer_contacts: {}
     vacancies:
       type: object
       properties:
