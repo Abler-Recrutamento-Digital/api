@@ -41,5 +41,7 @@ components:
       $ref: "./components/models/address.yaml"
     CustomerContact:
       $ref: "./components/models/customer_contact.yaml"
+    Candidate:
+      $ref: "./components/models/candidate.yaml"
     Relationship:
       $ref: "./components/models/relationship.yaml"      

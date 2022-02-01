@@ -1,0 +1,21 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      name: 
+        type: string
+        description: Nome
+      email: 
+        type: string
+        description: email
+      phone: 
+        type: string
+        description: telefone do candidato
