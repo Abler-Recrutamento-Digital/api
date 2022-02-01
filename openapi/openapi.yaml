@@ -15,11 +15,13 @@ tags:
     description: Rotas relacionadas aos webhooks subscriptions
 paths:
   /customers:
-    $ref: paths/customers/index.yaml
+    $ref: paths/customers/index.yaml  
   /customers/{id}:
     $ref: paths/customers/show.yaml
   /vacancies:
     $ref: paths/vacancies/index.yaml
+  /vacancies/{id}:
+    $ref: paths/vacancies/resources.yaml        
   /vacancies/{id}/candidates:
     $ref: paths/vacancies/candidate.yaml
   /vacancies/{id}/candidates/{candidate_id}:
