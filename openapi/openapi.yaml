@@ -24,9 +24,11 @@ paths:
   /candidates:
     $ref: paths/candidates/index.yaml
   /customers:
-    $ref: paths/customers/index.yaml
+    $ref: paths/customers/index.yaml  
   /vacancy:
     $ref: paths/vacancies/index.yaml
+  /vacancy/{id}:
+    $ref: paths/vacancies/resources.yaml
   /subscriptions:
     $ref: paths/webhook_subscriptions/index_create.yaml
   /subscriptions/{id}:

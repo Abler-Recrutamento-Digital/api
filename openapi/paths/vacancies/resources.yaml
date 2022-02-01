@@ -1,52 +1,17 @@
 get:
   tags:
     - Vagas
-  summary: Buscar
-  description: Busca de vagas
+  summary: Buscar pelo id
+  description: Busca de vaga pelo id
   security:
     - BearerToken: []
   parameters:
-    - in: query
-      name: q
-      description: Busca por query string
+    - in: path
+      name: id
+      description: Vacancy id
+      required: true
       schema:
-        type: string
-    - in: query
-      name: created_at_from
-      description: Busca data de criação da vaga
-      schema:
-        type: string
-        format: "DD/MM/YYYY"
-    - in: query
-      name: created_at_to
-      description: Busca data de criação da vaga
-      schema:
-        type: string
-        format: "DD/MM/YYYY"
-    - in: query
-      name: forward_at_from
-      description: Busca data de encaminhamento da vaga
-      schema:
-        type: string
-        format: "DD/MM/YYYY"
-    - in: query
-      name: forward_at_to
-      description: Busca data de encaminhamento da vaga
-      schema:
-        type: string
-        format: "DD/MM/YYYY"
-    - in: query
-      name: finished_at_from
-      description: Busca data de fechamento da vaga
-      schema:
-        type: string
-        format: "DD/MM/YYYY"
-    - in: query
-      name: finished_at_to
-      description: Busca data de fechamento da vaga
-      schema:
-        type: string
-        format: "DD/MM/YYYY"
+        type: integer
     - in: query
       name: include
       description:
@@ -83,9 +48,15 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/vacancy/vacancies.yaml"
+              $ref: "../../components/schemas/vacancy/vacancy.yaml"
     '401':
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '404':
+      description: NotFound
       content:
         application/json:
           schema:
