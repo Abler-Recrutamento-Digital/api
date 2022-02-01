@@ -19,6 +19,16 @@ get:
       schema:
         type: integer
     - in: query
+      name: per_page
+      description: Registros por página
+      schema:
+        type: string
+    - in: query
+      name: page
+      description: Página
+      schema:
+        type: string
+    - in: query
       name: name
       description: Filtrar os candidatos pelo nome
       schema:

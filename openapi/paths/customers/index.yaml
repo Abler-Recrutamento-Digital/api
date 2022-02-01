@@ -18,6 +18,16 @@ get:
         enum:
           - address
           - customer_contacts
+    - in: query
+      name: per_page
+      description: Registros por página
+      schema:
+        type: string
+    - in: query
+      name: page
+      description: Página
+      schema:
+        type: string
   responses:
     '200':
       description: successful operation
