@@ -1,13 +1,8 @@
 openapi: 3.0.0
 info:
   title: Abler API
-  description: |
-    Essa é a descrição da API da Abler (alterar)
-    <h4>Headers</h4>
-    <ul>
-      <li>Envie o header <b>Authorization</b> com o Bearer {JWT} para a autenticação.</li>
-      <li>Envie o header <b>Content-Language</b> para traduzir as mensagens [pt-BR, en]</li>
-    </ul>
+  description:
+    $ref: description.md
   version: 1.0.0
 servers:
   - url: 'https://empresa.abler.com.br/api/public/v1'

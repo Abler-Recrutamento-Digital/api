@@ -1,13 +1,7 @@
 openapi: 3.0.0
 info:
   title: Abler API
-  description: |
-    Essa é a descrição da API da Abler (alterar)
-    <h4>Headers</h4>
-    <ul>
-      <li>Envie o header <b>Authorization</b> com o Bearer {JWT} para a autenticação.</li>
-      <li>Envie o header <b>Content-Language</b> para traduzir as mensagens [pt-BR, en]</li>
-    </ul>
+  description: "# Abler API\n\nEsse é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar clientes\n- **Vagas**\n  - Bucas vagas\n  - Buscas candidatos\n- **Webhook Subscriptions**\n  - Buscar subscriptions\n  - Cadastrar subscriptions\n  - Atualizar subscriptions\n  - Deletar subscriptions\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t     |Intervalo    |\n|---\t              |---\t           |---\t         |\n|IP   \t            | 10 requisições | 10 segundos |\n\n"
   version: 1.0.0
 servers:
   - url: https://empresa.abler.com.br/api/public/v1
