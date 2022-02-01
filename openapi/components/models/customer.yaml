@@ -1,0 +1,45 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      corporate_name: 
+        type: string
+        description: Razão social
+      trading_name: 
+        type: string
+        description: Nome fantasia
+      cnpj: 
+        type: string
+        description: CNPJ
+      active: 
+        type: boolean
+        description: Ativo/Inativo
+      additional_info: 
+        type: string
+        description: Informações adicionais
+      created_at: 
+        type: datetime
+        description: Data de criação
+      updated_at: 
+        type: datetime
+        description: Data de atualização
+  relationships:
+    type: object    
+    description: Relacionamentos do resource
+    properties:
+      address: 
+        $ref: '#/components/schemas/relationship'
+      customer_analysts: 
+        $ref: '#/components/schemas/relationship'
+      vacancies: 
+        $ref: '#/components/schemas/relationship'
+      customer_contacts: 
+        $ref: '#/components/schemas/relationship'

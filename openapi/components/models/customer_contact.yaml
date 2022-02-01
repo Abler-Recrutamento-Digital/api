@@ -1,0 +1,38 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      name: 
+        type: string
+        description: Nome
+      email:
+        type: string
+        description: Email
+      phone:
+        type: string
+        description: Telefone
+      role:
+        type: string
+        description: Cargo
+      active:
+        type: boolean
+        description: Ativo/Inativo
+      allow_access:
+        type: boolean
+        description: Possui acesso/Não possui acesso
+      created_at:
+        type: datetime
+        description: Data de criação
+      updated_at:
+        type: datetime
+        description: Data de alteração
+      
+      

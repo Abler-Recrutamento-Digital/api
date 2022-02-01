@@ -1,0 +1,22 @@
+type: object
+properties: 
+  data: 
+   oneOf: 
+    - type: object
+      properties:
+        id: 
+          type: integer
+          description: ID do relacionamento
+        type: 
+          type: string
+          description: Tipo do relacionamento
+    - type: array
+      items: 
+        type: object
+        properties:
+          id: 
+            type: integer
+            description: ID do relacionamento
+          type: 
+            type: string
+            description: Tipo do relacionamento

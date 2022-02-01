@@ -29,8 +29,17 @@ paths:
   /subscriptions:
     $ref: paths/webhook_subscriptions/index_create.yaml
   /subscriptions/{id}:
-    $ref: paths/webhook_subscriptions/resources.yaml
+    $ref: paths/webhook_subscriptions/resources.yaml  
 components:
   securitySchemes:
     BearerToken:
       $ref: "./components/securitySchemes/BearerToken.yaml"
+  schemas: 
+    Customer:
+      $ref: "./components/models/customer.yaml"
+    Address:
+      $ref: "./components/models/address.yaml"
+    CustomerContact:
+      $ref: "./components/models/customer_contact.yaml"
+    Relationship:
+      $ref: "./components/models/relationship.yaml"      

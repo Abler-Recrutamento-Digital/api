@@ -1,0 +1,39 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      cep: 
+        type: string
+        description: CEP
+      street: 
+        type: string
+        description: Rua
+      number: 
+        type: integer
+        description: Número
+      complement: 
+        type: string
+        description: Complemento
+      neighborhood: 
+        type: string
+        description: Bairro
+      country: 
+        type: string
+        description: País
+      city_name: 
+        type: string
+        description: Cidade
+      state_name: 
+        type: string
+        description: Estado
+      state_abbreviation: 
+        type: string
+        description: Abreviação do estado
