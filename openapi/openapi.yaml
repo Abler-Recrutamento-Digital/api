@@ -43,5 +43,31 @@ components:
       $ref: "./components/models/customer_contact.yaml"
     Candidate:
       $ref: "./components/models/candidate.yaml"
+    Vacancy:
+      $ref: "./components/models/vacancy.yaml"
+    Pipeline:
+      $ref: "./components/models/pipeline.yaml"
     Relationship:
-      $ref: "./components/models/relationship.yaml"      
+      $ref: "./components/models/relationship.yaml" 
+    Team:
+      $ref: "./components/models/team.yaml" 
+    AreaOfFormation:
+      $ref: "./components/models/area_of_formation.yaml"
+    LevelOfInterest:
+      $ref: "./components/models/level_of_interest.yaml"
+    OccupationArea:
+      $ref: "./components/models/occupation_area.yaml"
+    AreaOfInterest:
+      $ref: "./components/models/area_of_interest.yaml"
+    Skill:
+      $ref: "./components/models/skill.yaml"
+    Benefit:
+      $ref: "./components/models/benefit.yaml"
+    VacanciesBenefit:
+      $ref: "./components/models/vacancies_benefit.yaml"
+    Language:
+      $ref: "./components/models/language.yaml"
+    VacanciesLanguage:
+      $ref: "./components/models/vacancies_language.yaml"
+    ComplementaryFormation:
+      $ref: "./components/models/complementary_formation.yaml"

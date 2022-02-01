@@ -1,0 +1,156 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      title: 
+        type: string
+        description: Título
+      slug: 
+        type: string
+        description: slug da vaga
+      created_at: 
+        type: datetime
+        description: Data de criação
+      published_at: 
+        type: datetime
+        description: Data de publicação
+      republished_at: 
+        type: datetime
+        description: Data de republicação
+      forward_at: 
+        type: datetime
+        description: Data de encaminhamento
+      close_on: 
+        type: datetime
+        description: Data de fechamento
+      exclusive_pcd:
+        type: boolean
+        description: Vaga apenas PCD
+      description:
+        type: string
+        description: Descrição da vaga
+      working_journey:
+        type: string
+        description: Jornada de trabalho
+      released:
+        type: boolean
+        description: Vaga lançada
+      show_progress_to_candidates:
+        type: boolean
+        description: Vaga exibe progresso para candidatos
+      available_for_change:
+        type: boolean
+        description: Disponível para mudança
+      available_for_travel:
+        type: boolean
+        description: Disponível para viagem
+      available_for_homeoffice:
+        type: boolean
+        description: Disponível para Homeoffice
+      refusal_reason:
+        type: string
+        description: Razão para não aprovação da vaga
+      educational_level:
+        type: string
+        description: Nível educacional
+        enum: 
+          - ensino_fundamental
+          - ensino_medio
+          - ensino_medio_tecnico
+          - tecnico
+          - graduacao
+          - pos
+          - mba
+          - doutorado
+          - mestrado  
+      educational_level_status:
+        type: string
+        description: Status do nível educacional
+        enum: 
+          - cursando
+          - completo
+          - indiferente
+      cnh:
+        type: string
+        description: CNH
+        enum: 
+          - a
+          - b
+          - ab
+          - c
+          - ac
+          - d
+          - ad
+          - e
+          - ae
+          - acc
+      status: 
+        type: string
+        description: Status da vaga
+        enum: 
+          - customer_request
+          - draft
+          - waiting_approval
+          - ready_for_publish
+          - published
+          - stopped
+          - forwarded_by_customer
+          - finished
+          - canceled
+      salary: 
+        description: Salário 
+        oneOf:
+          - type: string
+            enum: 
+              - to_match
+          - type: float 
+      contracting_regime: 
+        description: Salário 
+        type: string
+        enum: 
+          - to_match
+          - aprendiz
+          - avaliacao_psicologica
+          - clt
+          - contrato_hibrido
+          - estagiario
+          - freelancer
+          - intermitente
+          - periodo_determinado
+          - pj
+          - profissional_independente_contrato_societario
+          - staff
+          - temporario
+          - terceiro
+  relationships:
+    type: object    
+    description: Relacionamentos do resource
+    properties:
+      pipeline: 
+        $ref: '#/components/schemas/relationship'
+      address: 
+        $ref: '#/components/schemas/relationship'
+      team: 
+        $ref: '#/components/schemas/relationship'
+      area_of_formation: 
+        $ref: '#/components/schemas/relationship'
+      level_of_interest:
+        $ref: '#/components/schemas/relationship'
+      area_of_interests:
+        $ref: '#/components/schemas/relationship'
+      skills:
+        $ref: '#/components/schemas/relationship'
+      vacancies_benefits:
+        $ref: '#/components/schemas/relationship'
+      vacancies_languages:
+        $ref: '#/components/schemas/relationship'
+      complementary_formations:
+        $ref: '#/components/schemas/relationship'

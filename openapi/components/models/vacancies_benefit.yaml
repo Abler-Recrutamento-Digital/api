@@ -1,0 +1,39 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      extensible: 
+        type: boolean
+        description: Extensível
+      value_type: 
+        type: string
+        description: Tipo de valor
+        enum: 
+          - value
+          - percentage
+      periodicity: 
+        type: string
+        description: Periodicidade
+        enum: 
+          - daily
+          - weekly
+          - monthly
+          - semiannual
+          - yearly
+      value:
+        type: float
+        description: Valor do benefício
+  relationships:
+      type: object    
+      description: Relacionamentos do resource
+      properties:
+        benefit: 
+          $ref: '#/components/schemas/relationship'

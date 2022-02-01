@@ -1,27 +1,26 @@
 type: object
 properties:
   data:
-    description: Vaga serializada no formato JSON API
     type: array
     items:
-      type: object
-    properties:
-      id:
-        type: integer
-        description: Id do resource
-      type:
-        type: string
-        description: Tipo do resource
-      attributes:
-        type: object
-        description: Atributos do resource
-      relationships:
-        type: object
-        description: Relacionamentos do resource
+      $ref: '#/components/schemas/Vacancy'
   included:
     type: array
     description: Dados serializados do included no formato JSON API
-    items: []
+    items: 
+      anyOf:
+        - $ref: '#/components/schemas/Pipeline'
+        - $ref: '#/components/schemas/Team'
+        - $ref: '#/components/schemas/AreaOfFormation'
+        - $ref: '#/components/schemas/LevelOfInterest'
+        - $ref: '#/components/schemas/OccupationArea'
+        - $ref: '#/components/schemas/AreaOfInterest'
+        - $ref: '#/components/schemas/Skill'
+        - $ref: '#/components/schemas/Benefit'
+        - $ref: '#/components/schemas/VacanciesBenefit'
+        - $ref: '#/components/schemas/Language'
+        - $ref: '#/components/schemas/VacanciesLanguage'
+        - $ref: '#/components/schemas/ComplementaryFormation'
   meta:
     type: object
     description: Resource extra info
