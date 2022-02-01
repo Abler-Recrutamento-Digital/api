@@ -1,25 +1,23 @@
 get:
   tags:
-    - Clientes
-  summary: Buscar
-  description: Busca de clientes
+    - Vagas
+  summary: Buscar candidato
+  description: Busca candidato da vaga pelo id
   security:
     - BearerToken: []
   parameters:
-    - in: query
-      name: include
-      description:
-        "Quando um relacionamento precisar estar presente no dado serializado do
-        cliente, apenas inclua usando esse parâmetro. Envie o `include` separado
-        por vírgula para retornar mais que um. Exemplo:
-        `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`"
+    - in: path
+      name: id
+      description: ID da vaga
+      required: true
       schema:
-        type: string
-        enum:
-          - address
-          - customer_analysts
-          - vacancies
-          - customer_contacts
+        type: integer
+    - in: path
+      name: candidate_id
+      description: ID do candidato
+      required: true
+      schema:
+        type: integer
   responses:
     '200':
       description: successful operation
@@ -33,7 +31,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/customer/customers.yaml"
+              $ref: "../../components/schemas/candidate/candidate.yaml"
     '401':
       description: Unauthorized
       content:
