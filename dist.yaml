@@ -127,6 +127,47 @@ paths:
         - BearerToken: []
       parameters:
         - in: query
+          name: q
+          description: Busca por query string
+          schema:
+            type: string
+        - in: query
+          name: created_at_from
+          description: Busca data de criação da vaga
+          schema:
+            type: string
+            format: DD/MM/YYYY
+        - in: query
+          name: created_at_to
+          description: Busca data de criação da vaga
+          schema:
+            type: string
+            format: DD/MM/YYYY
+        - in: query
+          name: forward_at_from
+          description: Busca data de encaminhamento da vaga
+          schema:
+            type: string
+            format: DD/MM/YYYY
+        - in: query
+          name: forward_at_to
+          description: Busca data de encaminhamento da vaga
+          schema:
+            type: string
+            format: DD/MM/YYYY
+        - in: query
+          name: finished_at_from
+          description: Busca data de fechamento da vaga
+          schema:
+            type: string
+            format: DD/MM/YYYY
+        - in: query
+          name: finished_at_to
+          description: Busca data de fechamento da vaga
+          schema:
+            type: string
+            format: DD/MM/YYYY
+        - in: query
           name: include
           description: >-
             Quando um relacionamento precisar estar presente no dado serializado
@@ -136,17 +177,19 @@ paths:
           schema:
             type: string
             enum:
+              - pipeline
+              - address
               - team
-              - company
               - area_of_formation
               - level_of_interest
               - area_of_interests
+              - area_of_interests.occupation_areas
               - skills
               - vacancies_benefits
+              - vacancies_benefits.benefit
               - vacancies_languages
+              - vacancies_languages.language
               - complementary_formations
-              - vacancy_analysts
-              - address
       responses:
         '200':
           description: successful operation
@@ -163,6 +206,76 @@ paths:
                   $ref: '#/components/schemas/vacancies'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /vacancies/{id}:
+    get:
+      tags:
+        - Vagas
+      summary: Buscar pelo id
+      description: Busca de vaga pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: Vacancy id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: include
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+          schema:
+            type: string
+            enum:
+              - pipeline
+              - address
+              - team
+              - area_of_formation
+              - level_of_interest
+              - area_of_interests
+              - area_of_interests.occupation_areas
+              - skills
+              - vacancies_benefits
+              - vacancies_benefits.benefit
+              - vacancies_languages
+              - vacancies_languages.language
+              - complementary_formations
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vacancy'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
           content:
             application/json:
               schema:
@@ -673,7 +786,7 @@ components:
       type: object
       properties:
         data:
-          description: Subscription serializada no formato JSON API
+          description: Vaga serializada no formato JSON API
           type: array
           items:
             type: object
@@ -703,25 +816,153 @@ components:
             type: vacancy
             attributes:
               title: Cargo
-              salary: 2500
-              educational_level: graduacao
-              contracting_regime: clt
-              available_for_travel: true
-              available_for_change: true
-              available_for_homeoffice: true
-              working_journey: true
-              quantity: 2
-              educational_level_status: completo
-              slug: vaga-slug
-              required_experience: true
-              status: published
-              released: true
-              requisition_type: expansao
-              notify_feedback: true
-              notify_invitation: true
+              slug: slug-vaga
+              created_at: '2021-04-05T15:30:33.948-03:00'
+              published_at: '2021-04-05T15:33:30.757-03:00'
+              republished_at: '2021-04-06T11:07:58.530-03:00'
+              forward_at: '2021-04-05T15:30:33.948-03:00'
+              close_on: '2021-04-05T15:30:33.948-03:00'
+              exclusive_pcd: false
               description: Descrição da vaga
-              created_at: '2022-01-06T16:22:39.230-03:00'
-              updated_at: '2022-01-06T16:22:39.230-03:00'
+              working_journey: Jornada de trabalho
+              released: true
+              show_progress_to_candidates: false
+              available_for_change: false
+              available_for_travel: true
+              available_for_homeoffice: true
+              refusal_reason: Razão da não aprovação
+              educational_level: graduacao
+              educational_level_status: indiferente
+              cnh: ab
+              status: published
+              salary: 4000
+              contracting_regime: clt
+            relationships:
+              pipeline:
+                data:
+                  id: 1
+                  type: pipeline
+              address:
+                data:
+                  id: 1
+                  type: address
+              team:
+                data:
+                  id: 1
+                  type: team
+              area_of_formation:
+                data:
+                  id: 1
+                  type: area_of_formation
+              level_of_interest:
+                data:
+                  id: 1
+                  type: level_of_interest
+              area_of_interests:
+                data:
+                  - id: 1
+                    type: area_of_interest
+              skills:
+                data:
+                  - id: 1
+                    type: skill
+              vacancies_benefits:
+                data:
+                  - id: 1
+                    type: vacancies_benefit
+              vacancies_languages:
+                data:
+                  - id: 1
+                    type: vacancies_language
+              complementary_formations:
+                data:
+                  - id: 1
+                    type: complementary_formation
+        included:
+          - id: 1
+            type: pipeline
+            attributes:
+              feedback: Feedback
+              finished: false
+              feedback_option: opcao feedback
+              contact_name: Nome do contato
+              contact_email: email@contato
+          - id: 1
+            type: team
+            attributes:
+              name: Time
+          - id: 1
+            type: area_of_formation
+            attributes:
+              name: Curso indiferente
+          - id: 1
+            type: level_of_interest
+            attributes:
+              name: Analista
+          - id: 1
+            type: occupation_area
+            attributes:
+              name: Administração
+          - id: 1
+            type: area_of_interest
+            attributes:
+              name: Tecnologia da Informação
+            relationships:
+              occupation_areas:
+                data:
+                  - id: 1
+                    type: occupation_area
+          - id: 1
+            type: skill
+            attributes:
+              name: Skill
+          - id: 1
+            type: benefit
+            attributes:
+              name: Benefício
+              has_value: false
+          - id: 1
+            type: vacancies_benefit
+            attributes:
+              extensible: false
+              value_type: valor
+              periodicity: mensal
+              value: 0.5
+            relationships:
+              benefit:
+                data:
+                  id: 1
+                  type: benefit
+          - id: 1
+            type: language
+            attributes:
+              name: Inglês
+          - id: 1
+            type: vacancies_language
+            attributes:
+              required: true
+              minimum_level: iniciante
+            relationships:
+              language:
+                data:
+                  id: '19'
+                  type: language
+          - id: 1
+            type: complementary_formation
+            attributes:
+              name: Informação complementar
+          - id: 1
+            type: address
+            attributes:
+              cep: 00000-00
+              street: Rua
+              number: 0
+              complement: Complemento
+              neighborhood: Bairro
+              country: País
+              city_name: Cidade
+              state_name: Estado
+              state_abbreviation: SC
         meta:
           count: 1
           items: 1
@@ -729,6 +970,185 @@ components:
           prev: null
           next: null
           last: 1
+    vacancy:
+      type: object
+      properties:
+        data:
+          description: Vaga serializada no formato JSON API
+          type: object
+          properties:
+            id:
+              type: integer
+              description: Id do resource
+            type:
+              type: string
+              description: Tipo do resource
+            attributes:
+              type: object
+              description: Atributos do resource
+            relationships:
+              type: object
+              description: Relacionamentos do resource
+        included:
+          type: array
+          description: Dados serializados do included no formato JSON API
+          items: []
+        meta:
+          type: object
+          description: Resource extra info
+      example:
+        data:
+          id: 1
+          type: vacancy
+          attributes:
+            title: Cargo
+            slug: slug-vaga
+            created_at: '2021-04-05T15:30:33.948-03:00'
+            published_at: '2021-04-05T15:33:30.757-03:00'
+            republished_at: '2021-04-06T11:07:58.530-03:00'
+            forward_at: '2021-04-05T15:30:33.948-03:00'
+            close_on: '2021-04-05T15:30:33.948-03:00'
+            exclusive_pcd: false
+            description: Descrição da vaga
+            working_journey: Jornada de trabalho
+            released: true
+            show_progress_to_candidates: false
+            available_for_change: false
+            available_for_travel: true
+            available_for_homeoffice: true
+            refusal_reason: Razão da não aprovação
+            educational_level: graduacao
+            educational_level_status: indiferente
+            cnh: ab
+            status: published
+            salary: 4000
+            contracting_regime: clt
+          relationships:
+            pipeline:
+              data:
+                id: 1
+                type: pipeline
+            address:
+              data:
+                id: 1
+                type: address
+            team:
+              data:
+                id: 1
+                type: team
+            area_of_formation:
+              data:
+                id: 1
+                type: area_of_formation
+            level_of_interest:
+              data:
+                id: 1
+                type: level_of_interest
+            area_of_interests:
+              data:
+                - id: 1
+                  type: area_of_interest
+            skills:
+              data:
+                - id: 1
+                  type: skill
+            vacancies_benefits:
+              data:
+                - id: 1
+                  type: vacancies_benefit
+            vacancies_languages:
+              data:
+                - id: 1
+                  type: vacancies_language
+            complementary_formations:
+              data:
+                - id: 1
+                  type: complementary_formation
+        included:
+          - id: 1
+            type: pipeline
+            attributes:
+              feedback: Feedback
+              finished: false
+              feedback_option: opcao feedback
+              contact_name: Nome do contato
+              contact_email: email@contato
+          - id: 1
+            type: team
+            attributes:
+              name: Time
+          - id: 1
+            type: area_of_formation
+            attributes:
+              name: Curso indiferente
+          - id: 1
+            type: level_of_interest
+            attributes:
+              name: Analista
+          - id: 1
+            type: occupation_area
+            attributes:
+              name: Administração
+          - id: 1
+            type: area_of_interest
+            attributes:
+              name: Tecnologia da Informação
+            relationships:
+              occupation_areas:
+                data:
+                  - id: 1
+                    type: occupation_area
+          - id: 1
+            type: skill
+            attributes:
+              name: Skill
+          - id: 1
+            type: benefit
+            attributes:
+              name: Benefício
+              has_value: false
+          - id: 1
+            type: vacancies_benefit
+            attributes:
+              extensible: false
+              value_type: valor
+              periodicity: mensal
+              value: 0.5
+            relationships:
+              benefit:
+                data:
+                  id: 1
+                  type: benefit
+          - id: 1
+            type: language
+            attributes:
+              name: Inglês
+          - id: 1
+            type: vacancies_language
+            attributes:
+              required: true
+              minimum_level: iniciante
+            relationships:
+              language:
+                data:
+                  id: '19'
+                  type: language
+          - id: 1
+            type: complementary_formation
+            attributes:
+              name: Informação complementar
+          - id: 1
+            type: address
+            attributes:
+              cep: 00000-00
+              street: Rua
+              number: 0
+              complement: Complemento
+              neighborhood: Bairro
+              country: País
+              city_name: Cidade
+              state_name: Estado
+              state_abbreviation: SC
     candidate:
       type: object
       properties:
