@@ -1,6 +1,6 @@
 get:
   tags:
-    - Webhook Subscriptions
+    - Webhook
   summary: Buscar pelo id
   description: Busca de subscription pelo id
   security:
@@ -46,7 +46,7 @@ get:
             $ref: "../../components/schemas/response/api.yaml"
 patch:
   tags:
-    - Webhook Subscriptions
+    - Webhook
   summary: Atualizar pelo id
   description: Atualização de subscription pelo id
   security:
@@ -121,7 +121,7 @@ patch:
             $ref: "../../components/schemas/response/api.yaml"
 delete:
   tags:
-    - Webhook Subscriptions
+    - Webhook
   summary: Deletar pelo id
   description: Deletar subscription pelo id
   security:

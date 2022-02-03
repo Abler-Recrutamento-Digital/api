@@ -1,6 +1,6 @@
 get:
   tags:
-    - Webhook Subscriptions
+    - Webhook
   summary: Buscar
   description: Busca de subscriptions
   security:
@@ -33,7 +33,7 @@ get:
             $ref: "../../components/schemas/response/api.yaml"
 post:
   tags:
-    - Webhook Subscriptions
+    - Webhook
   summary: Cadastrar
   description: Cadastrar webhook subscription
   security:

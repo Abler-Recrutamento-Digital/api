@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Abler API
-  description: "# Abler API\n\nEsse é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar clientes\n- **Vagas**\n  - Bucas vagas\n  - Buscas candidatos\n- **Webhook Subscriptions**\n  - Buscar subscriptions\n  - Cadastrar subscriptions\n  - Atualizar subscriptions\n  - Deletar subscriptions\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t     |Intervalo    |\n|---\t              |---\t           |---\t         |\n|IP   \t            | 10 requisições | 10 segundos |\n\n"
+  description: "# Abler API\n\nEssa é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar clientes\n- **Vagas**\n  - Buscas de vagas\n  - Buscas de candidatos relacionados a vagas\n- **Webhook Subscriptions**\n  - Buscar subscriptions\n  - Cadastrar subscriptions\n  - Atualizar subscriptions\n  - Deletar subscriptions\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t     |Intervalo    |\n|---\t              |---\t           |---\t         |\n|IP   \t            | 10 requisições | 10 segundos |\n\n"
   version: 1.0.0
 servers:
   - url: https://empresa.abler.com.br/api/public/v1
@@ -10,8 +10,231 @@ tags:
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
     description: Rotas relacionadas as vagas de sua empresa
-  - name: Webhook Subscriptions
-    description: Rotas relacionadas aos webhooks subscriptions
+  - name: Webhook
+    description: ' Você pode se inscrever em um dos eventos disponíveis e a Abler notificará quando este evento for disparado<br> <ol> <li>Use os endpoints de webhook_subscription para registrar seu endpoint;</li> <li>Quando o evento for disparado, a Abler irá enviar um POST para o endpoint registrado naquele evento.</li> </ol> Em seguida serão exibidos a lista de eventos disponíveis.     '
+webhooks:
+  vacancy_created:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de criação de Vaga
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - vacancy_created
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  vacancy_updated:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de atualização da vaga
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - vacancy_updated
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  vacancy_deleted:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de exclusão da vaga
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - vacancy_deleted
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  candidature_created:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de criação de candidatura
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                candidate_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - candidature_created
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  candidature_updated:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de atualização de candidatura
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                candidate_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - candidature_updated
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  candidature_disqualified:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de desqualificação de candidato
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                candidate_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - candidature_disqualified
+                disqualified_at:
+                  type: datetime
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  candidature_requalified:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de requalificação de candidato
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                candidate_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - candidature_requalified
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  candidate_hired:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de contratação de candidato
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                candidate_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - candidate_hired
+                salary:
+                  type: float
+                contracting_regime:
+                  type: string
+                  enum:
+                    - aprendiz
+                    - avaliacao_psicologica
+                    - clt
+                    - contrato_hibrido
+                    - estagiario
+                    - freelancer
+                    - intermitente
+                    - periodo_determinado
+                    - pj
+                    - profissional_independente_contrato_societario
+                    - staff
+                    - temporario
+                    - terceiro
+                requisition_type:
+                  type: string
+                  enum:
+                    - administracao_contrato
+                    - alocacao
+                    - banco_talentos
+                    - expansao
+                    - hunting
+                    - reposicao
+                    - substituicao
+                cpf_substituted:
+                  type: string
+                reason_of_demand:
+                  type: string
+                candidate_name:
+                  type: string
+                candidate_email:
+                  type: string
+                candidate_cell_phone:
+                  type: string
+                  format: (00) 00000-0000
+                initial_date:
+                  type: date
+                  format: YYYY-MM-DD
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
 paths:
   /customers:
     get:
@@ -33,9 +256,17 @@ paths:
             type: string
             enum:
               - address
-              - customer_analysts
-              - vacancies
               - customer_contacts
+        - in: query
+          name: per_page
+          description: Registros por página
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Página
+          schema:
+            type: string
       responses:
         '200':
           description: successful operation
@@ -82,8 +313,6 @@ paths:
             type: string
             enum:
               - address
-              - customer_analysts
-              - vacancies
               - customer_contacts
       responses:
         '200':
@@ -168,6 +397,21 @@ paths:
             type: string
             format: DD/MM/YYYY
         - in: query
+          name: status
+          description: Status da vaga
+          schema:
+            type: string
+            enum:
+              - customer_request
+              - draft
+              - waiting_approval
+              - ready_for_publish
+              - published
+              - stopped
+              - forwarded_by_customer
+              - finished
+              - canceled
+        - in: query
           name: include
           description: >-
             Quando um relacionamento precisar estar presente no dado serializado
@@ -190,6 +434,18 @@ paths:
               - vacancies_languages
               - vacancies_languages.language
               - complementary_formations
+              - vacancy_admission_info
+              - customer
+        - in: query
+          name: per_page
+          description: Registros por página
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Página
+          schema:
+            type: string
       responses:
         '200':
           description: successful operation
@@ -307,6 +563,17 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: include
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+          schema:
+            type: string
+            enum:
+              - candidates_pipelines
       responses:
         '200':
           description: successful operation
@@ -355,6 +622,16 @@ paths:
           schema:
             type: integer
         - in: query
+          name: per_page
+          description: Registros por página
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Página
+          schema:
+            type: string
+        - in: query
           name: name
           description: Filtrar os candidatos pelo nome
           schema:
@@ -364,6 +641,17 @@ paths:
           description: Filtrar os candidatos pelo e-mail
           schema:
             type: string
+        - in: query
+          name: include
+          description: >-
+            Quando um relacionamento precisar estar presente no dado serializado
+            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado por vírgula para retornar mais que um. Exemplo:
+            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+          schema:
+            type: string
+            enum:
+              - candidates_pipelines
       responses:
         '200':
           description: successful operation
@@ -393,7 +681,7 @@ paths:
   /subscriptions:
     get:
       tags:
-        - Webhook Subscriptions
+        - Webhook
       summary: Buscar
       description: Busca de subscriptions
       security:
@@ -426,7 +714,7 @@ paths:
                 $ref: '#/components/schemas/api'
     post:
       tags:
-        - Webhook Subscriptions
+        - Webhook
       summary: Cadastrar
       description: Cadastrar webhook subscription
       security:
@@ -489,7 +777,7 @@ paths:
   /subscriptions/{id}:
     get:
       tags:
-        - Webhook Subscriptions
+        - Webhook
       summary: Buscar pelo id
       description: Busca de subscription pelo id
       security:
@@ -535,7 +823,7 @@ paths:
                 $ref: '#/components/schemas/api'
     patch:
       tags:
-        - Webhook Subscriptions
+        - Webhook
       summary: Atualizar pelo id
       description: Atualização de subscription pelo id
       security:
@@ -610,7 +898,7 @@ paths:
                 $ref: '#/components/schemas/api'
     delete:
       tags:
-        - Webhook Subscriptions
+        - Webhook
       summary: Deletar pelo id
       description: Deletar subscription pelo id
       security:
@@ -662,6 +950,48 @@ components:
       description: 'Authorization: Bearer {JWT}'
       bearerFormat: JWT
   schemas:
+    Customer:
+      $ref: '#/components/schemas/customer-2'
+    Address:
+      $ref: '#/components/schemas/address'
+    CustomerContact:
+      $ref: '#/components/schemas/customer_contact'
+    Candidate:
+      $ref: '#/components/schemas/candidate-2'
+    Vacancy:
+      $ref: '#/components/schemas/vacancy-2'
+    Pipeline:
+      $ref: '#/components/schemas/pipeline'
+    Relationship:
+      $ref: '#/components/schemas/relationship'
+    Team:
+      $ref: '#/components/schemas/team'
+    AreaOfFormation:
+      $ref: '#/components/schemas/area_of_formation'
+    LevelOfInterest:
+      $ref: '#/components/schemas/level_of_interest'
+    OccupationArea:
+      $ref: '#/components/schemas/occupation_area'
+    AreaOfInterest:
+      $ref: '#/components/schemas/area_of_interest'
+    Skill:
+      $ref: '#/components/schemas/skill'
+    Benefit:
+      $ref: '#/components/schemas/benefit'
+    VacanciesBenefit:
+      $ref: '#/components/schemas/vacancies_benefit'
+    Language:
+      $ref: '#/components/schemas/language'
+    VacanciesLanguage:
+      $ref: '#/components/schemas/vacancies_language'
+    ComplementaryFormation:
+      $ref: '#/components/schemas/complementary_formation'
+    WebhookSubscription:
+      $ref: '#/components/schemas/webhook_subscription-2'
+    VacancyAdmissionInfo:
+      $ref: '#/components/schemas/vacancy_admission_info'
+    CandidatesPipeline:
+      $ref: '#/components/schemas/candidates_pipeline'
     customers:
       type: object
       properties:
@@ -669,24 +999,15 @@ components:
           description: Cliente serializado no formato JSON API
           type: array
           items:
-            type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+            oneOf:
+              - $ref: '#/components/schemas/Customer'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
-          items: []
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/Address'
+              - $ref: '#/components/schemas/CustomerContact'
         meta:
           type: object
           description: Resource extra info
@@ -704,8 +1025,6 @@ components:
               updated_at: '2022-01-07T14:30:19.403-03:00'
             relationships:
               address: {}
-              customer_analysts: {}
-              vacancies: {}
               customer_contacts: {}
           - id: 2
             type: customer
@@ -719,8 +1038,6 @@ components:
               updated_at: '2022-01-07T14:30:19.403-03:00'
             relationships:
               address: {}
-              customer_analysts: {}
-              vacancies: {}
               customer_contacts: {}
         meta:
           count: 2
@@ -746,25 +1063,15 @@ components:
       type: object
       properties:
         data:
-          description: Cliente serializado no formato JSON API
-          type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+          oneOf:
+            - $ref: '#/components/schemas/Customer'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
-          items: []
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/Address'
+              - $ref: '#/components/schemas/CustomerContact'
       example:
         data:
           id: 1
@@ -779,34 +1086,32 @@ components:
             updated_at: '2022-01-07T14:30:19.403-03:00'
           relationships:
             address: {}
-            customer_analysts: {}
-            vacancies: {}
             customer_contacts: {}
     vacancies:
       type: object
       properties:
         data:
-          description: Vaga serializada no formato JSON API
           type: array
           items:
-            type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+            $ref: '#/components/schemas/Vacancy'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
-          items: []
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/Pipeline'
+              - $ref: '#/components/schemas/Team'
+              - $ref: '#/components/schemas/AreaOfFormation'
+              - $ref: '#/components/schemas/LevelOfInterest'
+              - $ref: '#/components/schemas/OccupationArea'
+              - $ref: '#/components/schemas/AreaOfInterest'
+              - $ref: '#/components/schemas/Skill'
+              - $ref: '#/components/schemas/Benefit'
+              - $ref: '#/components/schemas/VacanciesBenefit'
+              - $ref: '#/components/schemas/Language'
+              - $ref: '#/components/schemas/VacanciesLanguage'
+              - $ref: '#/components/schemas/ComplementaryFormation'
+              - $ref: '#/components/schemas/VacancyAdmissionInfo'
         meta:
           type: object
           description: Resource extra info
@@ -835,6 +1140,7 @@ components:
               educational_level_status: indiferente
               cnh: ab
               status: published
+              additional_info: null
               salary: 4000
               contracting_regime: clt
             relationships:
@@ -878,6 +1184,14 @@ components:
                 data:
                   - id: 1
                     type: complementary_formation
+              vacancy_admission_info:
+                data:
+                  id: 1
+                  type: vacancy_admission_info
+              customer:
+                data:
+                  id: 1
+                  type: customer
         included:
           - id: 1
             type: pipeline
@@ -963,6 +1277,28 @@ components:
               city_name: Cidade
               state_name: Estado
               state_abbreviation: SC
+          - id: 1
+            type: customer
+            attributes:
+              corporate_name: Razão social
+              trading_name: Nome Fantasia
+              cnpj: 42434481000193
+              active: true
+              additional_info: Informações adicionais
+              created_at: '2022-01-07T14:30:19.403-03:00'
+              updated_at: '2022-01-07T14:30:19.403-03:00'
+            relationships:
+              address: {}
+              customer_contacts: {}
+          - id: 1
+            type: vacancy_admission_info
+            attributes:
+              cost_center: null
+              contract_time: null
+              reason_of_demand: Motivo
+              name_substituted: null
+              cpf_substituted: null
+              license: ferias
         meta:
           count: 1
           items: 1
@@ -974,25 +1310,26 @@ components:
       type: object
       properties:
         data:
-          description: Vaga serializada no formato JSON API
-          type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+          oneOf:
+            - $ref: '#/components/schemas/Vacancy'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
-          items: []
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/Pipeline'
+              - $ref: '#/components/schemas/Team'
+              - $ref: '#/components/schemas/AreaOfFormation'
+              - $ref: '#/components/schemas/LevelOfInterest'
+              - $ref: '#/components/schemas/OccupationArea'
+              - $ref: '#/components/schemas/AreaOfInterest'
+              - $ref: '#/components/schemas/Skill'
+              - $ref: '#/components/schemas/Benefit'
+              - $ref: '#/components/schemas/VacanciesBenefit'
+              - $ref: '#/components/schemas/Language'
+              - $ref: '#/components/schemas/VacanciesLanguage'
+              - $ref: '#/components/schemas/ComplementaryFormation'
+              - $ref: '#/components/schemas/VacancyAdmissionInfo'
         meta:
           type: object
           description: Resource extra info
@@ -1021,6 +1358,7 @@ components:
             educational_level_status: indiferente
             cnh: ab
             status: published
+            additional_info: null
             salary: 4000
             contracting_regime: clt
           relationships:
@@ -1064,6 +1402,14 @@ components:
               data:
                 - id: 1
                   type: complementary_formation
+            vacancy_admission_info:
+              data:
+                id: 1
+                type: vacancy_admission_info
+            customer:
+              data:
+                id: 1
+                type: customer
         included:
           - id: 1
             type: pipeline
@@ -1149,29 +1495,40 @@ components:
               city_name: Cidade
               state_name: Estado
               state_abbreviation: SC
+          - id: 1
+            type: customer
+            attributes:
+              corporate_name: Razão social
+              trading_name: Nome Fantasia
+              cnpj: 42434481000193
+              active: true
+              additional_info: Informações adicionais
+              created_at: '2022-01-07T14:30:19.403-03:00'
+              updated_at: '2022-01-07T14:30:19.403-03:00'
+            relationships:
+              address: {}
+              customer_contacts: {}
+          - id: 1
+            type: vacancy_admission_info
+            attributes:
+              cost_center: null
+              contract_time: null
+              reason_of_demand: Motivo
+              name_substituted: null
+              cpf_substituted: null
+              license: ferias
     candidate:
       type: object
       properties:
         data:
-          description: Candidato serializado no formato JSON API
-          type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+          oneOf:
+            - $ref: '#/components/schemas/Candidate'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
-          items: []
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/CandidatesPipeline'
       example:
         data:
           id: 4
@@ -1184,27 +1541,16 @@ components:
       type: object
       properties:
         data:
-          description: Candidato serializado no formato JSON API
           type: array
           items:
-            type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+            oneOf:
+              - $ref: '#/components/schemas/Candidate'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
-          items: []
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/CandidatesPipeline'
         meta:
           type: object
           description: Resource extra info
@@ -1236,20 +1582,8 @@ components:
           description: Webhook Subscription serializada no formato JSON API
           type: array
           items:
-            type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+            oneOf:
+              - $ref: '#/components/schemas/WebhookSubscription'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
@@ -1280,21 +1614,8 @@ components:
       type: object
       properties:
         data:
-          description: Webhook Subscription serializada no formato JSON API
-          type: object
-          properties:
-            id:
-              type: integer
-              description: Id do resource
-            type:
-              type: string
-              description: Tipo do resource
-            attributes:
-              type: object
-              description: Atributos do resource
-            relationships:
-              type: object
-              description: Relacionamentos do resource
+          oneOf:
+            - $ref: '#/components/schemas/WebhookSubscription'
         included:
           type: array
           description: Dados serializados do included no formato JSON API
@@ -1306,3 +1627,677 @@ components:
           attributes:
             event: vacancy_created
             url: https://webhook.site/a679aac8-d684
+    customer-2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            corporate_name:
+              type: string
+              description: Razão social
+            trading_name:
+              type: string
+              description: Nome fantasia
+            cnpj:
+              type: string
+              description: CNPJ
+            active:
+              type: boolean
+              description: Ativo/Inativo
+            additional_info:
+              type: string
+              description: Informações adicionais
+            created_at:
+              type: datetime
+              description: Data de criação
+            updated_at:
+              type: datetime
+              description: Data de atualização
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            address:
+              $ref: '#/components/schemas/relationship'
+            customer_contacts:
+              $ref: '#/components/schemas/relationship'
+    address:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            cep:
+              type: string
+              description: CEP
+            street:
+              type: string
+              description: Rua
+            number:
+              type: integer
+              description: Número
+            complement:
+              type: string
+              description: Complemento
+            neighborhood:
+              type: string
+              description: Bairro
+            country:
+              type: string
+              description: País
+            city_name:
+              type: string
+              description: Cidade
+            state_name:
+              type: string
+              description: Estado
+            state_abbreviation:
+              type: string
+              description: Abreviação do estado
+    customer_contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+            email:
+              type: string
+              description: Email
+            phone:
+              type: string
+              description: Telefone
+            role:
+              type: string
+              description: Cargo
+            active:
+              type: boolean
+              description: Ativo/Inativo
+            allow_access:
+              type: boolean
+              description: Possui acesso/Não possui acesso
+            created_at:
+              type: datetime
+              description: Data de criação
+            updated_at:
+              type: datetime
+              description: Data de alteração
+    candidate-2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+            email:
+              type: string
+              description: email
+            phone:
+              type: string
+              description: telefone do candidato
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            candidates_pipelines:
+              $ref: '#/components/schemas/relationship'
+    vacancy-2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            title:
+              type: string
+              description: Título
+            slug:
+              type: string
+              description: slug da vaga
+            created_at:
+              type: datetime
+              description: Data de criação
+            published_at:
+              type: datetime
+              description: Data de publicação
+            republished_at:
+              type: datetime
+              description: Data de republicação
+            forward_at:
+              type: datetime
+              description: Data de encaminhamento
+            close_on:
+              type: datetime
+              description: Data de fechamento
+            exclusive_pcd:
+              type: boolean
+              description: Vaga apenas PCD
+            description:
+              type: string
+              description: Descrição da vaga
+            working_journey:
+              type: string
+              description: Jornada de trabalho
+            released:
+              type: boolean
+              description: Vaga lançada
+            show_progress_to_candidates:
+              type: boolean
+              description: Vaga exibe progresso para candidatos
+            available_for_change:
+              type: boolean
+              description: Disponível para mudança
+            available_for_travel:
+              type: boolean
+              description: Disponível para viagem
+            available_for_homeoffice:
+              type: boolean
+              description: Disponível para Homeoffice
+            refusal_reason:
+              type: string
+              description: Razão para não aprovação da vaga
+            educational_level:
+              type: string
+              description: Nível educacional
+              enum:
+                - ensino_fundamental
+                - ensino_medio
+                - ensino_medio_tecnico
+                - tecnico
+                - graduacao
+                - pos
+                - mba
+                - doutorado
+                - mestrado
+            educational_level_status:
+              type: string
+              description: Status do nível educacional
+              enum:
+                - cursando
+                - completo
+                - indiferente
+            cnh:
+              type: string
+              description: CNH
+              enum:
+                - a
+                - b
+                - ab
+                - c
+                - ac
+                - d
+                - ad
+                - e
+                - ae
+                - acc
+            status:
+              type: string
+              description: Status da vaga
+              enum:
+                - customer_request
+                - draft
+                - waiting_approval
+                - ready_for_publish
+                - published
+                - stopped
+                - forwarded_by_customer
+                - finished
+                - canceled
+            additional_info:
+              type: string
+              description: Informações adicionais
+            salary:
+              description: Salário
+              oneOf:
+                - type: string
+                  enum:
+                    - to_match
+                - type: float
+            contracting_regime:
+              description: Salário
+              type: string
+              enum:
+                - to_match
+                - aprendiz
+                - avaliacao_psicologica
+                - clt
+                - contrato_hibrido
+                - estagiario
+                - freelancer
+                - intermitente
+                - periodo_determinado
+                - pj
+                - profissional_independente_contrato_societario
+                - staff
+                - temporario
+                - terceiro
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            pipeline:
+              $ref: '#/components/schemas/relationship'
+            address:
+              $ref: '#/components/schemas/relationship'
+            team:
+              $ref: '#/components/schemas/relationship'
+            area_of_formation:
+              $ref: '#/components/schemas/relationship'
+            level_of_interest:
+              $ref: '#/components/schemas/relationship'
+            area_of_interests:
+              $ref: '#/components/schemas/relationship'
+            skills:
+              $ref: '#/components/schemas/relationship'
+            vacancies_benefits:
+              $ref: '#/components/schemas/relationship'
+            vacancies_languages:
+              $ref: '#/components/schemas/relationship'
+            complementary_formations:
+              $ref: '#/components/schemas/relationship'
+    pipeline:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            feedback:
+              type: string
+              description: Feedback
+            finished:
+              type: boolean
+              description: Processo finalizado
+            feedback_option:
+              type: string
+              description: Opções do feedback
+              enum:
+                - conhecimento_testes
+                - desenvoltura_processo
+                - experiencia_atividades
+                - experiencia_segmento
+                - fluencia_idioma
+                - formacao_diferenciada
+                - maior_aderencia
+            contact_name:
+              type: string
+              description: Contato
+            contact_email:
+              type: string
+              description: Email do contato
+    relationship:
+      type: object
+      properties:
+        data:
+          oneOf:
+            - type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID do relacionamento
+                type:
+                  type: string
+                  description: Tipo do relacionamento
+            - type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID do relacionamento
+                  type:
+                    type: string
+                    description: Tipo do relacionamento
+    team:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Descrição do time
+    area_of_formation:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    level_of_interest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    occupation_area:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    area_of_interest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            occupation_areas:
+              $ref: '#/components/schemas/relationship'
+    skill:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    benefit:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+            has_value:
+              type: string
+              description: Benefício possui valor
+    vacancies_benefit:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            extensible:
+              type: boolean
+              description: Extensível
+            value_type:
+              type: string
+              description: Tipo de valor
+              enum:
+                - value
+                - percentage
+            periodicity:
+              type: string
+              description: Periodicidade
+              enum:
+                - daily
+                - weekly
+                - monthly
+                - semiannual
+                - yearly
+            value:
+              type: float
+              description: Valor do benefício
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            benefit:
+              $ref: '#/components/schemas/relationship'
+    language:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    vacancies_language:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            required:
+              type: boolean
+              description: Obrigatório
+            minimum_level:
+              type: string
+              description: Nível mínimo
+              enum:
+                - iniciante
+                - basico
+                - intermediario
+                - independente
+                - proficiencia_operacional
+                - dominio_pleno
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            language:
+              $ref: '#/components/schemas/relationship'
+    complementary_formation:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    webhook_subscription-2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            event:
+              type: string
+              description: Evento
+            url:
+              type: string
+              description: URL cadastrada
+    vacancy_admission_info:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            cost_center:
+              type: string
+              description: Centro de custo
+            contract_time:
+              type: string
+              description: Tempo de contrato
+            reason_of_demand:
+              type: string
+              description: Razão da demanda
+            name_substituted:
+              type: string
+              description: Nome do substituído
+            cpf_substituted:
+              type: string
+              description: CPF do substituído
+            license:
+              type: string
+              description: Motivo de reposição/substituição
+              enum:
+                - desligamento
+                - ferias
+                - medica
+                - maternidade
+    candidates_pipeline:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            salary:
+              type: float
+              description: Salário
+            hired_at:
+              type: datetime
+              description: Data de contratação
+            initial_date:
+              type: date
+              description: Data inicial de contrato
+            info:
+              type: string
+              description: Informações adicionais
+            disqualified_at:
+              type: datetime
+              description: Data de desqualificação

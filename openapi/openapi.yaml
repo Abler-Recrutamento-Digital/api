@@ -11,7 +11,7 @@ tags:
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
     description: Rotas relacionadas as vagas de sua empresa
-  - name: Webhook Subscriptions
+  - name: Webhook
     description: 
       "
       Você pode se inscrever em um dos eventos disponíveis e a Abler notificará quando este evento for disparado<br>
@@ -19,60 +19,216 @@ tags:
         <li>Use os endpoints de webhook_subscription para registrar seu endpoint;</li>
         <li>Quando o evento for disparado, a Abler irá enviar um POST para o endpoint registrado naquele evento.</li>
       </ol>
-      Lista de eventos:
-      <table>
-        <thead>
-          <tr>
-            <th>Evento</th>
-            <th>Identificador</th>
-            <th>Parâmetros enviados</th>            
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Criação de Vaga</td>
-            <td>vacancy_created</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'event': 'vacancy_created' }</td>
-          </tr>
-          <tr>
-            <td>Atualização de Vaga</td>
-            <td>vacancy_updated</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'event': 'vacancy_updated' }</td>
-          </tr>
-          <tr>
-            <td>Exclusão de Vaga</td>
-            <td>vacancy_deleted</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'event': 'vacancy_deleted' }</td>
-          </tr>
-          <tr>
-            <td>Criação de Candidatura</td>
-            <td>candidature_created</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_created' }</td>
-          </tr>
-          <tr>
-            <td>Atualização de Candidatura</td>
-            <td>candidature_updated</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_updated' }</td>
-          </tr>
-          <tr>
-            <td>Candidato desqualificado</td>
-            <td>candidature_disqualified</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_disqualified' }</td>
-          </tr>
-          <tr>
-            <td>Candidato requalificado</td>
-            <td>candidature_requalified</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_requalified' }</td>
-          </tr>
-          <tr>
-            <td>Candidato contratado</td>
-            <td>candidate_hired</td>
-            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidate_hired' }</td>
-          </tr>
-        </tbody>
-      </table>
-      <b>Obs:</b> O código de resposta deve ser <b>200</b> para confirmarmos como sucesso e não precisar reenviá-lo.
+      Em seguida serão exibidos a lista de eventos disponíveis.    
       "
+
+webhooks:  
+  vacancy_created:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de criação de Vaga
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer                  
+                event:
+                  type: string
+                  enum: 
+                   - vacancy_created                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  vacancy_updated:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de atualização da vaga
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer                  
+                event:
+                  type: string
+                  enum: 
+                   - vacancy_updated                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  vacancy_deleted:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de exclusão da vaga
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer                  
+                event:
+                  type: string
+                  enum: 
+                   - vacancy_deleted                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  candidature_created:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de criação de candidatura
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer  
+                candidate_id:
+                  type: integer  
+                event:
+                  type: string
+                  enum: 
+                   - candidature_created                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  candidature_updated:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de atualização de candidatura
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer  
+                candidate_id:
+                  type: integer  
+                event:
+                  type: string
+                  enum: 
+                   - candidature_updated                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  candidature_disqualified:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de desqualificação de candidato
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer  
+                candidate_id:
+                  type: integer  
+                event:
+                  type: string
+                  enum: 
+                   - candidature_disqualified   
+                disqualified_at:
+                  type: datetime
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  candidature_requalified:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de requalificação de candidato
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer  
+                candidate_id:
+                  type: integer  
+                event:
+                  type: string
+                  enum: 
+                   - candidature_requalified                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  candidate_hired:  
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de contratação de candidato
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer  
+                candidate_id:
+                  type: integer  
+                event:
+                  type: string
+                  enum: 
+                   - candidate_hired    
+                salary: 
+                  type: float
+                contracting_regime: 
+                  type: string
+                  enum:                     
+                    - aprendiz
+                    - avaliacao_psicologica
+                    - clt
+                    - contrato_hibrido
+                    - estagiario
+                    - freelancer
+                    - intermitente
+                    - periodo_determinado
+                    - pj
+                    - profissional_independente_contrato_societario
+                    - staff
+                    - temporario
+                    - terceiro
+                requisition_type: 
+                  type: string
+                  enum:                     
+                    - administracao_contrato
+                    - alocacao
+                    - banco_talentos
+                    - expansao
+                    - hunting
+                    - reposicao
+                    - substituicao
+                cpf_substituted: 
+                  type: string
+                reason_of_demand: 
+                  type: string
+                candidate_name: 
+                  type: string
+                candidate_email: 
+                  type: string
+                candidate_cell_phone: 
+                  type: string
+                  format: (00) 00000-0000
+                initial_date: 
+                  type: date
+                  format: YYYY-MM-DD                  
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
 paths:
   /customers:
     $ref: paths/customers/index.yaml  
