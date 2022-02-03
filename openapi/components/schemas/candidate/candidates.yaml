@@ -5,6 +5,12 @@ properties:
     items:    
       oneOf:
         - $ref: '#/components/schemas/Candidate'
+  included:
+    type: array
+    description: Dados serializados do included no formato JSON API
+    items:
+      anyOf:
+        - $ref: '#/components/schemas/CandidatesPipeline'
   meta:
     type: object
     description: Resource extra info

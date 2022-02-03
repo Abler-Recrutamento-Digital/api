@@ -105,6 +105,9 @@ properties:
           - forwarded_by_customer
           - finished
           - canceled
+      additional_info:
+        type: string
+        description: Informações adicionais
       salary: 
         description: Salário 
         oneOf:

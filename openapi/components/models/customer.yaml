@@ -36,10 +36,6 @@ properties:
     description: Relacionamentos do resource
     properties:
       address: 
-        $ref: '#/components/schemas/relationship'
-      customer_analysts: 
-        $ref: '#/components/schemas/relationship'
-      vacancies: 
-        $ref: '#/components/schemas/relationship'
+        $ref: '#/components/schemas/relationship'     
       customer_contacts: 
         $ref: '#/components/schemas/relationship'

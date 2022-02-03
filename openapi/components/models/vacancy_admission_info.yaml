@@ -1,0 +1,35 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      cost_center: 
+        type: string
+        description: Centro de custo
+      contract_time: 
+        type: string
+        description: Tempo de contrato
+      reason_of_demand: 
+        type: string
+        description: Razão da demanda
+      name_substituted: 
+        type: string
+        description: Nome do substituído
+      cpf_substituted: 
+        type: string
+        description: CPF do substituído
+      license: 
+        type: string
+        description: Motivo de reposição/substituição
+        enum: 
+          - desligamento
+          - ferias
+          - medica
+          - maternidade

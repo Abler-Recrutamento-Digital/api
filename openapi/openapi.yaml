@@ -12,7 +12,67 @@ tags:
   - name: Vagas
     description: Rotas relacionadas as vagas de sua empresa
   - name: Webhook Subscriptions
-    description: Rotas relacionadas aos webhooks subscriptions
+    description: 
+      "
+      Você pode se inscrever em um dos eventos disponíveis e a Abler notificará quando este evento for disparado<br>
+      <ol>
+        <li>Use os endpoints de webhook_subscription para registrar seu endpoint;</li>
+        <li>Quando o evento for disparado, a Abler irá enviar um POST para o endpoint registrado naquele evento.</li>
+      </ol>
+      Lista de eventos:
+      <table>
+        <thead>
+          <tr>
+            <th>Evento</th>
+            <th>Identificador</th>
+            <th>Parâmetros enviados</th>            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Criação de Vaga</td>
+            <td>vacancy_created</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'event': 'vacancy_created' }</td>
+          </tr>
+          <tr>
+            <td>Atualização de Vaga</td>
+            <td>vacancy_updated</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'event': 'vacancy_updated' }</td>
+          </tr>
+          <tr>
+            <td>Exclusão de Vaga</td>
+            <td>vacancy_deleted</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'event': 'vacancy_deleted' }</td>
+          </tr>
+          <tr>
+            <td>Criação de Candidatura</td>
+            <td>candidature_created</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_created' }</td>
+          </tr>
+          <tr>
+            <td>Atualização de Candidatura</td>
+            <td>candidature_updated</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_updated' }</td>
+          </tr>
+          <tr>
+            <td>Candidato desqualificado</td>
+            <td>candidature_disqualified</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_disqualified' }</td>
+          </tr>
+          <tr>
+            <td>Candidato requalificado</td>
+            <td>candidature_requalified</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidature_requalified' }</td>
+          </tr>
+          <tr>
+            <td>Candidato contratado</td>
+            <td>candidate_hired</td>
+            <td>{ 'vacancy_id': ID_VAGA, 'candidate_id': ID_CANDIDATO, 'event': 'candidate_hired' }</td>
+          </tr>
+        </tbody>
+      </table>
+      <b>Obs:</b> O código de resposta deve ser <b>200</b> para confirmarmos como sucesso e não precisar reenviá-lo.
+      "
 paths:
   /customers:
     $ref: paths/customers/index.yaml  
@@ -71,3 +131,9 @@ components:
       $ref: "./components/models/vacancies_language.yaml"
     ComplementaryFormation:
       $ref: "./components/models/complementary_formation.yaml"
+    WebhookSubscription:
+      $ref: "./components/models/webhook_subscription.yaml"
+    VacancyAdmissionInfo:
+      $ref: "./components/models/vacancy_admission_info.yaml"
+    CandidatesPipeline:
+      $ref: "./components/models/candidates_pipeline.yaml"

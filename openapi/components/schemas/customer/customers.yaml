@@ -30,8 +30,6 @@ example:
         updated_at: 2022-01-07T14:30:19.403-03:00
       relationships:
         address: {}
-        customer_analysts: {}
-        vacancies: {}
         customer_contacts: {}
     - id: 2
       type: customer
@@ -45,8 +43,6 @@ example:
         updated_at: 2022-01-07T14:30:19.403-03:00
       relationships:
         address: {}
-        customer_analysts: {}
-        vacancies: {}
         customer_contacts: {}
   meta:
     count: 2
