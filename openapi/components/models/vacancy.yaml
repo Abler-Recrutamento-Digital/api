@@ -116,7 +116,7 @@ properties:
               - to_match
           - type: float 
       contracting_regime: 
-        description: Salário 
+        description: Tipo de contrato 
         type: string
         enum: 
           - to_match
