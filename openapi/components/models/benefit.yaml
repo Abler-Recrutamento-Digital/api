@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      name: 
+        type: string
+        description: Nome
+      has_value: 
+        type: string
+        description: Benefício possui valor

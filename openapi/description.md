@@ -1,6 +1,6 @@
 # Abler API
 
-Esse é uma API pública para que os nossos clientes possam
+Essa é uma API pública para que os nossos clientes possam
 realizar integrações com seus sistemas.
 
 ## Recursos
@@ -8,8 +8,8 @@ realizar integrações com seus sistemas.
 - **Clientes**
   - Buscar clientes
 - **Vagas**
-  - Bucas vagas
-  - Buscas candidatos
+  - Buscas de vagas
+  - Buscas de candidatos relacionados a vagas
 - **Webhook Subscriptions**
   - Buscar subscriptions
   - Cadastrar subscriptions

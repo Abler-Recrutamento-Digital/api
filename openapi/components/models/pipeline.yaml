@@ -1,0 +1,35 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      feedback: 
+        type: string
+        description: Feedback
+      finished: 
+        type: boolean
+        description: Processo finalizado
+      feedback_option: 
+        type: string
+        description: Opções do feedback
+        enum: 
+          - conhecimento_testes
+          - desenvoltura_processo
+          - experiencia_atividades
+          - experiencia_segmento
+          - fluencia_idioma
+          - formacao_diferenciada
+          - maior_aderencia
+      contact_name: 
+        type: string
+        description: Contato
+      contact_email: 
+        type: string
+        description: Email do contato

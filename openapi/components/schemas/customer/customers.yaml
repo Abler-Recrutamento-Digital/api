@@ -4,24 +4,15 @@ properties:
     description: Cliente serializado no formato JSON API
     type: array
     items:
-      type: object
-    properties:
-      id:
-        type: integer
-        description: Id do resource
-      type:
-        type: string
-        description: Tipo do resource
-      attributes:
-        type: object
-        description: Atributos do resource
-      relationships:
-        type: object
-        description: Relacionamentos do resource
+      oneOf: 
+        - $ref: '#/components/schemas/Customer'
   included:
     type: array
     description: Dados serializados do included no formato JSON API
-    items: []
+    items: 
+      anyOf:
+        - $ref: '#/components/schemas/Address'
+        - $ref: '#/components/schemas/CustomerContact'    
   meta:
     type: object
     description: Resource extra info
@@ -39,8 +30,6 @@ example:
         updated_at: 2022-01-07T14:30:19.403-03:00
       relationships:
         address: {}
-        customer_analysts: {}
-        vacancies: {}
         customer_contacts: {}
     - id: 2
       type: customer
@@ -54,8 +43,6 @@ example:
         updated_at: 2022-01-07T14:30:19.403-03:00
       relationships:
         address: {}
-        customer_analysts: {}
-        vacancies: {}
         customer_contacts: {}
   meta:
     count: 2

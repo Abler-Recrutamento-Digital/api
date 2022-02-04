@@ -1,0 +1,27 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      salary: 
+        type: float
+        description: Salário
+      hired_at: 
+        type: datetime
+        description: Data de contratação
+      initial_date: 
+        type: date
+        description: Data inicial de contrato
+      info: 
+        type: string
+        description: Informações adicionais
+      disqualified_at: 
+        type: datetime
+        description: Data de desqualificação

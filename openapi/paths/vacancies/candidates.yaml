@@ -19,6 +19,16 @@ get:
       schema:
         type: integer
     - in: query
+      name: per_page
+      description: Registros por página
+      schema:
+        type: string
+    - in: query
+      name: page
+      description: Página
+      schema:
+        type: string
+    - in: query
       name: name
       description: Filtrar os candidatos pelo nome
       schema:
@@ -28,6 +38,17 @@ get:
       description: Filtrar os candidatos pelo e-mail
       schema:
         type: string
+    - in: query
+      name: include
+      description:
+        "Quando um relacionamento precisar estar presente no dado serializado do
+        cliente, apenas inclua usando esse parâmetro. Envie o `include` separado
+        por vírgula para retornar mais que um. Exemplo:
+        `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`"
+      schema:
+        type: string
+        enum:
+          - candidates_pipelines
   responses:
     '200':
       description: successful operation

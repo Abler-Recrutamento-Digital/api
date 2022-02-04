@@ -1,21 +1,8 @@
 type: object
 properties:
   data:
-    description: Webhook Subscription serializada no formato JSON API
-    type: object
-    properties:
-      id:
-        type: integer
-        description: Id do resource
-      type:
-        type: string
-        description: Tipo do resource
-      attributes:
-        type: object
-        description: Atributos do resource
-      relationships:
-        type: object
-        description: Relacionamentos do resource
+    oneOf:
+      - $ref: '#/components/schemas/WebhookSubscription'    
   included:
     type: array
     description: Dados serializados do included no formato JSON API

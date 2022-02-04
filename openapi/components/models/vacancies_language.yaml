@@ -1,0 +1,31 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      required: 
+        type: boolean
+        description: Obrigatório
+      minimum_level: 
+        type: string
+        description: Nível mínimo
+        enum: 
+          - iniciante
+          - basico
+          - intermediario
+          - independente
+          - proficiencia_operacional
+          - dominio_pleno
+  relationships:
+      type: object    
+      description: Relacionamentos do resource
+      properties:
+        language: 
+          $ref: '#/components/schemas/relationship'

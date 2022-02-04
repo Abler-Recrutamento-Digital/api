@@ -1,27 +1,27 @@
 type: object
 properties:
   data:
-    description: Vaga serializada no formato JSON API
     type: array
     items:
-      type: object
-    properties:
-      id:
-        type: integer
-        description: Id do resource
-      type:
-        type: string
-        description: Tipo do resource
-      attributes:
-        type: object
-        description: Atributos do resource
-      relationships:
-        type: object
-        description: Relacionamentos do resource
+      $ref: '#/components/schemas/Vacancy'
   included:
     type: array
     description: Dados serializados do included no formato JSON API
-    items: []
+    items: 
+      anyOf:
+        - $ref: '#/components/schemas/Pipeline'
+        - $ref: '#/components/schemas/Team'
+        - $ref: '#/components/schemas/AreaOfFormation'
+        - $ref: '#/components/schemas/LevelOfInterest'
+        - $ref: '#/components/schemas/OccupationArea'
+        - $ref: '#/components/schemas/AreaOfInterest'
+        - $ref: '#/components/schemas/Skill'
+        - $ref: '#/components/schemas/Benefit'
+        - $ref: '#/components/schemas/VacanciesBenefit'
+        - $ref: '#/components/schemas/Language'
+        - $ref: '#/components/schemas/VacanciesLanguage'
+        - $ref: '#/components/schemas/ComplementaryFormation'
+        - $ref: '#/components/schemas/VacancyAdmissionInfo'
   meta:
     type: object
     description: Resource extra info
@@ -50,6 +50,7 @@ example:
         educational_level_status: indiferente
         cnh: ab
         status: published
+        additional_info: null
         salary: 4000
         contracting_regime: clt
       relationships:
@@ -93,6 +94,14 @@ example:
           data:
           - id: 1
             type: complementary_formation
+        vacancy_admission_info:
+          data:
+            id: 1
+            type: vacancy_admission_info
+        customer:
+          data:
+            id: 1
+            type: customer
   included:
     - id: 1
       type: pipeline
@@ -178,6 +187,28 @@ example:
         city_name: Cidade
         state_name: Estado
         state_abbreviation: SC
+    - id: 1
+      type: customer
+      attributes:
+        corporate_name: Razão social
+        trading_name: Nome Fantasia
+        cnpj: 42434481000193
+        active: true
+        additional_info: Informações adicionais
+        created_at: 2022-01-07T14:30:19.403-03:00
+        updated_at: 2022-01-07T14:30:19.403-03:00
+      relationships:
+        address: {}
+        customer_contacts: {}
+    - id: 1
+      type: vacancy_admission_info
+      attributes:
+        cost_center: null
+        contract_time: null
+        reason_of_demand: Motivo
+        name_substituted: null
+        cpf_substituted: null
+        license: ferias    
   meta:
     count: 1
     items: 1

@@ -48,6 +48,21 @@ get:
         type: string
         format: "DD/MM/YYYY"
     - in: query
+      name: status
+      description: Status da vaga
+      schema:
+        type: string
+        enum: 
+          - customer_request
+          - draft
+          - waiting_approval
+          - ready_for_publish
+          - published
+          - stopped
+          - forwarded_by_customer
+          - finished
+          - canceled
+    - in: query
       name: include
       description:
         "Quando um relacionamento precisar estar presente no dado serializado do
@@ -70,6 +85,18 @@ get:
           - vacancies_languages
           - vacancies_languages.language
           - complementary_formations
+          - vacancy_admission_info
+          - customer
+    - in: query
+      name: per_page
+      description: Registros por página
+      schema:
+        type: string
+    - in: query
+      name: page
+      description: Página
+      schema:
+        type: string
   responses:
     '200':
       description: successful operation

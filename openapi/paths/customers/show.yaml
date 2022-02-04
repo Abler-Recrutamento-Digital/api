@@ -17,8 +17,6 @@ get:
         type: string
         enum:
           - address
-          - customer_analysts
-          - vacancies
           - customer_contacts
   responses:
     '200':
