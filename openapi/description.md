@@ -1,4 +1,4 @@
-# Abler API
+# Introdução
 
 Essa é uma API pública para que os nossos clientes possam
 realizar integrações com seus sistemas.
@@ -8,13 +8,9 @@ realizar integrações com seus sistemas.
 - **Clientes**
   - Buscar clientes
 - **Vagas**
-  - Buscas de vagas
-  - Buscas de candidatos relacionados a vagas
-- **Webhook Subscriptions**
-  - Buscar subscriptions
-  - Cadastrar subscriptions
-  - Atualizar subscriptions
-  - Deletar subscriptions
+  - Buscar vagas e candidatos
+- **Webhook**
+  - Buscar, cadastrar, atualizar e deletar inscrições em webhooks
 
 ## Autenticação
 
@@ -22,7 +18,13 @@ realizar integrações com seus sistemas.
 
 ## Limite de requisições
 
-|Tipo de acesso   	| Limite   	     |Intervalo    |
-|---	              |---	           |---	         |
-|IP   	            | 10 requisições | 10 segundos |
+|Tipo de acesso   	| Limite   	      |Intervalo  |
+|---	              |---	            |---	      |
+|IP   	            | 300 requisições | 5 minutos |
+
+No cabeçalho da resposta, disponibilizamos os parâmetros abaixo para que você consiga calcular o tempo entre suas requisições:
+
+- `X-RateLimit-Limit`: Limite de requisições por 5 minutos.
+- `X-RateLimit-Remaining`: Tempo disponível para exceder o limite.
+- `X-RateLimit-Reset`: Tempo no qual você pode enviar requisições novamente (segundos).
 
