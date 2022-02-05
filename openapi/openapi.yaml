@@ -21,8 +21,7 @@ tags:
       </ol>
       Em seguida serão exibidos a lista de eventos disponíveis.    
       "
-
-webhooks:  
+webhooks:
   vacancy_created:  
     post:
       tags:
@@ -226,6 +225,8 @@ webhooks:
                 initial_date: 
                   type: date
                   format: YYYY-MM-DD                  
+                additional_info:
+                  type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
