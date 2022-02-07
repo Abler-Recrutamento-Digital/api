@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Abler API
-  description: "# Abler API\n\nEssa é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar clientes\n- **Vagas**\n  - Buscas de vagas\n  - Buscas de candidatos relacionados a vagas\n- **Webhook Subscriptions**\n  - Buscar subscriptions\n  - Cadastrar subscriptions\n  - Atualizar subscriptions\n  - Deletar subscriptions\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t     |Intervalo    |\n|---\t              |---\t           |---\t         |\n|IP   \t            | 10 requisições | 10 segundos |\n\n"
+  description: "# Introdução\n\nEssa é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar clientes\n- **Vagas**\n  - Buscar vagas e candidatos\n- **Webhook**\n  - Buscar, cadastrar, atualizar e deletar inscrições em webhooks\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t      |Intervalo  |\n|---\t              |---\t            |---\t      |\n|IP   \t            | 300 requisições | 5 minutos |\n\nNo cabeçalho da resposta, disponibilizamos os parâmetros abaixo para que você consiga calcular o tempo entre suas requisições:\n\n- `X-RateLimit-Limit`: Limite de requisições por 5 minutos.\n- `X-RateLimit-Remaining`: Tempo disponível para exceder o limite.\n- `X-RateLimit-Reset`: Tempo no qual você pode enviar requisições novamente (segundos).\n\n"
   version: 1.0.0
 servers:
   - url: https://empresa.abler.com.br/api/public/v1
@@ -230,6 +230,8 @@ webhooks:
                 initial_date:
                   type: date
                   format: YYYY-MM-DD
+                additional_info:
+                  type: string
       responses:
         '200':
           description: >-
@@ -247,11 +249,17 @@ paths:
       parameters:
         - in: query
           name: include
-          description: >-
-            Quando um relacionamento precisar estar presente no dado serializado
-            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
-            separado por vírgula para retornar mais que um. Exemplo:
-            `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`
+          description: >+
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `empresa.abler.com.br/api/public/v1/customers?include=address,customer_contacts`"
+
           schema:
             type: string
             enum:
@@ -304,11 +312,17 @@ paths:
       parameters:
         - in: query
           name: include
-          description: >-
-            Quando um relacionamento precisar estar presente no dado serializado
-            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
-            separado por vírgula para retornar mais que um. Exemplo:
-            `empresa.abler.com.br/api/public/v1/customers?include=address,customer_analysts`
+          description: >+
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `empresa.abler.com.br/api/public/v1/customers?include=address,customer_contacts`"
+
           schema:
             type: string
             enum:
@@ -565,11 +579,17 @@ paths:
             type: integer
         - in: query
           name: include
-          description: >-
-            Quando um relacionamento precisar estar presente no dado serializado
-            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
-            separado por vírgula para retornar mais que um. Exemplo:
-            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+          description: >+
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `empresa.abler.com.br/api/public/v1/vacancies/1/candidates?include=candidates_pipelines`"
+
           schema:
             type: string
             enum:
@@ -643,11 +663,17 @@ paths:
             type: string
         - in: query
           name: include
-          description: >-
-            Quando um relacionamento precisar estar presente no dado serializado
-            do cliente, apenas inclua usando esse parâmetro. Envie o `include`
-            separado por vírgula para retornar mais que um. Exemplo:
-            `empresa.abler.com.br/api/public/v1/vacancies?include=address,team`
+          description: >+
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `empresa.abler.com.br/api/public/v1/vacancies/1/candidates?include=candidates_pipelines`"
+
           schema:
             type: string
             enum:
@@ -1537,6 +1563,8 @@ components:
             name: Matheus
             email: matheus@gmail.com
             phone: 41988889999
+          relationships:
+            candidates_pipelines: {}
     candidates:
       type: object
       properties:
@@ -1562,12 +1590,16 @@ components:
               name: Matheus
               email: matheus@gmail.com
               phone: 41988889999
+            relationships:
+              candidates_pipelines: {}
           - id: 5
             type: candidate
             attributes:
               name: Carlos
               email: carlos@gmail.com
               phone: 41988887777
+            relationships:
+              candidates_pipelines: {}
         meta:
           count: 2
           items: 2
@@ -1764,10 +1796,10 @@ components:
               description: Nome
             email:
               type: string
-              description: email
+              description: E-mail
             phone:
               type: string
-              description: telefone do candidato
+              description: Telefone
         relationships:
           type: object
           description: Relacionamentos do resource
