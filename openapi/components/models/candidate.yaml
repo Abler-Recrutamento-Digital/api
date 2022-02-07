@@ -10,18 +10,18 @@ properties:
     type: object
     description: Atributos do resource
     properties:
-      name: 
+      name:
         type: string
         description: Nome
-      email: 
+      email:
         type: string
-        description: email
-      phone: 
+        description: E-mail
+      phone:
         type: string
-        description: telefone do candidato
+        description: Telefone
   relationships:
-    type: object    
+    type: object
     description: Relacionamentos do resource
     properties:
-      candidates_pipelines: 
-        $ref: '#/components/schemas/relationship'     
+      candidates_pipelines:
+        $ref: '#/components/schemas/relationship'

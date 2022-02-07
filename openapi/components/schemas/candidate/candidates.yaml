@@ -2,7 +2,7 @@ type: object
 properties:
   data:
     type: array
-    items:    
+    items:
       oneOf:
         - $ref: '#/components/schemas/Candidate'
   included:
@@ -22,12 +22,16 @@ example:
         name: Matheus
         email: matheus@gmail.com
         phone: 41988889999
+      relationships:
+        candidates_pipelines: {}
     - id: 5
       type: candidate
       attributes:
         name: Carlos
         email: carlos@gmail.com
         phone: 41988887777
+      relationships:
+        candidates_pipelines: {}
   meta:
     count: 2
     items: 2
