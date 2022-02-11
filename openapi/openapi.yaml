@@ -5,7 +5,7 @@ info:
     $ref: description.md
   version: 1.0.0
 servers:
-  - url: 'https://empresa.abler.com.br/api/public/v1'
+  - url: 'https://api.abler.com.br/v1'
 tags:
   - name: Clientes
     description: Rotas relacionadas aos clientes de sua empresa
