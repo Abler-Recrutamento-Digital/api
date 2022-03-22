@@ -168,9 +168,9 @@ example:
       type: experience_tag
       attributes:
         tags: [
-					"Administração da qualidade",
-					"Administração de atendimento"
-				]
+	  "Administração da qualidade",
+	  "Administração de atendimento"
+	]
     - id: 1
       type: customer
       attributes:
