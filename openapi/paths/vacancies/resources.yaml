@@ -24,11 +24,10 @@ get:
         enum:
           - pipeline
           - address
-          - team                  
-          - area_of_formation
+          - team
           - level_of_interest
           - area_of_interests
-          - area_of_interests.occupation_areas          
+          - area_of_interests.occupation_areas
           - skills
           - vacancies_benefits
           - vacancies_benefits.benefit

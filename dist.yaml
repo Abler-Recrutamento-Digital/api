@@ -438,7 +438,6 @@ paths:
               - pipeline
               - address
               - team
-              - area_of_formation
               - level_of_interest
               - area_of_interests
               - area_of_interests.occupation_areas
@@ -514,7 +513,6 @@ paths:
               - pipeline
               - address
               - team
-              - area_of_formation
               - level_of_interest
               - area_of_interests
               - area_of_interests.occupation_areas
@@ -1127,11 +1125,9 @@ components:
             anyOf:
               - $ref: '#/components/schemas/Pipeline'
               - $ref: '#/components/schemas/Team'
-              - $ref: '#/components/schemas/AreaOfFormation'
               - $ref: '#/components/schemas/LevelOfInterest'
               - $ref: '#/components/schemas/OccupationArea'
               - $ref: '#/components/schemas/AreaOfInterest'
-              - $ref: '#/components/schemas/Skill'
               - $ref: '#/components/schemas/Benefit'
               - $ref: '#/components/schemas/VacanciesBenefit'
               - $ref: '#/components/schemas/Language'
@@ -1160,7 +1156,8 @@ components:
               show_progress_to_candidates: false
               available_for_change: false
               available_for_travel: true
-              available_for_homeoffice: true
+              work_type:
+                - 100% remoto
               refusal_reason: Razão da não aprovação
               educational_level: graduacao
               educational_level_status: indiferente
@@ -1169,6 +1166,10 @@ components:
               additional_info: null
               salary: 4000
               contracting_regime: clt
+              area_of_formation_name: Tecnologia da Informação
+              tech_skills:
+                - HTML
+                - CSS
             relationships:
               pipeline:
                 data:
@@ -1178,14 +1179,14 @@ components:
                 data:
                   id: 1
                   type: address
+              experience_tag:
+                data:
+                  id: 1
+                  type: experience_tag
               team:
                 data:
                   id: 1
                   type: team
-              area_of_formation:
-                data:
-                  id: 1
-                  type: area_of_formation
               level_of_interest:
                 data:
                   id: 1
@@ -1194,10 +1195,6 @@ components:
                 data:
                   - id: 1
                     type: area_of_interest
-              skills:
-                data:
-                  - id: 1
-                    type: skill
               vacancies_benefits:
                 data:
                   - id: 1
@@ -1232,30 +1229,13 @@ components:
             attributes:
               name: Time
           - id: 1
-            type: area_of_formation
-            attributes:
-              name: Curso indiferente
-          - id: 1
             type: level_of_interest
             attributes:
               name: Analista
           - id: 1
-            type: occupation_area
-            attributes:
-              name: Administração
-          - id: 1
             type: area_of_interest
             attributes:
               name: Tecnologia da Informação
-            relationships:
-              occupation_areas:
-                data:
-                  - id: 1
-                    type: occupation_area
-          - id: 1
-            type: skill
-            attributes:
-              name: Skill
           - id: 1
             type: benefit
             attributes:
@@ -1303,6 +1283,12 @@ components:
               city_name: Cidade
               state_name: Estado
               state_abbreviation: SC
+          - id: 1
+            type: experience_tag
+            attributes:
+              tags:
+                - Administração da qualidade
+                - Administração de atendimento
           - id: 1
             type: customer
             attributes:
@@ -1345,11 +1331,8 @@ components:
             anyOf:
               - $ref: '#/components/schemas/Pipeline'
               - $ref: '#/components/schemas/Team'
-              - $ref: '#/components/schemas/AreaOfFormation'
               - $ref: '#/components/schemas/LevelOfInterest'
-              - $ref: '#/components/schemas/OccupationArea'
               - $ref: '#/components/schemas/AreaOfInterest'
-              - $ref: '#/components/schemas/Skill'
               - $ref: '#/components/schemas/Benefit'
               - $ref: '#/components/schemas/VacanciesBenefit'
               - $ref: '#/components/schemas/Language'
@@ -1378,7 +1361,8 @@ components:
             show_progress_to_candidates: false
             available_for_change: false
             available_for_travel: true
-            available_for_homeoffice: true
+            work_type:
+              - 100% remoto
             refusal_reason: Razão da não aprovação
             educational_level: graduacao
             educational_level_status: indiferente
@@ -1387,6 +1371,10 @@ components:
             additional_info: null
             salary: 4000
             contracting_regime: clt
+            area_of_formation_name: Tecnologia da Informação
+            tech_skills:
+              - HTML
+              - CSS
           relationships:
             pipeline:
               data:
@@ -1396,14 +1384,14 @@ components:
               data:
                 id: 1
                 type: address
+            experience_tag:
+              data:
+                id: 1
+                type: experience_tag
             team:
               data:
                 id: 1
                 type: team
-            area_of_formation:
-              data:
-                id: 1
-                type: area_of_formation
             level_of_interest:
               data:
                 id: 1
@@ -1412,10 +1400,6 @@ components:
               data:
                 - id: 1
                   type: area_of_interest
-            skills:
-              data:
-                - id: 1
-                  type: skill
             vacancies_benefits:
               data:
                 - id: 1
@@ -1450,30 +1434,13 @@ components:
             attributes:
               name: Time
           - id: 1
-            type: area_of_formation
-            attributes:
-              name: Curso indiferente
-          - id: 1
             type: level_of_interest
             attributes:
               name: Analista
           - id: 1
-            type: occupation_area
-            attributes:
-              name: Administração
-          - id: 1
             type: area_of_interest
             attributes:
               name: Tecnologia da Informação
-            relationships:
-              occupation_areas:
-                data:
-                  - id: 1
-                    type: occupation_area
-          - id: 1
-            type: skill
-            attributes:
-              name: Skill
           - id: 1
             type: benefit
             attributes:
@@ -1521,6 +1488,12 @@ components:
               city_name: Cidade
               state_name: Estado
               state_abbreviation: SC
+          - id: 1
+            type: experience_tag
+            attributes:
+              tags:
+                - Administração da qualidade
+                - Administração de atendimento
           - id: 1
             type: customer
             attributes:
