@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      email:
+        type: string
+        description: E-mail
+      name:
+        type: string
+        description: Nome
+      subdomain:
+        type: string
+        description: Subdomínio
+      role:
+        type: string
+        description: Função
+      phone:
+        type: integer
+        description: Telefone
+      active:
+        type: boolean
+        description: Ativo

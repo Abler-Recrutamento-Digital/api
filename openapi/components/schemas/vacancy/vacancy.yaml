@@ -21,6 +21,8 @@ properties:
         - $ref: '#/components/schemas/VacanciesLanguage'
         - $ref: '#/components/schemas/ComplementaryFormation'
         - $ref: '#/components/schemas/VacancyAdmissionInfo'
+        - $ref: '#/components/schemas/Approver'
+        - $ref: '#/components/schemas/Analyst'
   meta:
     type: object
     description: Resource extra info
@@ -31,6 +33,7 @@ example:
     attributes:
       title: Cargo
       slug: slug-vaga
+      quantity: 10
       created_at: '2021-04-05T15:30:33.948-03:00'
       published_at: '2021-04-05T15:33:30.757-03:00'
       republished_at: '2021-04-06T11:07:58.530-03:00'
@@ -101,6 +104,14 @@ example:
         data:
           id: 1
           type: customer
+      approvers:
+        data:
+        - id: 1
+          type: approver
+      analysts:
+        data:
+        - id: 1
+          type: analyst
   included:
     - id: 1
       type: pipeline
@@ -207,4 +218,20 @@ example:
         reason_of_demand: Motivo
         name_substituted: null
         cpf_substituted: null
-        license: ferias    
+        license: ferias
+    - id: 1
+      type: approver
+      attributes:
+        email: E-mail
+        name: Nome
+        subdomain: null
+        role: CEO
+    - id: 1
+      type: analyst
+      attributes:
+        name: Nome
+        email: E-mail
+        phone: (41) 9999-9999
+        subdomain: null
+        active: false
+        role: Design

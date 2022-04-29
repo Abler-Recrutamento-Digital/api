@@ -16,6 +16,9 @@ properties:
       slug: 
         type: string
         description: slug da vaga
+      quantity:
+        type: integer
+        description: 10
       created_at: 
         type: datetime
         description: Data de criação
@@ -156,4 +159,8 @@ properties:
       vacancies_languages:
         $ref: '#/components/schemas/relationship'
       complementary_formations:
+        $ref: '#/components/schemas/relationship'
+      approvers:
+        $ref: '#/components/schemas/relationship'
+      analysts:
         $ref: '#/components/schemas/relationship'

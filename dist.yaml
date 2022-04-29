@@ -1138,6 +1138,8 @@ components:
               - $ref: '#/components/schemas/VacanciesLanguage'
               - $ref: '#/components/schemas/ComplementaryFormation'
               - $ref: '#/components/schemas/VacancyAdmissionInfo'
+              - $ref: '#/components/schemas/Approver'
+              - $ref: '#/components/schemas/Analyst'
         meta:
           type: object
           description: Resource extra info
@@ -1148,6 +1150,7 @@ components:
             attributes:
               title: Cargo
               slug: slug-vaga
+              quantity: 10
               created_at: '2021-04-05T15:30:33.948-03:00'
               published_at: '2021-04-05T15:33:30.757-03:00'
               republished_at: '2021-04-06T11:07:58.530-03:00'
@@ -1218,6 +1221,14 @@ components:
                 data:
                   id: 1
                   type: customer
+              approvers:
+                data:
+                  - id: 1
+                    type: approver
+              analysts:
+                data:
+                  - id: 1
+                    type: analyst
         included:
           - id: 1
             type: pipeline
@@ -1325,6 +1336,22 @@ components:
               name_substituted: null
               cpf_substituted: null
               license: ferias
+          - id: 1
+            type: approver
+            attributes:
+              email: E-mail
+              name: Nome
+              subdomain: null
+              role: CEO
+          - id: 1
+            type: analyst
+            attributes:
+              name: Nome
+              email: E-mail
+              phone: (41) 9999-9999
+              subdomain: null
+              active: false
+              role: Design
         meta:
           count: 1
           items: 1
@@ -1356,6 +1383,8 @@ components:
               - $ref: '#/components/schemas/VacanciesLanguage'
               - $ref: '#/components/schemas/ComplementaryFormation'
               - $ref: '#/components/schemas/VacancyAdmissionInfo'
+              - $ref: '#/components/schemas/Approver'
+              - $ref: '#/components/schemas/Analyst'
         meta:
           type: object
           description: Resource extra info
@@ -1366,6 +1395,7 @@ components:
           attributes:
             title: Cargo
             slug: slug-vaga
+            quantity: 10
             created_at: '2021-04-05T15:30:33.948-03:00'
             published_at: '2021-04-05T15:33:30.757-03:00'
             republished_at: '2021-04-06T11:07:58.530-03:00'
@@ -1436,6 +1466,14 @@ components:
               data:
                 id: 1
                 type: customer
+            approvers:
+              data:
+                - id: 1
+                  type: approver
+            analysts:
+              data:
+                - id: 1
+                  type: analyst
         included:
           - id: 1
             type: pipeline
@@ -1543,6 +1581,22 @@ components:
               name_substituted: null
               cpf_substituted: null
               license: ferias
+          - id: 1
+            type: approver
+            attributes:
+              email: E-mail
+              name: Nome
+              subdomain: null
+              role: CEO
+          - id: 1
+            type: analyst
+            attributes:
+              name: Nome
+              email: E-mail
+              phone: (41) 9999-9999
+              subdomain: null
+              active: false
+              role: Design
     candidate:
       type: object
       properties:
@@ -1825,6 +1879,9 @@ components:
             slug:
               type: string
               description: slug da vaga
+            quantity:
+              type: integer
+              description: 10
             created_at:
               type: datetime
               description: Data de criação
@@ -1965,6 +2022,10 @@ components:
             vacancies_languages:
               $ref: '#/components/schemas/relationship'
             complementary_formations:
+              $ref: '#/components/schemas/relationship'
+            approvers:
+              $ref: '#/components/schemas/relationship'
+            analysts:
               $ref: '#/components/schemas/relationship'
     pipeline:
       type: object
