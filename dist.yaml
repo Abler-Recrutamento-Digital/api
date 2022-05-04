@@ -450,6 +450,8 @@ paths:
               - complementary_formations
               - vacancy_admission_info
               - customer
+              - approvers
+              - analysts
         - in: query
           name: per_page
           description: Registros por página
@@ -524,6 +526,8 @@ paths:
               - vacancies_languages
               - vacancies_languages.language
               - complementary_formations
+              - approvers
+              - analysts
       responses:
         '200':
           description: successful operation

@@ -74,11 +74,11 @@ get:
         enum:
           - pipeline
           - address
-          - team                  
+          - team
           - area_of_formation
           - level_of_interest
           - area_of_interests
-          - area_of_interests.occupation_areas          
+          - area_of_interests.occupation_areas
           - skills
           - vacancies_benefits
           - vacancies_benefits.benefit
@@ -87,6 +87,8 @@ get:
           - complementary_formations
           - vacancy_admission_info
           - customer
+          - approvers
+          - analysts
     - in: query
       name: per_page
       description: Registros por página
