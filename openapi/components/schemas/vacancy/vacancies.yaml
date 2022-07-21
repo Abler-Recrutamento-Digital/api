@@ -54,20 +54,20 @@ example:
         salary: 4000
         contracting_regime: clt
         experience_tags: [
-				  "Abnt",
-				  "Administração da qualidade"
-			  ]
+          "Abnt",
+          "Administração da qualidade"
+        ]
         work_type: [
-				  "presencial"
-			  ]
+          "presencial"
+        ]
         tech_skills: [
           "Rails",
           "Laravel"
         ]
         courses: [
-				  "Administração",
-				  "Tecnologia em Sistemas para Internet"
-			  ]
+          "Administração",
+          "Tecnologia em Sistemas para Internet"
+        ]
       relationships:
         pipeline:
           data:
