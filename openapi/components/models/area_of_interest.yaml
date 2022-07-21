@@ -10,12 +10,6 @@ properties:
     type: object
     description: Atributos do resource
     properties:
-      name: 
+      name:
         type: string
         description: Nome
-  relationships:
-      type: object    
-      description: Relacionamentos do resource
-      properties:
-        occupation_areas: 
-          $ref: '#/components/schemas/relationship'

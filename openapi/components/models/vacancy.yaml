@@ -10,28 +10,28 @@ properties:
     type: object
     description: Atributos do resource
     properties:
-      title: 
+      title:
         type: string
         description: Título
-      slug: 
+      slug:
         type: string
         description: slug da vaga
       quantity:
         type: integer
         description: 10
-      created_at: 
+      created_at:
         type: datetime
         description: Data de criação
-      published_at: 
+      published_at:
         type: datetime
         description: Data de publicação
-      republished_at: 
+      republished_at:
         type: datetime
         description: Data de republicação
-      forward_at: 
+      forward_at:
         type: datetime
         description: Data de encaminhamento
-      close_on: 
+      close_on:
         type: datetime
         description: Data de fechamento
       exclusive_pcd:
@@ -61,6 +61,28 @@ properties:
       refusal_reason:
         type: string
         description: Razão para não aprovação da vaga
+      experience_tags:
+        type: array
+        description:
+        items:
+          type: string
+      work_type:
+        type: array
+        description: Tipo da vaga
+        items:
+          type: enum
+          - presencial
+          - hibrida
+          - remoto
+      tech_skills:
+        type: array
+        items:
+          type: string
+      courses:
+        type: array
+        description: Cursos
+        items:
+          type: string
       educational_level:
         type: string
         description: Nível educacional
@@ -137,22 +159,18 @@ properties:
           - temporario
           - terceiro
   relationships:
-    type: object    
+    type: object
     description: Relacionamentos do resource
     properties:
-      pipeline: 
+      pipeline:
         $ref: '#/components/schemas/relationship'
-      address: 
+      address:
         $ref: '#/components/schemas/relationship'
-      team: 
-        $ref: '#/components/schemas/relationship'
-      area_of_formation: 
+      team:
         $ref: '#/components/schemas/relationship'
       level_of_interest:
         $ref: '#/components/schemas/relationship'
       area_of_interests:
-        $ref: '#/components/schemas/relationship'
-      skills:
         $ref: '#/components/schemas/relationship'
       vacancies_benefits:
         $ref: '#/components/schemas/relationship'

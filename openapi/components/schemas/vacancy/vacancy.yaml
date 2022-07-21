@@ -55,6 +55,21 @@ example:
       additional_info: null
       salary: 4000
       contracting_regime: clt
+      experience_tags: [
+				"Abnt",
+				"Administração da qualidade"
+			]
+      work_type: [
+				"presencial"
+			]
+      tech_skills: [
+        "Rails",
+        "Laravel"
+      ]
+      courses: [
+				"Administração",
+        "Tecnologia em Sistemas para Internet"
+			]
     relationships:
       pipeline:
         data:
@@ -68,10 +83,6 @@ example:
         data:
           id: 1
           type: team
-      area_of_formation:
-        data:
-          id: 1
-          type: area_of_formation
       level_of_interest:
         data:
           id: 1
@@ -80,10 +91,6 @@ example:
         data:
         - id: 1
           type: area_of_interest
-      skills:
-        data:
-        - id: 1
-          type: skill
       vacancies_benefits:
         data:
         - id: 1
@@ -126,26 +133,13 @@ example:
       attributes:
         name: Time
     - id: 1
-      type: area_of_formation
-      attributes:
-        name: Curso indiferente
-    - id: 1
       type: level_of_interest
       attributes:
         name: Analista
     - id: 1
-      type: occupation_area
-      attributes:
-        name: Administração    
-    - id: 1
       type: area_of_interest
       attributes:
         name: Tecnologia da Informação
-      relationships:
-        occupation_areas:
-          data:
-          - id: 1
-            type: occupation_area
     - id: 1
       type: skill
       attributes:

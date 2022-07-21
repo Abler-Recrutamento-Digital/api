@@ -268,12 +268,8 @@ components:
       $ref: "./components/models/relationship.yaml" 
     Team:
       $ref: "./components/models/team.yaml" 
-    AreaOfFormation:
-      $ref: "./components/models/area_of_formation.yaml"
     LevelOfInterest:
       $ref: "./components/models/level_of_interest.yaml"
-    OccupationArea:
-      $ref: "./components/models/occupation_area.yaml"
     AreaOfInterest:
       $ref: "./components/models/area_of_interest.yaml"
     Skill:
