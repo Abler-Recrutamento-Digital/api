@@ -272,8 +272,6 @@ components:
       $ref: "./components/models/level_of_interest.yaml"
     AreaOfInterest:
       $ref: "./components/models/area_of_interest.yaml"
-    Skill:
-      $ref: "./components/models/skill.yaml"
     Benefit:
       $ref: "./components/models/benefit.yaml"
     VacanciesBenefit:

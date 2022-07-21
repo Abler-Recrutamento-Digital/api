@@ -11,11 +11,8 @@ properties:
       anyOf:
         - $ref: '#/components/schemas/Pipeline'
         - $ref: '#/components/schemas/Team'
-        - $ref: '#/components/schemas/AreaOfFormation'
         - $ref: '#/components/schemas/LevelOfInterest'
-        - $ref: '#/components/schemas/OccupationArea'
         - $ref: '#/components/schemas/AreaOfInterest'
-        - $ref: '#/components/schemas/Skill'
         - $ref: '#/components/schemas/Benefit'
         - $ref: '#/components/schemas/VacanciesBenefit'
         - $ref: '#/components/schemas/Language'
