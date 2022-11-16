@@ -52,3 +52,41 @@ get:
         application/json:
           schema:
             $ref: "../../components/schemas/response/api.yaml"
+post:
+  tags:
+    - Vagas
+  summary: Adicionar candidatura
+  description: Adicionar candidatura
+  security:
+    - BearerToken: []
+      AuthToken: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CandidatePayload'
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/candidate/candidate.yaml"              
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"

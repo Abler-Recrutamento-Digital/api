@@ -298,3 +298,5 @@ components:
       $ref: "./components/models/candidates_pipeline.yaml"
     VacancyPayload:
       $ref: "./components/schemas/vacancy/payload.yaml"
+    CandidatePayload:
+      $ref: "./components/schemas/candidate/payload.yaml"
