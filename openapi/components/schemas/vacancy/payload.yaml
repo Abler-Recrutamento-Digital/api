@@ -1,0 +1,146 @@
+type: object
+properties:
+  vacancy:
+    type: object
+    properties: 
+      title:
+        type: string
+        description: Título da vaga
+        required: true
+        example: Desenvolvedor back-end
+      customer_id:
+        type: integer
+        description: Cliente
+        example: 1
+      customer_contact_id:
+        type: integer
+        description: Contato do cliente
+        example: 1
+      salary: 
+        type: number
+        description: Salário
+        example: 5500
+      quantity: 
+        type: integer
+        description: Quantidade
+        example: 1
+      contracting_regime: 
+        type: string
+        description: > 
+          Tipo de contrato<br>
+          Disponível em: **enums/contracting_regime**
+        example: aprendiz
+      working_journey: 
+        type: string
+        description: Jornada de trabalho
+        example: Segunda a sexta 8:00 as 18:00
+      forward_at: 
+        type: string <DD/MM/YYYY>
+        description: Prazo de encaminhamento
+        example: 01/12/2022
+      close_on: 
+        type: string <DD/MM/YYYY>
+        description: Prazo de fechamento
+        example: 30/12/2022
+      exclusive_pcd: 
+        type: boolean
+        description: Processo PCD
+        example: false
+      disability_ids: 
+        type: array
+        description: Deficiências
+        items:
+          type: integer
+        example: [1, 2, 3]
+      cnh: 
+        type: string        
+        description: > 
+          CNH<br>
+          Disponível em: **enums/cnh**
+        example: a
+      seller_id: 
+        type: integer
+        description: >
+          Consultor comercial<br>
+          Disponível em: **collections/company_users**
+      team_id: 
+        type: integer
+        description: >
+          Equipe<br>
+          Disponível em: **collections/teams**
+      additional_info: 
+        type: string
+        description: Informações adicionais
+      fee: 
+        type: number
+        description: Taxa
+      tax: 
+        type: number
+        description: Imposto
+      billing_info: 
+        type: string
+        description: Informações sobre faturamento
+      vacancies_benefits_attributes: 
+        type: array
+        items: 
+          type: object
+          properties:
+            id: 
+              type: integer
+              description: id do registro
+            benefit_id: 
+              type: integer
+              description: >
+                Benefício<br>
+                Disponível em: **collections/benefits**
+            value: 
+              type: number
+              description: Valor
+            value_type: 
+              type: string
+              description:  >
+                Tipo de Valor<br>
+                Disponível em: **enums/benefit_value_type**
+            periodicity:
+              type: string
+              description: >
+                Periodicidade<br>
+                Disponível em: **enums/benefit_periodicities**
+            extensible: 
+              type: boolean
+              description: Extensível
+            _destroy: 
+              type: boolean
+              description: Flag enviada para exclusão de registro
+          required:
+            - benefit_id
+      vacancy_admission_info_attributes:
+        type: object
+        properties:
+          id: 
+            type: integer
+            description: id do registro
+          reason_of_demand: 
+            type: string
+            description: Motivo da demanda
+          contract_time: 
+            type: string
+            description: Tempo de contrato
+          cost_center: 
+            type: string
+            description: Centro de custo
+          license: 
+            type: string
+            description: >
+              Licença<br>
+              Disponível em: **enums/license**
+          name_substituted: 
+            type: string
+            description: Nome do substituído
+          cpf_substituted: 
+            type: string
+            description: CPF do substituído
+    required: 
+      - title
+      - salary
+      - quantity

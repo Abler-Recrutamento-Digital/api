@@ -66,3 +66,97 @@ get:
         application/json:
           schema:
             $ref: "../../components/schemas/response/api.yaml"
+patch:
+  tags:
+    - Vagas
+  summary: Atualizar pelo id
+  description: Atualizar vaga
+  security:
+    - BearerToken: []
+      AuthToken: []
+  parameters:
+    - in: path
+      name: id
+      description: Vacancy id
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/VacancyPayload'
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/vacancy/vacancy.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+delete:
+  tags:
+    - Vagas
+  summary: Deletar pelo id
+  description: Deletar vaga pelo id
+  security:
+    - BearerToken: []
+      AuthToken: []
+  parameters:
+    - in: path
+      name: id
+      description: ID da Vaga
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/vacancy/vacancy.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '404':
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
