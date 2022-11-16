@@ -6,15 +6,18 @@ realizar integrações com seus sistemas.
 ## Recursos
 
 - **Clientes**
-  - Buscar clientes
+  - Buscar, cadastrar, atualizar e deletar clientes
 - **Vagas**
-  - Buscar vagas e candidatos
+  - Buscar, cadastrar, atualizar e deletar vagas
+  - Buscar e cadastrar candidatos
 - **Webhook**
   - Buscar, cadastrar, atualizar e deletar inscrições em webhooks
 
 ## Autenticação
 
 - Envie o header **Authorization** com o Bearer {JWT} para a autenticação.
+- Para os endpoints relacionados a **criação, alteração e exclusão de vagas**, candidatos e clientes será necessário realizar login utilizando os recursos de autenticação. 
+- Nesses casos enviar no header **AUTH_TOKEN** com o token obtido pelos recursos de autenticação
 
 ## Limite de requisições
 

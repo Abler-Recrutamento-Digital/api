@@ -1,0 +1,48 @@
+post:
+  tags:
+    - Auth
+  summary: Login
+  description: Autenticar usuário
+  security:
+    - BearerToken: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            login:
+              type: string
+              description: email do usuário
+              example: email@gmail.com
+            password:
+              type: string
+              description: Senha
+              example: 7%Fdk4D3*hT3
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/auth/login.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"

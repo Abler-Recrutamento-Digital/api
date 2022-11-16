@@ -1,0 +1,6 @@
+type: object
+properties:
+  token: 
+    description: Token para autenticação de usuário
+example:
+  token: eyJhbGciOiJIUzUxMiJ9.eyJkYXRhIjp7ImlkIjoiNzk3IiwidHlwZSI6ImNvbXBhbnlfdXNlciIsImF0dHJpYnV0ZXMiOnsiZW1haWwiOiJhZG1pbkBudWJhbmsuY29tLmJyIiwibmFtZSI6IkFkbWluIE51YmFuayJ9LCJyZWxhdGlvbnNoaXBzIjp7fSwibWV0YSI6e319LCJpZCI6Nzk3LCJleHAiOjE2NzEyMDcxNzEsImF1ZCI6ImNvbXBhbnlfdXNlciJ9.bwPApXmjOdB9ahpDGU_imFyJq_Ik3BzQKLYMtcj-JS130wz6oGWL8JQGD87kDHqXZpHD-PtIhhwLauCza_KEjA
