@@ -188,7 +188,9 @@ webhooks:
                 event:
                   type: string
                   enum: 
-                   - candidate_hired    
+                   - candidate_hired   
+                title: 
+                  type: string                                    
                 salary: 
                   type: float
                 contracting_regime: 
@@ -217,7 +219,13 @@ webhooks:
                     - hunting
                     - reposicao
                     - substituicao
+                license: 
+                  type: string
+                name_substituted: 
+                  type: string
                 cpf_substituted: 
+                  type: string
+                contract_time: 
                   type: string
                 reason_of_demand: 
                   type: string
@@ -228,10 +236,38 @@ webhooks:
                 candidate_cell_phone: 
                   type: string
                   format: (00) 00000-0000
+                candidate_pis: 
+                  type: string 
+                candidate_birthday: 
+                  type: string                                  
+                  format: YYYY-MM-DD                                  
                 initial_date: 
                   type: date
                   format: YYYY-MM-DD                  
-                additional_info:
+                address: 
+                  type: string
+                  format: Cidade/Sigla Estado
+                cost_center: 
+                  type: string
+                working_journey: 
+                  type: string
+                additional_info:                
+                  type: string
+                benefits: 
+                  type: string
+                exclusive_pcd: 
+                  type: boolean
+                team_name: 
+                  type: string
+                customer_id: 
+                  type: integer
+                customer_corporate_name: 
+                  type: string
+                customer_trading_name: 
+                  type: string
+                customer_cnpj: 
+                  type: string
+                customer_contact_name: 
                   type: string
       responses:
         200:
@@ -299,9 +335,7 @@ components:
     CustomerContact:
       $ref: "./components/models/customer_contact.yaml"
     Candidate:
-      $ref: "./components/models/candidate.yaml"
-    Vacancy:
-      $ref: "./components/models/vacancy.yaml"
+      $ref: "./components/models/candidate.yaml"    
     Pipeline:
       $ref: "./components/models/pipeline.yaml"
     Relationship:
@@ -344,3 +378,5 @@ components:
       $ref: "./components/models/state.yaml"
     CompanyUser:
       $ref: "./components/models/company_user.yaml"
+    Vacancy:
+      $ref: "./components/models/vacancy.yaml"
