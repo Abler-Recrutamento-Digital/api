@@ -1,0 +1,15 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do enum
+  type:
+    type: string
+    description: Tipo do enum
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      name: 
+        type: string
+        description: Nome

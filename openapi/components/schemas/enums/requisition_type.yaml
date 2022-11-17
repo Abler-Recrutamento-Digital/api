@@ -1,0 +1,14 @@
+type: object
+properties:
+  data:
+    type: array
+    description: Registro serializado no formato JSON API    
+    items: 
+      oneOf:
+        - $ref: '#/components/schemas/Enum' 
+example:
+  data:
+    id: administracao_contrato
+    type: requisition_type
+    attributes:
+      name: Administração de contrato
