@@ -238,9 +238,9 @@ paths:
   /auth/logout:
     $ref: paths/auth/logout.yaml
   /customers:
-    $ref: paths/customers/index.yaml  
+    $ref: paths/customers/index_create.yaml  
   /customers/{id}:
-    $ref: paths/customers/show.yaml
+    $ref: paths/customers/resources.yaml
   /vacancies:
     $ref: paths/vacancies/index.yaml
   /vacancies/{id}:
@@ -300,3 +300,5 @@ components:
       $ref: "./components/schemas/vacancy/payload.yaml"
     CandidatePayload:
       $ref: "./components/schemas/candidate/payload.yaml"
+    CustomerPayload:
+      $ref: "./components/schemas/customer/payload.yaml"

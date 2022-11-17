@@ -140,6 +140,9 @@ properties:
           cpf_substituted: 
             type: string
             description: CPF do substituído
+          _destroy: 
+            type: boolean
+            description: Flag enviada para exclusão de registro
     required: 
       - title
       - salary

@@ -51,3 +51,43 @@ get:
         application/json:
           schema:
             $ref: "../../components/schemas/response/api.yaml"
+post:
+  tags:
+    - Clientes
+  summary: Criar
+  description: Criar cliente
+  security:
+    - BearerToken: []
+      AuthToken: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CustomerPayload'
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/customer/customer.yaml"              
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+
+

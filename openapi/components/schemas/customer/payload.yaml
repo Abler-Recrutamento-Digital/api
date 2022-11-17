@@ -1,0 +1,87 @@
+type: object
+properties:
+  customer:
+    type: object
+    properties: 
+      corporate_name:
+        type: string
+        description: Razão social
+        example: Empresa SA
+      trading_name:
+        type: string
+        description: Nome Fantasia
+        example: Empresa SA
+      cnpj:
+        type: string
+        description: CNPJ
+        example: 56.577.955/0001-60
+      address_attributes:
+        type: object
+        properties:
+          id: 
+            type: integer
+            description: ID do registro
+          cep: 
+            type: string
+            description: CEP
+          street:
+            type: string
+            description: Rua
+          number: 
+            type: string
+            description: Número
+          complement:
+            type: string
+            description: Complemento
+          neighborhood: 
+            type: string
+            description: Bairro
+          country:
+            type: string
+            description: País,
+          state_id: 
+            type: integer
+            description: >
+              ID do estado<br>
+              Disponível em: **collections/states**
+          city_id: 
+            type: integer
+            description: >
+              ID do cidade<br>
+              Disponível em: **collections/cities**
+          _destroy: 
+            type: boolean
+            description: Flag enviada para exclusão de registro
+        required: 
+          - state_id
+          - city_id
+      customer_contacts_attributes:
+        type: array
+        items:
+          type: object
+          properties: 
+            id: 
+              type: integer
+              description: ID do registro
+            name: 
+              type: string
+              description: Nome do contato
+            email: 
+              type: string
+              description: Email do contato
+            role: 
+              type: string
+              description: Cargo
+            phone: 
+              type: string
+              description: Telefone
+            _destroy: 
+              type: boolean
+              description: Flag enviada para exclusão de registro
+          required: 
+            - name
+            - email
+    required:
+      - corporate_name
+      - trading_name
+      - cnpj
