@@ -265,6 +265,8 @@ paths:
     $ref: paths/collections/disabilities.yaml
   /collections/states:
     $ref: paths/collections/states.yaml
+  /collections/customers:
+    $ref: paths/collections/customers.yaml
   /enums/cnhs:
     $ref: paths/enums/cnh.yaml
   /enums/requisition_types:
