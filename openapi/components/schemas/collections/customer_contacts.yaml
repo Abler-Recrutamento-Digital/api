@@ -1,0 +1,22 @@
+type: object
+properties:
+  data:
+    type: array
+    description: Registro serializado no formato JSON API    
+    items: 
+      oneOf:
+        - $ref: '#/components/schemas/CustomerContact' 
+example:
+  data:
+    id: 1
+    type: customer_contact
+    attributes:
+      name: Customer
+      email: customer@teste.com.br"
+      phone: null
+      role: CTO
+      active: true
+      allow_access: false
+      access_role_id: null
+      created_at: 2022-01-07T14:30:19.403-03:00
+      updated_at: 2022-01-07T14:30:19.403-03:00

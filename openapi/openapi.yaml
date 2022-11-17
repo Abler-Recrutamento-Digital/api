@@ -267,6 +267,8 @@ paths:
     $ref: paths/collections/states.yaml
   /collections/customers:
     $ref: paths/collections/customers.yaml
+  /collections/customer_contacts:
+    $ref: paths/collections/customer_contacts.yaml
   /enums/cnhs:
     $ref: paths/enums/cnh.yaml
   /enums/requisition_types:
