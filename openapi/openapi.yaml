@@ -259,15 +259,19 @@ paths:
     $ref: paths/webhook_subscriptions/resources.yaml  
   /collections/benefits:
     $ref: paths/collections/benefits.yaml
-  /enums/cnh:
+  /collections/cities:
+    $ref: paths/collections/cities.yaml
+  /collections/disabilities:
+    $ref: paths/collections/disabilities.yaml
+  /enums/cnhs:
     $ref: paths/enums/cnh.yaml
-  /enums/requisition_type:
+  /enums/requisition_types:
     $ref: paths/enums/requisition_type.yaml
-  /enums/contracting_regime:
+  /enums/contracting_regimes:
     $ref: paths/enums/contracting_regime.yaml
-  /enums/license:
+  /enums/licenses:
     $ref: paths/enums/license.yaml
-  /enums/benefit_value_type:
+  /enums/benefit_value_types:
     $ref: paths/enums/benefit_value_type.yaml
   /enums/benefit_periodicities:
     $ref: paths/enums/benefit_periodicities.yaml
@@ -322,3 +326,7 @@ components:
       $ref: "./components/schemas/customer/payload.yaml"
     Enum:
       $ref: "./components/models/enum.yaml"
+    Disability:
+      $ref: "./components/models/disability.yaml"
+    City:
+      $ref: "./components/models/city.yaml"
