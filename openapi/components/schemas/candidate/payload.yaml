@@ -19,5 +19,4 @@ properties:
         description: CPF
     required:
       - email
-      - cpf
       - name
