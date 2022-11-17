@@ -263,6 +263,8 @@ paths:
     $ref: paths/collections/cities.yaml
   /collections/disabilities:
     $ref: paths/collections/disabilities.yaml
+  /collections/states:
+    $ref: paths/collections/states.yaml
   /enums/cnhs:
     $ref: paths/enums/cnh.yaml
   /enums/requisition_types:
@@ -330,3 +332,5 @@ components:
       $ref: "./components/models/disability.yaml"
     City:
       $ref: "./components/models/city.yaml"
+    State:
+      $ref: "./components/models/state.yaml"
