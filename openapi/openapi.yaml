@@ -13,6 +13,8 @@ tags:
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
     description: Rotas relacionadas as vagas de sua empresa
+  - name: Coleções
+    description: Rotas relacionadas a coleções da empresa
   - name: Webhook
     description: 
       "
@@ -253,6 +255,8 @@ paths:
     $ref: paths/webhook_subscriptions/index_create.yaml
   /subscriptions/{id}:
     $ref: paths/webhook_subscriptions/resources.yaml  
+  /collections/benefits:
+    $ref: paths/collections/benefits.yaml
 components:
   securitySchemes:
     BearerToken:
