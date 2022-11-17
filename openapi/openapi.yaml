@@ -269,6 +269,8 @@ paths:
     $ref: paths/collections/customers.yaml
   /collections/customer_contacts:
     $ref: paths/collections/customer_contacts.yaml
+  /collections/company_users:
+    $ref: paths/collections/company_users.yaml
   /enums/cnhs:
     $ref: paths/enums/cnh.yaml
   /enums/requisition_types:
@@ -338,3 +340,5 @@ components:
       $ref: "./components/models/city.yaml"
     State:
       $ref: "./components/models/state.yaml"
+    CompanyUser:
+      $ref: "./components/models/company_user.yaml"

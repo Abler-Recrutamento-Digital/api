@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    type: integer
+    description: Id do resource
+  type:
+    type: string
+    description: Tipo do resource
+  attributes:
+    type: object
+    description: Atributos do resource
+    properties:
+      name: 
+        type: string
+        description: Nome
+      email: 
+        type: string
+        description: Email
+      phone: 
+        type: string
+        description: Telefone
+      active: 
+        type: boolean
+        description: Flag de ativo/inativo
+      is_admin: 
+        type: boolean
+        description: É admin
+      role: 
+        type: string
+        description: Cargo
