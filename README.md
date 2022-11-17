@@ -13,5 +13,8 @@ Starts the reference docs preview server.
 #### `npm run build`
 Bundles the definition to the dist folder.
 
+#### `./bundle.sh`
+Bundle the dist folder at index.html
+
 #### `npm test`
 Validates the definition.
