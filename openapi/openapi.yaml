@@ -271,6 +271,8 @@ paths:
     $ref: paths/collections/customer_contacts.yaml
   /collections/company_users:
     $ref: paths/collections/company_users.yaml
+  /collections/teams:
+    $ref: paths/collections/teams.yaml
   /enums/cnhs:
     $ref: paths/enums/cnh.yaml
   /enums/requisition_types:
