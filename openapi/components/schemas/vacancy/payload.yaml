@@ -147,3 +147,5 @@ properties:
       - title
       - salary
       - quantity
+      - contracting_regime
+      - working_journey

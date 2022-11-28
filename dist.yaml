@@ -1417,7 +1417,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termos no campo nome
           schema:
             type: string
       responses:
@@ -1457,7 +1457,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termo nome
           schema:
             type: string
         - in: query
@@ -1502,7 +1502,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termo nome
           schema:
             type: string
       responses:
@@ -1542,7 +1542,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termo nome e abreviação
           schema:
             type: string
       responses:
@@ -1582,7 +1582,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termo razão social e nome fantasia
           schema:
             type: string
       responses:
@@ -1619,12 +1619,6 @@ paths:
       description: Busca de contatos
       security:
         - BearerToken: []
-      parameters:
-        - in: query
-          name: q
-          description: Busca pode termos
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -1662,7 +1656,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termo nome
           schema:
             type: string
       responses:
@@ -1702,7 +1696,7 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca pode termos
+          description: Busca por termo nome
           schema:
             type: string
       responses:
@@ -3518,6 +3512,8 @@ components:
             - title
             - salary
             - quantity
+            - contracting_regime
+            - working_journey
     payload-2:
       type: object
       properties:

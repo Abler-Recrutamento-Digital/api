@@ -5,12 +5,6 @@ get:
   description: Busca de contatos
   security:
     - BearerToken: []
-  parameters:
-    - in: query
-      name: q
-      description: Busca pode termos
-      schema:
-        type: string
   responses:
     '200':
       description: successful operation

@@ -8,7 +8,7 @@ get:
   parameters:
     - in: query
       name: q
-      description: Busca pode termos
+      description: Busca por termo razão social e nome fantasia
       schema:
         type: string
   responses:
