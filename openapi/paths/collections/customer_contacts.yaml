@@ -5,6 +5,27 @@ get:
   description: Busca de contatos
   security:
     - BearerToken: []
+  parameters:
+  - in: query
+    name: q
+    description: Filtrar os contatos por query string
+    schema:
+      type: string
+  - in: query
+    name: customer_id
+    description: Filtrar os contatos pelo ID do cliente
+    schema:
+      type: integer
+  - in: query
+    name: include
+    description:
+      $ref: include_contacts.md
+    schema:
+      type: string
+      enum:
+        - customer
+        - vacancies
+        - access_role
   responses:
     '200':
       description: successful operation
