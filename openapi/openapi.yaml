@@ -235,6 +235,8 @@ paths:
     $ref: paths/customers/index.yaml  
   /customers/{id}:
     $ref: paths/customers/show.yaml
+  /customer_contacts:
+    $ref: paths/customers/contacts.yaml
   /vacancies:
     $ref: paths/vacancies/index.yaml
   /vacancies/{id}:
