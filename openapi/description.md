@@ -17,7 +17,7 @@ realizar integrações com seus sistemas.
 
 - Envie o header **Authorization** com o Bearer {JWT} para a autenticação.
 - Para os endpoints relacionados a **criação, alteração e exclusão de vagas**, candidatos e clientes será necessário realizar login utilizando os recursos de autenticação. 
-- Nesses casos enviar no header **AUTH_TOKEN** com o token obtido pelos recursos de autenticação
+- Nesses casos enviar no header **auth-token** com o token obtido pelos recursos de autenticação
 
 ## Limite de requisições
 
