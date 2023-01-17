@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Abler API
-  description: "# Introdução\n\nEssa é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar, cadastrar, atualizar e deletar clientes\n- **Vagas**\n  - Buscar, cadastrar, atualizar e deletar vagas\n  - Buscar e cadastrar candidatos\n- **Webhook**\n  - Buscar, cadastrar, atualizar e deletar inscrições em webhooks\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n- Para os endpoints relacionados a **criação, alteração e exclusão de vagas**, candidatos e clientes será necessário realizar login utilizando os recursos de autenticação. \n- Nesses casos enviar no header **AUTH_TOKEN** com o token obtido pelos recursos de autenticação\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t      |Intervalo  |\n|---\t              |---\t            |---\t      |\n|IP   \t            | 300 requisições | 5 minutos |\n\nNo cabeçalho da resposta, disponibilizamos os parâmetros abaixo para que você consiga calcular o tempo entre suas requisições:\n\n- `X-RateLimit-Limit`: Limite de requisições por 5 minutos.\n- `X-RateLimit-Remaining`: Tempo disponível para exceder o limite.\n- `X-RateLimit-Reset`: Tempo no qual você pode enviar requisições novamente (segundos).\n\n"
+  description: "# Introdução\n\nEssa é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar, cadastrar, atualizar e deletar clientes\n- **Vagas**\n  - Buscar, cadastrar, atualizar e deletar vagas\n  - Buscar e cadastrar candidatos\n- **Webhook**\n  - Buscar, cadastrar, atualizar e deletar inscrições em webhooks\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n- Para os endpoints relacionados a **criação, alteração e exclusão de vagas**, candidatos e clientes será necessário realizar login utilizando os recursos de autenticação. \n- Nesses casos enviar no header **auth-token** com o token obtido pelos recursos de autenticação\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t      |Intervalo  |\n|---\t              |---\t            |---\t      |\n|IP   \t            | 300 requisições | 5 minutos |\n\nNo cabeçalho da resposta, disponibilizamos os parâmetros abaixo para que você consiga calcular o tempo entre suas requisições:\n\n- `X-RateLimit-Limit`: Limite de requisições por 5 minutos.\n- `X-RateLimit-Remaining`: Tempo disponível para exceder o limite.\n- `X-RateLimit-Reset`: Tempo no qual você pode enviar requisições novamente (segundos).\n\n"
   version: 1.0.0
 servers:
   - url: https://api.abler.com.br/v1
@@ -1619,6 +1619,35 @@ paths:
       description: Busca de contatos
       security:
         - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Filtrar os contatos por query string
+          schema:
+            type: string
+        - in: query
+          name: customer_id
+          description: Filtrar os contatos pelo ID do cliente
+          schema:
+            type: integer
+        - in: query
+          name: include
+          description: >-
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `api.abler.com.br/v1/collections/customer_contacts?include=address,customer_contacts`"
+          schema:
+            type: string
+            enum:
+              - customer
+              - vacancies
+              - access_role
       responses:
         '200':
           description: successful operation
@@ -1939,7 +1968,7 @@ components:
     AuthToken:
       type: apiKey
       in: header
-      name: AUTH_TOKEN
+      name: auth-token
   schemas:
     Customer:
       $ref: '#/components/schemas/customer-2'
