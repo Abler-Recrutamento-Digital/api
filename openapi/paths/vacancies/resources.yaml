@@ -73,7 +73,6 @@ patch:
   description: Atualizar vaga
   security:
     - BearerToken: []
-      AuthToken: []
   parameters:
     - in: path
       name: id
@@ -120,7 +119,6 @@ delete:
   description: Deletar vaga pelo id
   security:
     - BearerToken: []
-      AuthToken: []
   parameters:
     - in: path
       name: id

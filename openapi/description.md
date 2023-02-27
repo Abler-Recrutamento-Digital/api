@@ -13,11 +13,12 @@ realizar integrações com seus sistemas.
 - **Webhook**
   - Buscar, cadastrar, atualizar e deletar inscrições em webhooks
 
-## Autenticação
+# Autenticação
 
-- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.
-- Para os endpoints relacionados a **criação, alteração e exclusão de vagas**, candidatos e clientes será necessário realizar login utilizando os recursos de autenticação. 
-- Nesses casos enviar no header **auth-token** com o token obtido pelos recursos de autenticação
+* Dentro do painel gerencial da empresa na seção **Integrações** gere o token para acesso de empresa (**TOKEN_EMPRESA**).
+* Envie o header **Authorization** com o valor `Bearer TOKEN_EMPRESA` para a autenticação.
+* Para os endpoints relacionados a **criação, alteração e exclusão** dos recursos de [Vagas](#tag/Vagas), [Candidaturas](#tag/Vagas/paths/~1vacancies~1%7Bid%7D~1candidates/post) e [Clientes](#tag/Clientes) será necessário realizar login para obter seu **TOKEN_USUARIO** utilizando o recurso de [Autenticação](#tag/Auth)
+* Utilize o **TOKEN_USUARIO** para utilizar os recursos da API enviando o header **Authorization** com o valor `Bearer TOKEN_USUARIO`.
 
 ## Limite de requisições
 
