@@ -1,7 +1,6 @@
 # Introdução
 
-Essa é uma API pública para que os nossos clientes possam
-realizar integrações com seus sistemas.
+Nossos clientes podem utilizar nossa API para integrar a Abler com suas aplicações.
 
 ## Recursos
 
@@ -15,10 +14,21 @@ realizar integrações com seus sistemas.
 
 # Autenticação
 
-* Dentro do painel gerencial da empresa na seção **Integrações** gere o token para acesso de empresa (**TOKEN_EMPRESA**).
-* Envie o header **Authorization** com o valor `Bearer TOKEN_EMPRESA` para a autenticação.
-* Para os endpoints relacionados a **criação, alteração e exclusão** dos recursos de [Vagas](#tag/Vagas), [Candidaturas](#tag/Vagas/paths/~1vacancies~1%7Bid%7D~1candidates/post) e [Clientes](#tag/Clientes) será necessário realizar login para obter seu **TOKEN_USUARIO** utilizando o recurso de [Autenticação](#tag/Auth)
-* Utilize o **TOKEN_USUARIO** para utilizar os recursos da API enviando o header **Authorization** com o valor `Bearer TOKEN_USUARIO`.
+O primeiro passo para iniciar a integração com a Abler é gerar o token de acesso. 
+Você consegue obter o token da seguinte forma:
+1. Acesse a conta da empresa na plataforma Abler;
+2. Clique em "Configurações" na página de início. Se você estiver usando o novo ATS, clique em "Empresa" e precisará efetuar login novamente;
+3. Na aba Dados da sua empresa, vá para o fim da página até chegar em "Integrações";
+4. Crie o token e use ele na sua aplicação como descrito abaixo. 
+
+### Como usar o token
+
+Em toda requisição que realizar, envie no header da requisição:
+ 
+`Authorization: Bearer {COLOQUE_O_TOKEN_AQUI}`
+
+ATENÇÃO: Este token não expira. Insira-o em um lugar seguro dentro da aplicação, tais como gerenciadores de secrets ou arquivos .env. Não insira o token diretamente em seu código-fonte.
+
 
 ## Limite de requisições
 
