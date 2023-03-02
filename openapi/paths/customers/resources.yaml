@@ -1,39 +1,20 @@
 get:
   tags:
-    - Vagas
+    - Clientes
   summary: Buscar pelo id
-  description: Busca de vaga pelo id
+  description: Busca de clientes pelo id
   security:
     - BearerToken: []
   parameters:
-    - in: path
-      name: id
-      description: Vacancy id
-      required: true
-      schema:
-        type: integer
     - in: query
       name: include
       description:
-        "Quando um relacionamento precisar estar presente no dado serializado do
-        cliente, apenas inclua usando esse parâmetro. Envie o `include` separado
-        por vírgula para retornar mais que um. Exemplo:
-        `api.abler.com.br/v1/vacancies?include=address,team`"
+        $ref: include.md
       schema:
         type: string
         enum:
-          - pipeline
           - address
-          - team
-          - level_of_interest
-          - area_of_interests
-          - vacancies_benefits
-          - vacancies_benefits.benefit
-          - vacancies_languages
-          - vacancies_languages.language
-          - complementary_formations
-          - approvers
-          - analysts
+          - customer_contacts
   responses:
     '200':
       description: successful operation
@@ -47,7 +28,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/vacancy/vacancy.yaml"
+              $ref: "../../components/schemas/customer/customer.yaml"
     '401':
       description: Unauthorized
       content:
@@ -68,24 +49,23 @@ get:
             $ref: "../../components/schemas/response/api.yaml"
 patch:
   tags:
-    - Vagas
-  summary: Atualizar pelo id
-  description: Atualizar vaga
+    - Clientes
+  summary: Atualizar
+  description: Atualizar cliente
   security:
     - BearerToken: []
+      AuthToken: []
   parameters:
-    - in: path
-      name: id
-      description: Vacancy id
-      required: true
-      schema:
-        type: integer
+    - in: query
+      name: include
+      description:
+        $ref: include.md
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/VacancyPayload'
+          $ref: '#/components/schemas/CustomerPayload'
   responses:
     '200':
       description: successful operation
@@ -97,9 +77,7 @@ patch:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: "../../components/schemas/vacancy/vacancy.yaml"
+            $ref: "../../components/schemas/customer/customer.yaml"              
     '401':
       description: Unauthorized
       content:
@@ -114,18 +92,23 @@ patch:
             $ref: "../../components/schemas/response/api.yaml"
 delete:
   tags:
-    - Vagas
-  summary: Deletar pelo id
-  description: Deletar vaga pelo id
+    - Clientes
+  summary: Excluir
+  description: Excluir cliente
   security:
     - BearerToken: []
+      AuthToken: []
   parameters:
-    - in: path
-      name: id
-      description: ID da Vaga
-      required: true
-      schema:
-        type: integer
+    - in: query
+      name: include
+      description:
+        $ref: include.md
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CustomerPayload'
   responses:
     '200':
       description: successful operation
@@ -137,17 +120,9 @@ delete:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: "../../components/schemas/vacancy/vacancy.yaml"
+            $ref: "../../components/schemas/customer/customer.yaml"              
     '401':
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: "../../components/schemas/response/api.yaml"
-    '404':
-      description: NotFound
       content:
         application/json:
           schema:

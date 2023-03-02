@@ -70,10 +70,11 @@ properties:
         type: array
         description: Tipo da vaga
         items:
-          type: enum
-          - presencial
-          - hibrida
-          - remoto
+          type: string
+          enum:
+            - presencial
+            - hibrida
+            - remoto
       tech_skills:
         type: array
         items:

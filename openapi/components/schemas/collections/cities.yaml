@@ -1,0 +1,14 @@
+type: object
+properties:
+  data:
+    type: array
+    description: Registro serializado no formato JSON API    
+    items: 
+      oneOf:
+        - $ref: '#/components/schemas/City' 
+example:
+  data:
+    id: 1
+    type: city
+    attributes:
+      name: Curitiba

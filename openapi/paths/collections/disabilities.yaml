@@ -1,0 +1,39 @@
+get:
+  tags:
+    - Coleções
+  summary: Tipo de deficiência
+  description: Busca de tipo de deficiência
+  security:
+    - BearerToken: []
+  parameters:
+    - in: query
+      name: q
+      description: Busca por termo nome
+      schema:
+        type: string
+  responses:
+    '200':
+      description: successful operation
+      headers:
+        Authorization:
+          schema:
+            type: string
+          description: Bearer JWT
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../components/schemas/collections/disabilities.yaml"
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"
+    '422':
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: "../../components/schemas/response/api.yaml"

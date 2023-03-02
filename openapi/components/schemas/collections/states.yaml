@@ -1,0 +1,15 @@
+type: object
+properties:
+  data:
+    type: array
+    description: Registro serializado no formato JSON API    
+    items: 
+      oneOf:
+        - $ref: '#/components/schemas/State' 
+example:
+  data:
+    id: 1
+    type: state
+    attributes:
+      name: Paraná
+      abbreviation: PR

@@ -1,20 +1,25 @@
-get:
+post:
   tags:
-    - Clientes
-  summary: Buscar pelo id
-  description: Busca de clientes pelo id
+    - Auth
+  summary: Login
+  description: Autenticar usuário
   security:
     - BearerToken: []
-  parameters:
-    - in: query
-      name: include
-      description:
-        $ref: include.md
-      schema:
-        type: string
-        enum:
-          - address
-          - customer_contacts
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            login:
+              type: string
+              description: email do usuário
+              example: email@gmail.com
+            password:
+              type: string
+              description: Senha
+              example: 7%Fdk4D3*hT3
   responses:
     '200':
       description: successful operation
@@ -28,15 +33,9 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/customer/customer.yaml"
+              $ref: "../../components/schemas/auth/login.yaml"
     '401':
       description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: "../../components/schemas/response/api.yaml"
-    '404':
-      description: NotFound
       content:
         application/json:
           schema:

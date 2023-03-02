@@ -1,4 +1,4 @@
 type: http
 scheme: bearer
-description: 'Authorization: Bearer {JWT}'
+description: 'Authorization: Bearer token'
 bearerFormat: JWT

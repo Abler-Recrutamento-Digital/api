@@ -1,28 +1,14 @@
 get:
   tags:
-    - Clientes
-  summary: Buscar
-  description: Busca de clientes
+    - Coleções
+  summary: Estados
+  description: Busca de estados
   security:
     - BearerToken: []
   parameters:
     - in: query
-      name: include
-      description:
-        $ref: include.md
-      schema:
-        type: string
-        enum:
-          - address
-          - customer_contacts
-    - in: query
-      name: per_page
-      description: Registros por página
-      schema:
-        type: string
-    - in: query
-      name: page
-      description: Página
+      name: q
+      description: Busca por termo nome e abreviação
       schema:
         type: string
   responses:
@@ -38,7 +24,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/customer/customers.yaml"
+              $ref: "../../components/schemas/collections/states.yaml"
     '401':
       description: Unauthorized
       content:

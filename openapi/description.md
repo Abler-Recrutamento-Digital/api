@@ -1,30 +1,30 @@
 # Introdução
 
-Essa é uma API pública para que os nossos clientes possam
-realizar integrações com seus sistemas.
+Nossos clientes podem utilizar nossa API para integrar a Abler com suas aplicações.
 
 ## Recursos
 
 - **Clientes**
-  - Buscar clientes
+  - Buscar, cadastrar, atualizar e deletar clientes
 - **Vagas**
-  - Buscar vagas e candidatos
+  - Buscar, cadastrar, atualizar e deletar vagas
+  - Buscar e cadastrar candidatos
 - **Webhook**
   - Buscar, cadastrar, atualizar e deletar inscrições em webhooks
 
-## Autenticação
+# Autenticação
 
-- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.
+O primeiro passo para iniciar a integração com a Abler é gerar o token de acesso. 
+Você consegue obter o token da seguinte forma:
+1. Acesse a conta da empresa na plataforma Abler;
+2. Clique em "Configurações" na página de início. Se você estiver usando o novo ATS, clique em "Empresa" e precisará efetuar login novamente;
+3. Na aba Dados da sua empresa, vá para o fim da página até chegar em "Integrações";
+4. Crie o token e use ele na sua aplicação como descrito abaixo. 
 
-## Limite de requisições
+### Como usar o token
 
-|Tipo de acesso   	| Limite   	      |Intervalo  |
-|---	              |---	            |---	      |
-|IP   	            | 300 requisições | 5 minutos |
+Em toda requisição que realizar, envie no header da requisição:
 
-No cabeçalho da resposta, disponibilizamos os parâmetros abaixo para que você consiga calcular o tempo entre suas requisições:
+`Authorization: Bearer {COLOQUE_O_TOKEN_AQUI}`
 
-- `X-RateLimit-Limit`: Limite de requisições por 5 minutos.
-- `X-RateLimit-Remaining`: Tempo disponível para exceder o limite.
-- `X-RateLimit-Reset`: Tempo no qual você pode enviar requisições novamente (segundos).
-
+ATENÇÃO: Este token não expira. Insira-o em um lugar seguro dentro da aplicação, tais como gerenciadores de secrets ou arquivos .env. Não insira o token diretamente em seu código-fonte.

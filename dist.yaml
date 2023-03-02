@@ -1,7 +1,56 @@
 openapi: 3.0.0
 info:
   title: Abler API
-  description: "# Introdução\n\nEssa é uma API pública para que os nossos clientes possam\nrealizar integrações com seus sistemas.\n\n## Recursos\n\n- **Clientes**\n  - Buscar clientes\n- **Vagas**\n  - Buscar vagas e candidatos\n- **Webhook**\n  - Buscar, cadastrar, atualizar e deletar inscrições em webhooks\n\n## Autenticação\n\n- Envie o header **Authorization** com o Bearer {JWT} para a autenticação.\n\n## Limite de requisições\n\n|Tipo de acesso   \t| Limite   \t      |Intervalo  |\n|---\t              |---\t            |---\t      |\n|IP   \t            | 300 requisições | 5 minutos |\n\nNo cabeçalho da resposta, disponibilizamos os parâmetros abaixo para que você consiga calcular o tempo entre suas requisições:\n\n- `X-RateLimit-Limit`: Limite de requisições por 5 minutos.\n- `X-RateLimit-Remaining`: Tempo disponível para exceder o limite.\n- `X-RateLimit-Reset`: Tempo no qual você pode enviar requisições novamente (segundos).\n\n"
+  description: >-
+    # Introdução
+
+
+    Nossos clientes podem utilizar nossa API para integrar a Abler com suas
+    aplicações.
+
+
+    ## Recursos
+
+
+    - **Clientes**
+      - Buscar, cadastrar, atualizar e deletar clientes
+    - **Vagas**
+      - Buscar, cadastrar, atualizar e deletar vagas
+      - Buscar e cadastrar candidatos
+    - **Webhook**
+      - Buscar, cadastrar, atualizar e deletar inscrições em webhooks
+
+    # Autenticação
+
+
+    O primeiro passo para iniciar a integração com a Abler é gerar o token de
+    acesso. 
+
+    Você consegue obter o token da seguinte forma:
+
+    1. Acesse a conta da empresa na plataforma Abler;
+
+    2. Clique em "Configurações" na página de início. Se você estiver usando o
+    novo ATS, clique em "Empresa" e precisará efetuar login novamente;
+
+    3. Na aba Dados da sua empresa, vá para o fim da página até chegar em
+    "Integrações";
+
+    4. Crie o token e use ele na sua aplicação como descrito abaixo. 
+
+
+    ### Como usar o token
+
+
+    Em toda requisição que realizar, envie no header da requisição:
+
+
+    `Authorization: Bearer {COLOQUE_O_TOKEN_AQUI}`
+
+
+    ATENÇÃO: Este token não expira. Insira-o em um lugar seguro dentro da
+    aplicação, tais como gerenciadores de secrets ou arquivos .env. Não insira o
+    token diretamente em seu código-fonte.
   version: 1.0.0
 servers:
   - url: https://api.abler.com.br/v1
@@ -10,6 +59,10 @@ tags:
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
     description: Rotas relacionadas as vagas de sua empresa
+  - name: Coleções
+    description: Rotas relacionadas a coleções da empresa
+  - name: Enum
+    description: Rotas relacionadas a enums da empresa
   - name: Webhook
     description: ' Você pode se inscrever em um dos eventos disponíveis e a Abler notificará quando este evento for disparado<br> <ol> <li>Use os endpoints de webhook_subscription para registrar seu endpoint;</li> <li>Quando o evento for disparado, a Abler irá enviar um POST para o endpoint registrado naquele evento.</li> </ol> Em seguida serão exibidos a lista de eventos disponíveis.     '
 webhooks:
@@ -188,6 +241,8 @@ webhooks:
                   type: string
                   enum:
                     - candidate_hired
+                title:
+                  type: string
                 salary:
                   type: float
                 contracting_regime:
@@ -216,7 +271,13 @@ webhooks:
                     - hunting
                     - reposicao
                     - substituicao
+                license:
+                  type: string
+                name_substituted:
+                  type: string
                 cpf_substituted:
+                  type: string
+                contract_time:
                   type: string
                 reason_of_demand:
                   type: string
@@ -227,10 +288,38 @@ webhooks:
                 candidate_cell_phone:
                   type: string
                   format: (00) 00000-0000
+                candidate_pis:
+                  type: string
+                candidate_birthday:
+                  type: string
+                  format: YYYY-MM-DD
                 initial_date:
                   type: date
                   format: YYYY-MM-DD
+                address:
+                  type: string
+                  format: Cidade/Sigla Estado
+                cost_center:
+                  type: string
+                working_journey:
+                  type: string
                 additional_info:
+                  type: string
+                benefits:
+                  type: string
+                exclusive_pcd:
+                  type: boolean
+                team_name:
+                  type: string
+                customer_id:
+                  type: integer
+                customer_corporate_name:
+                  type: string
+                customer_trading_name:
+                  type: string
+                customer_cnpj:
+                  type: string
+                customer_contact_name:
                   type: string
       responses:
         '200':
@@ -301,6 +390,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api'
+    post:
+      tags:
+        - Clientes
+      summary: Criar
+      description: Criar cliente
+      security:
+        - BearerToken: []
+          AuthToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerPayload'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
   /customers/{id}:
     get:
       tags:
@@ -350,6 +477,110 @@ paths:
                 $ref: '#/components/schemas/api'
         '404':
           description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    patch:
+      tags:
+        - Clientes
+      summary: Atualizar
+      description: Atualizar cliente
+      security:
+        - BearerToken: []
+          AuthToken: []
+      parameters:
+        - in: query
+          name: include
+          description: >+
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `api.abler.com.br/v1/customers?include=address,customer_contacts`"
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerPayload'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    delete:
+      tags:
+        - Clientes
+      summary: Excluir
+      description: Excluir cliente
+      security:
+        - BearerToken: []
+          AuthToken: []
+      parameters:
+        - in: query
+          name: include
+          description: >+
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `api.abler.com.br/v1/customers?include=address,customer_contacts`"
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerPayload'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer'
+        '401':
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -485,6 +716,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api'
+    post:
+      tags:
+        - Vagas
+      summary: Criar
+      description: Criar vaga
+      security:
+        - BearerToken: []
+          AuthToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacancyPayload'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vacancy'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
   /vacancies/{id}:
     get:
       tags:
@@ -522,6 +793,98 @@ paths:
               - complementary_formations
               - approvers
               - analysts
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vacancy'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '404':
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    patch:
+      tags:
+        - Vagas
+      summary: Atualizar pelo id
+      description: Atualizar vaga
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: Vacancy id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacancyPayload'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/vacancy'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    delete:
+      tags:
+        - Vagas
+      summary: Deletar pelo id
+      description: Deletar vaga pelo id
+      security:
+        - BearerToken: []
+      parameters:
+        - in: path
+          name: id
+          description: ID da Vaga
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: successful operation
@@ -606,6 +969,44 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/candidate'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+    post:
+      tags:
+        - Vagas
+      summary: Adicionar candidatura
+      description: Adicionar candidatura
+      security:
+        - BearerToken: []
+          AuthToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidatePayload'
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/candidate'
         '401':
           description: Unauthorized
           content:
@@ -966,13 +1367,569 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/api'
+  /collections/benefits:
+    get:
+      tags:
+        - Coleções
+      summary: Beneficios
+      description: Busca de beneficios
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termos no campo nome
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/benefit'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/cities:
+    get:
+      tags:
+        - Coleções
+      summary: Cidades
+      description: Busca de cidades
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termo nome
+          schema:
+            type: string
+        - in: query
+          name: state_id
+          description: Busca id de estado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/cities'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/disabilities:
+    get:
+      tags:
+        - Coleções
+      summary: Tipo de deficiência
+      description: Busca de tipo de deficiência
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termo nome
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/disabilities'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/states:
+    get:
+      tags:
+        - Coleções
+      summary: Estados
+      description: Busca de estados
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termo nome e abreviação
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/states'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/customers:
+    get:
+      tags:
+        - Coleções
+      summary: Clientes
+      description: Busca de clientes
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termo razão social e nome fantasia
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/customers-2'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/customer_contacts:
+    get:
+      tags:
+        - Coleções
+      summary: Contatos
+      description: Busca de contatos
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Filtrar os contatos por query string
+          schema:
+            type: string
+        - in: query
+          name: customer_id
+          description: Filtrar os contatos pelo ID do cliente
+          schema:
+            type: integer
+        - in: query
+          name: include
+          description: >-
+            "Quando um relacionamento precisar estar presente no dado
+            serializado do
+
+            cliente, apenas inclua usando esse parâmetro. Envie o `include`
+            separado
+
+            por vírgula para retornar mais que um. Exemplo:
+
+            `api.abler.com.br/v1/collections/customer_contacts?include=address,customer_contacts`"
+          schema:
+            type: string
+            enum:
+              - customer
+              - vacancies
+              - access_role
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/customer_contacts'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/company_users:
+    get:
+      tags:
+        - Coleções
+      summary: Usuários
+      description: Busca de usuários da empresa
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termo nome
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/company_users'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /collections/teams:
+    get:
+      tags:
+        - Coleções
+      summary: Equipes
+      description: Busca de equipes
+      security:
+        - BearerToken: []
+      parameters:
+        - in: query
+          name: q
+          description: Busca por termo nome
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/teams'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /enums/cnhs:
+    get:
+      tags:
+        - Enum
+      summary: CNH
+      description: Busca de CNH
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/cnh'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /enums/requisition_types:
+    get:
+      tags:
+        - Enum
+      summary: Tipo de requisição
+      description: Busca de tipo de requisição
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/requisition_type'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /enums/contracting_regimes:
+    get:
+      tags:
+        - Enum
+      summary: Tipo de contrato
+      description: Busca de tipo de contrato
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/contracting_regime'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /enums/licenses:
+    get:
+      tags:
+        - Enum
+      summary: Licença
+      description: Busca de licença
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/license'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /enums/benefit_value_types:
+    get:
+      tags:
+        - Enum
+      summary: Valor de benefícios
+      description: Busca de valor de benefícios
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/benefit_value_type'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+  /enums/benefit_periodicities:
+    get:
+      tags:
+        - Enum
+      summary: Periodicidade de benefícios
+      description: Busca de periodicidade de benefícios
+      security:
+        - BearerToken: []
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: Bearer JWT
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/benefit_periodicities'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api'
 components:
   securitySchemes:
     BearerToken:
       type: http
       scheme: bearer
-      description: 'Authorization: Bearer {JWT}'
+      description: 'Authorization: Bearer token'
       bearerFormat: JWT
+    AuthToken:
+      type: apiKey
+      in: header
+      name: auth-token
   schemas:
     Customer:
       $ref: '#/components/schemas/customer-2'
@@ -982,8 +1939,6 @@ components:
       $ref: '#/components/schemas/customer_contact'
     Candidate:
       $ref: '#/components/schemas/candidate-2'
-    Vacancy:
-      $ref: ./components/models/vacancy.yaml
     Pipeline:
       $ref: '#/components/schemas/pipeline'
     Relationship:
@@ -995,7 +1950,7 @@ components:
     AreaOfInterest:
       $ref: '#/components/schemas/area_of_interest'
     Benefit:
-      $ref: '#/components/schemas/benefit'
+      $ref: '#/components/schemas/benefit-2'
     VacanciesBenefit:
       $ref: '#/components/schemas/vacancies_benefit'
     Language:
@@ -1010,6 +1965,24 @@ components:
       $ref: '#/components/schemas/vacancy_admission_info'
     CandidatesPipeline:
       $ref: '#/components/schemas/candidates_pipeline'
+    VacancyPayload:
+      $ref: '#/components/schemas/payload'
+    CandidatePayload:
+      $ref: '#/components/schemas/payload-2'
+    CustomerPayload:
+      $ref: '#/components/schemas/payload-3'
+    Enum:
+      $ref: '#/components/schemas/enum'
+    Disability:
+      $ref: '#/components/schemas/disability'
+    City:
+      $ref: '#/components/schemas/city'
+    State:
+      $ref: '#/components/schemas/state'
+    CompanyUser:
+      $ref: '#/components/schemas/company_user'
+    Vacancy:
+      $ref: '#/components/schemas/vacancy-2'
     customers:
       type: object
       properties:
@@ -1671,6 +2644,240 @@ components:
           attributes:
             event: vacancy_created
             url: https://webhook.site/a679aac8-d684
+    benefit:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Benefício serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Benefit'
+      example:
+        data:
+          id: 1
+          type: benefit
+          attributes:
+            name: Descrição do benefício
+            has_value: false
+    cities:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/City'
+      example:
+        data:
+          id: 1
+          type: city
+          attributes:
+            name: Curitiba
+    disabilities:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Disability'
+      example:
+        data:
+          id: 1
+          type: disability
+          attributes:
+            name: Auditiva
+    states:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/State'
+      example:
+        data:
+          id: 1
+          type: state
+          attributes:
+            name: Paraná
+            abbreviation: PR
+    customers-2:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Customer'
+      example:
+        data:
+          id: 1
+          type: customer
+          attributes:
+            corporate_name: Razão social
+            trading_name: Nome Fantasia
+            cnpj: 42434481000193
+            active: true
+            additional_info: Informações adicionais
+            created_at: '2022-01-07T14:30:19.403-03:00'
+            updated_at: '2022-01-07T14:30:19.403-03:00'
+          relationships:
+            address: {}
+            customer_contacts: {}
+    customer_contacts:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/CustomerContact'
+      example:
+        data:
+          id: 1
+          type: customer_contact
+          attributes:
+            name: Customer
+            email: customer@teste.com.br"
+            phone: null
+            role: CTO
+            active: true
+            allow_access: false
+            access_role_id: null
+            created_at: '2022-01-07T14:30:19.403-03:00'
+            updated_at: '2022-01-07T14:30:19.403-03:00'
+    company_users:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/CompanyUser'
+      example:
+        data:
+          id: 1
+          type: company_user
+          attributes:
+            email: company_user@teste.com.br"
+            name: Admin
+            phone: null
+            active: true
+            is_admin: true
+            role: true
+    teams:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Team'
+      example:
+        data:
+          id: 1
+          type: team
+          attributes:
+            name: Equipe X
+    cnh:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Enum'
+      example:
+        data:
+          id: a
+          type: cnh
+          attributes:
+            name: A
+    requisition_type:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Enum'
+      example:
+        data:
+          id: administracao_contrato
+          type: requisition_type
+          attributes:
+            name: Administração de contrato
+    contracting_regime:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Enum'
+      example:
+        data:
+          id: aprendiz
+          type: contracting_regime
+          attributes:
+            name: Aprendiz
+    license:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Enum'
+      example:
+        data:
+          id: desligamento
+          type: license
+          attributes:
+            name: Desligamento
+    benefit_value_type:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Enum'
+      example:
+        data:
+          id: value
+          type: benefit_value_type
+          attributes:
+            name: Valor
+    benefit_periodicities:
+      type: object
+      properties:
+        data:
+          type: array
+          description: Registro serializado no formato JSON API
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Enum'
+      example:
+        data:
+          id: daily
+          type: benefit_periodicity
+          attributes:
+            name: Diário
     customer-2:
       type: object
       properties:
@@ -1925,7 +3132,7 @@ components:
             name:
               type: string
               description: Nome
-    benefit:
+    benefit-2:
       type: object
       properties:
         id:
@@ -2131,3 +3338,546 @@ components:
             disqualified_at:
               type: datetime
               description: Data de desqualificação
+    payload:
+      type: object
+      properties:
+        vacancy:
+          type: object
+          properties:
+            title:
+              type: string
+              description: Título da vaga
+              required: true
+              example: Desenvolvedor back-end
+            customer_id:
+              type: integer
+              description: Cliente
+              example: 1
+            customer_contact_id:
+              type: integer
+              description: Contato do cliente
+              example: 1
+            salary:
+              type: number
+              description: Salário
+              example: 5500
+            quantity:
+              type: integer
+              description: Quantidade
+              example: 1
+            contracting_regime:
+              type: string
+              description: |
+                Tipo de contrato<br> Disponível em: **enums/contracting_regime**
+              example: aprendiz
+            working_journey:
+              type: string
+              description: Jornada de trabalho
+              example: Segunda a sexta 8:00 as 18:00
+            forward_at:
+              type: string <DD/MM/YYYY>
+              description: Prazo de encaminhamento
+              example: 01/12/2022
+            close_on:
+              type: string <DD/MM/YYYY>
+              description: Prazo de fechamento
+              example: 30/12/2022
+            exclusive_pcd:
+              type: boolean
+              description: Processo PCD
+              example: false
+            disability_ids:
+              type: array
+              description: Deficiências
+              items:
+                type: integer
+              example:
+                - 1
+                - 2
+                - 3
+            cnh:
+              type: string
+              description: |
+                CNH<br> Disponível em: **enums/cnh**
+              example: a
+            seller_id:
+              type: integer
+              description: >
+                Consultor comercial<br> Disponível em:
+                **collections/company_users**
+            team_id:
+              type: integer
+              description: |
+                Equipe<br> Disponível em: **collections/teams**
+            additional_info:
+              type: string
+              description: Informações adicionais
+            fee:
+              type: number
+              description: Taxa
+            tax:
+              type: number
+              description: Imposto
+            billing_info:
+              type: string
+              description: Informações sobre faturamento
+            vacancies_benefits_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: id do registro
+                  benefit_id:
+                    type: integer
+                    description: |
+                      Benefício<br> Disponível em: **collections/benefits**
+                  value:
+                    type: number
+                    description: Valor
+                  value_type:
+                    type: string
+                    description: >
+                      Tipo de Valor<br> Disponível em:
+                      **enums/benefit_value_type**
+                  periodicity:
+                    type: string
+                    description: >
+                      Periodicidade<br> Disponível em:
+                      **enums/benefit_periodicities**
+                  extensible:
+                    type: boolean
+                    description: Extensível
+                  _destroy:
+                    type: boolean
+                    description: Flag enviada para exclusão de registro
+                required:
+                  - benefit_id
+            vacancy_admission_info_attributes:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: id do registro
+                reason_of_demand:
+                  type: string
+                  description: Motivo da demanda
+                contract_time:
+                  type: string
+                  description: Tempo de contrato
+                cost_center:
+                  type: string
+                  description: Centro de custo
+                license:
+                  type: string
+                  description: |
+                    Licença<br> Disponível em: **enums/license**
+                name_substituted:
+                  type: string
+                  description: Nome do substituído
+                cpf_substituted:
+                  type: string
+                  description: CPF do substituído
+                _destroy:
+                  type: boolean
+                  description: Flag enviada para exclusão de registro
+          required:
+            - title
+            - salary
+            - quantity
+            - contracting_regime
+            - working_journey
+    payload-2:
+      type: object
+      properties:
+        candidate:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email do candidato
+              example: candidato@gmail.com
+            name:
+              type: string
+              description: Nome do candidato
+              example: Nome
+            cell_phone:
+              type: string
+              description: Celular
+            cpf:
+              type: string
+              description: CPF
+          required:
+            - email
+            - name
+    payload-3:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            corporate_name:
+              type: string
+              description: Razão social
+              example: Empresa SA
+            trading_name:
+              type: string
+              description: Nome Fantasia
+              example: Empresa SA
+            cnpj:
+              type: string
+              description: CNPJ
+              example: 56.577.955/0001-60
+            address_attributes:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID do registro
+                cep:
+                  type: string
+                  description: CEP
+                street:
+                  type: string
+                  description: Rua
+                number:
+                  type: string
+                  description: Número
+                complement:
+                  type: string
+                  description: Complemento
+                neighborhood:
+                  type: string
+                  description: Bairro
+                country:
+                  type: string
+                  description: País,
+                state_id:
+                  type: integer
+                  description: |
+                    ID do estado<br> Disponível em: **collections/states**
+                city_id:
+                  type: integer
+                  description: |
+                    ID do cidade<br> Disponível em: **collections/cities**
+                _destroy:
+                  type: boolean
+                  description: Flag enviada para exclusão de registro
+              required:
+                - state_id
+                - city_id
+            customer_contacts_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID do registro
+                  name:
+                    type: string
+                    description: Nome do contato
+                  email:
+                    type: string
+                    description: Email do contato
+                  role:
+                    type: string
+                    description: Cargo
+                  phone:
+                    type: string
+                    description: Telefone
+                  _destroy:
+                    type: boolean
+                    description: Flag enviada para exclusão de registro
+                required:
+                  - name
+                  - email
+          required:
+            - corporate_name
+            - trading_name
+            - cnpj
+    enum:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do enum
+        type:
+          type: string
+          description: Tipo do enum
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    disability:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    city:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+    state:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+            abbreviation:
+              type: string
+              description: Abreviação
+    company_user:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            name:
+              type: string
+              description: Nome
+            email:
+              type: string
+              description: Email
+            phone:
+              type: string
+              description: Telefone
+            active:
+              type: boolean
+              description: Flag de ativo/inativo
+            is_admin:
+              type: boolean
+              description: É admin
+            role:
+              type: string
+              description: Cargo
+    vacancy-2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do resource
+        type:
+          type: string
+          description: Tipo do resource
+        attributes:
+          type: object
+          description: Atributos do resource
+          properties:
+            title:
+              type: string
+              description: Título
+            slug:
+              type: string
+              description: slug da vaga
+            quantity:
+              type: integer
+              description: 10
+            created_at:
+              type: datetime
+              description: Data de criação
+            published_at:
+              type: datetime
+              description: Data de publicação
+            republished_at:
+              type: datetime
+              description: Data de republicação
+            forward_at:
+              type: datetime
+              description: Data de encaminhamento
+            close_on:
+              type: datetime
+              description: Data de fechamento
+            exclusive_pcd:
+              type: boolean
+              description: Vaga apenas PCD
+            description:
+              type: string
+              description: Descrição da vaga
+            working_journey:
+              type: string
+              description: Jornada de trabalho
+            released:
+              type: boolean
+              description: Vaga lançada
+            show_progress_to_candidates:
+              type: boolean
+              description: Vaga exibe progresso para candidatos
+            available_for_change:
+              type: boolean
+              description: Disponível para mudança
+            available_for_travel:
+              type: boolean
+              description: Disponível para viagem
+            available_for_homeoffice:
+              type: boolean
+              description: Disponível para Homeoffice
+            refusal_reason:
+              type: string
+              description: Razão para não aprovação da vaga
+            experience_tags:
+              type: array
+              description: null
+              items:
+                type: string
+            work_type:
+              type: array
+              description: Tipo da vaga
+              items:
+                type: string
+                enum:
+                  - presencial
+                  - hibrida
+                  - remoto
+            tech_skills:
+              type: array
+              items:
+                type: string
+            courses:
+              type: array
+              description: Cursos
+              items:
+                type: string
+            educational_level:
+              type: string
+              description: Nível educacional
+              enum:
+                - ensino_fundamental
+                - ensino_medio
+                - ensino_medio_tecnico
+                - tecnico
+                - graduacao
+                - pos
+                - mba
+                - doutorado
+                - mestrado
+            educational_level_status:
+              type: string
+              description: Status do nível educacional
+              enum:
+                - cursando
+                - completo
+                - indiferente
+            cnh:
+              type: string
+              description: CNH
+              enum:
+                - a
+                - b
+                - ab
+                - c
+                - ac
+                - d
+                - ad
+                - e
+                - ae
+                - acc
+            status:
+              type: string
+              description: Status da vaga
+              enum:
+                - customer_request
+                - draft
+                - waiting_approval
+                - ready_for_publish
+                - published
+                - stopped
+                - forwarded_by_customer
+                - finished
+                - canceled
+            additional_info:
+              type: string
+              description: Informações adicionais
+            salary:
+              description: Salário
+              oneOf:
+                - type: string
+                  enum:
+                    - to_match
+                - type: float
+            contracting_regime:
+              description: Tipo de contrato
+              type: string
+              enum:
+                - to_match
+                - aprendiz
+                - avaliacao_psicologica
+                - clt
+                - contrato_hibrido
+                - estagiario
+                - freelancer
+                - intermitente
+                - periodo_determinado
+                - pj
+                - profissional_independente_contrato_societario
+                - staff
+                - temporario
+                - terceiro
+        relationships:
+          type: object
+          description: Relacionamentos do resource
+          properties:
+            pipeline:
+              $ref: '#/components/schemas/relationship'
+            address:
+              $ref: '#/components/schemas/relationship'
+            team:
+              $ref: '#/components/schemas/relationship'
+            level_of_interest:
+              $ref: '#/components/schemas/relationship'
+            area_of_interests:
+              $ref: '#/components/schemas/relationship'
+            vacancies_benefits:
+              $ref: '#/components/schemas/relationship'
+            vacancies_languages:
+              $ref: '#/components/schemas/relationship'
+            complementary_formations:
+              $ref: '#/components/schemas/relationship'
+            approvers:
+              $ref: '#/components/schemas/relationship'
+            analysts:
+              $ref: '#/components/schemas/relationship'

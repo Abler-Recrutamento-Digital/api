@@ -11,6 +11,10 @@ tags:
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
     description: Rotas relacionadas as vagas de sua empresa
+  - name: Coleções
+    description: Rotas relacionadas a coleções da empresa
+  - name: Enum
+    description: Rotas relacionadas a enums da empresa
   - name: Webhook
     description: 
       "
@@ -182,7 +186,9 @@ webhooks:
                 event:
                   type: string
                   enum: 
-                   - candidate_hired    
+                   - candidate_hired   
+                title: 
+                  type: string                                    
                 salary: 
                   type: float
                 contracting_regime: 
@@ -211,7 +217,13 @@ webhooks:
                     - hunting
                     - reposicao
                     - substituicao
+                license: 
+                  type: string
+                name_substituted: 
+                  type: string
                 cpf_substituted: 
+                  type: string
+                contract_time: 
                   type: string
                 reason_of_demand: 
                   type: string
@@ -222,19 +234,47 @@ webhooks:
                 candidate_cell_phone: 
                   type: string
                   format: (00) 00000-0000
+                candidate_pis: 
+                  type: string 
+                candidate_birthday: 
+                  type: string                                  
+                  format: YYYY-MM-DD                                  
                 initial_date: 
                   type: date
                   format: YYYY-MM-DD                  
-                additional_info:
+                address: 
+                  type: string
+                  format: Cidade/Sigla Estado
+                cost_center: 
+                  type: string
+                working_journey: 
+                  type: string
+                additional_info:                
+                  type: string
+                benefits: 
+                  type: string
+                exclusive_pcd: 
+                  type: boolean
+                team_name: 
+                  type: string
+                customer_id: 
+                  type: integer
+                customer_corporate_name: 
+                  type: string
+                customer_trading_name: 
+                  type: string
+                customer_cnpj: 
+                  type: string
+                customer_contact_name: 
                   type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
 paths:
   /customers:
-    $ref: paths/customers/index.yaml  
+    $ref: paths/customers/index_create.yaml  
   /customers/{id}:
-    $ref: paths/customers/show.yaml
+    $ref: paths/customers/resources.yaml
   /vacancies:
     $ref: paths/vacancies/index.yaml
   /vacancies/{id}:
@@ -247,10 +287,40 @@ paths:
     $ref: paths/webhook_subscriptions/index_create.yaml
   /subscriptions/{id}:
     $ref: paths/webhook_subscriptions/resources.yaml  
+  /collections/benefits:
+    $ref: paths/collections/benefits.yaml
+  /collections/cities:
+    $ref: paths/collections/cities.yaml
+  /collections/disabilities:
+    $ref: paths/collections/disabilities.yaml
+  /collections/states:
+    $ref: paths/collections/states.yaml
+  /collections/customers:
+    $ref: paths/collections/customers.yaml
+  /collections/customer_contacts:
+    $ref: paths/collections/customer_contacts.yaml
+  /collections/company_users:
+    $ref: paths/collections/company_users.yaml
+  /collections/teams:
+    $ref: paths/collections/teams.yaml
+  /enums/cnhs:
+    $ref: paths/enums/cnh.yaml
+  /enums/requisition_types:
+    $ref: paths/enums/requisition_type.yaml
+  /enums/contracting_regimes:
+    $ref: paths/enums/contracting_regime.yaml
+  /enums/licenses:
+    $ref: paths/enums/license.yaml
+  /enums/benefit_value_types:
+    $ref: paths/enums/benefit_value_type.yaml
+  /enums/benefit_periodicities:
+    $ref: paths/enums/benefit_periodicities.yaml
 components:
   securitySchemes:
     BearerToken:
       $ref: "./components/securitySchemes/BearerToken.yaml"
+    AuthToken: 
+      $ref: "./components/securitySchemes/AuthToken.yaml"
   schemas: 
     Customer:
       $ref: "./components/models/customer.yaml"
@@ -259,9 +329,7 @@ components:
     CustomerContact:
       $ref: "./components/models/customer_contact.yaml"
     Candidate:
-      $ref: "./components/models/candidate.yaml"
-    Vacancy:
-      $ref: "./components/models/vacancy.yaml"
+      $ref: "./components/models/candidate.yaml"    
     Pipeline:
       $ref: "./components/models/pipeline.yaml"
     Relationship:
@@ -288,3 +356,21 @@ components:
       $ref: "./components/models/vacancy_admission_info.yaml"
     CandidatesPipeline:
       $ref: "./components/models/candidates_pipeline.yaml"
+    VacancyPayload:
+      $ref: "./components/schemas/vacancy/payload.yaml"
+    CandidatePayload:
+      $ref: "./components/schemas/candidate/payload.yaml"
+    CustomerPayload:
+      $ref: "./components/schemas/customer/payload.yaml"
+    Enum:
+      $ref: "./components/models/enum.yaml"
+    Disability:
+      $ref: "./components/models/disability.yaml"
+    City:
+      $ref: "./components/models/city.yaml"
+    State:
+      $ref: "./components/models/state.yaml"
+    CompanyUser:
+      $ref: "./components/models/company_user.yaml"
+    Vacancy:
+      $ref: "./components/models/vacancy.yaml"

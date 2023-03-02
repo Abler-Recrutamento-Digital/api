@@ -1,0 +1,7 @@
+type: object
+properties:
+  success:
+    type: boolean 
+    description: Boolean informando sucesso ou falha
+example:
+  success: true

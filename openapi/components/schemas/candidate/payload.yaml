@@ -1,0 +1,22 @@
+type: object
+properties:
+  candidate:
+    type: object
+    properties: 
+      email:
+        type: string
+        description: Email do candidato        
+        example: candidato@gmail.com
+      name:
+        type: string
+        description: Nome do candidato        
+        example: Nome
+      cell_phone:
+        type: string
+        description: Celular
+      cpf:
+        type: string
+        description: CPF
+    required:
+      - email
+      - name

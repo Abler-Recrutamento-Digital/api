@@ -1,31 +1,30 @@
 get:
   tags:
-    - Vagas
-  summary: Buscar candidato
-  description: Busca candidato da vaga pelo id
+    - Clientes
+  summary: Buscar
+  description: Busca de clientes
   security:
     - BearerToken: []
   parameters:
-    - in: path
-      name: id
-      description: ID da vaga
-      required: true
-      schema:
-        type: integer
-    - in: path
-      name: candidate_id
-      description: ID do candidato
-      required: true
-      schema:
-        type: integer
     - in: query
       name: include
       description:
-        $ref: candidate_include.md
+        $ref: include.md
       schema:
         type: string
         enum:
-          - candidates_pipelines
+          - address
+          - customer_contacts
+    - in: query
+      name: per_page
+      description: Registros por página
+      schema:
+        type: string
+    - in: query
+      name: page
+      description: Página
+      schema:
+        type: string
   responses:
     '200':
       description: successful operation
@@ -39,7 +38,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../components/schemas/candidate/candidate.yaml"
+              $ref: "../../components/schemas/customer/customers.yaml"
     '401':
       description: Unauthorized
       content:
@@ -54,9 +53,9 @@ get:
             $ref: "../../components/schemas/response/api.yaml"
 post:
   tags:
-    - Vagas
-  summary: Adicionar candidatura
-  description: Adicionar candidatura
+    - Clientes
+  summary: Criar
+  description: Criar cliente
   security:
     - BearerToken: []
       AuthToken: []
@@ -65,7 +64,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/CandidatePayload'
+          $ref: '#/components/schemas/CustomerPayload'
   responses:
     '200':
       description: successful operation
@@ -77,7 +76,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../components/schemas/candidate/candidate.yaml"              
+            $ref: "../../components/schemas/customer/customer.yaml"              
     '401':
       description: Unauthorized
       content:
@@ -90,3 +89,5 @@ post:
         application/json:
           schema:
             $ref: "../../components/schemas/response/api.yaml"
+
+
