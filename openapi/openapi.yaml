@@ -7,8 +7,6 @@ info:
 servers:
   - url: 'https://api.abler.com.br/v1'
 tags:
-  - name: Auth
-    description: Rotas relacionadas a autenticação
   - name: Clientes
     description: Rotas relacionadas aos clientes de sua empresa
   - name: Vagas
@@ -273,10 +271,6 @@ webhooks:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
 paths:
-  /auth/login:
-    $ref: paths/auth/login.yaml
-  /auth/logout:
-    $ref: paths/auth/logout.yaml
   /customers:
     $ref: paths/customers/index_create.yaml  
   /customers/{id}:
