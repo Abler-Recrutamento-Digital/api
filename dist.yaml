@@ -283,6 +283,8 @@ webhooks:
                   type: string
                 candidate_name:
                   type: string
+                candidate_cpf:
+                  type: string
                 candidate_email:
                   type: string
                 candidate_cell_phone:
