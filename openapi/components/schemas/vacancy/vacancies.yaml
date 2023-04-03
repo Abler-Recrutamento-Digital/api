@@ -53,6 +53,7 @@ example:
         additional_info: null
         salary: 4000
         contracting_regime: clt
+        report_hiring_times: 2
         experience_tags: [
           "Abnt",
           "Administração da qualidade"
