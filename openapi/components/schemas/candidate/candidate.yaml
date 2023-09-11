@@ -17,5 +17,8 @@ example:
       name: Matheus
       email: matheus@gmail.com
       phone: 41988889999
+      cpf: 08234355500
+      pis: 902834287283
+      birthday: 1990-01-01
     relationships:
       candidates_pipelines: {}

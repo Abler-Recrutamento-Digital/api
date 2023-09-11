@@ -22,6 +22,9 @@ example:
         name: Matheus
         email: matheus@gmail.com
         phone: 41988889999
+        cpf: 08234355500
+        pis: 902834287283
+        birthday: 1990-01-01
       relationships:
         candidates_pipelines: {}
     - id: 5
@@ -30,6 +33,9 @@ example:
         name: Carlos
         email: carlos@gmail.com
         phone: 41988887777
+        cpf: 08234355500
+        pis: 902834287283
+        birthday: 1990-01-01
       relationships:
         candidates_pipelines: {}
   meta:
