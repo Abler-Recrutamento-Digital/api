@@ -82,6 +82,7 @@ patch:
                     - candidature_disqualified
                     - candidature_requalified
                     - candidate_hired
+                    - admission_finished
                 url:
                   type: string
                   required: false
