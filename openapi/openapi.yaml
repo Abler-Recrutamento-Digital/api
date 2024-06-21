@@ -272,6 +272,119 @@ webhooks:
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  
+  admission_finished:
+    post:
+      tags:
+        - Webhook      
+      requestBody:
+        description: Informação sobre o evento de finalização de admissão
+        content:
+          application/json:
+            schema: 
+              properties:
+                vacancy_id:
+                  type: integer  
+                candidate_id:
+                  type: integer  
+                event: 
+                  type: string
+                  enum: 
+                   - admission_finished
+                pipeline_stage_id:
+                  type: integer
+                name:
+                  type: string
+                email:
+                  type: string
+                cell_phone:
+                  type: string
+                  format: (00) 00000-0000
+                home_phone:
+                  type: string
+                  format: (00) 0000-0000
+                cnh:
+                  type: string
+                pis:
+                  type: string
+                cpf:
+                  type: string
+                birthday:
+                  type: string
+                gender:
+                  type: string
+                ethnicity:
+                  type: string
+                sexual_orientation:
+                  type: string
+                pronoun:
+                  type: string
+                disability:
+                  type: string
+                disability_description:
+                  type: string
+                cover_letter:
+                  type: string
+                state:
+                  type: string
+                city:
+                  type: string
+                neighborhood:
+                  type: string
+                cep:
+                  type: string
+                work_type:
+                  type: string
+                linkedin_url:
+                  type: string
+                portfolio_url:
+                  type: string
+                salary_intended:
+                  type: string
+                salary_intended_max:
+                  type: string
+                area_of_interest:
+                  type: array
+                  items:
+                    type: string
+                level_of_interest:
+                  type: array
+                  items:
+                    type: string
+                national_experiences:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      company:
+                        type: string
+                      role:
+                        type: string
+                      start_date:
+                        type: string
+                      end_date:
+                        type: string
+                      last_salary:
+                        type: string
+                      activities:
+                        type: string
+                educational_profiles:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      institution:
+                        type: string
+                      course:
+                        type: string
+                      educational_institution:
+                        type: string
+                      level:
+                        type: string
+                      start_date:
+                        type: string
+                      end_date:
+                        type: string
 paths:
   /customers:
     $ref: paths/customers/index_create.yaml  
