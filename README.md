@@ -7,10 +7,10 @@
 
 ### Usage
 
-#### `npm start`
+#### `yarn start`
 Starts the reference docs preview server.
 
-#### `npm run build`
+#### `yarn build`
 Bundles the definition to the dist folder.
 
 #### `./bundle.sh`

@@ -48,7 +48,7 @@ get:
         type: string
         format: "DD/MM/YYYY"
     - in: query
-      name: status
+      name: statuses
       description: Status da vaga
       schema:
         type: string
