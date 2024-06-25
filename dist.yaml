@@ -756,6 +756,14 @@ paths:
             type: string
             format: DD/MM/YYYY
         - in: query
+          name: released
+          description: Flag para ver se a vaga está publicada ou não
+          schema:
+            type: string
+            enum:
+              - true
+              - false
+        - in: query
           name: statuses
           description: Status da vaga
           schema:
