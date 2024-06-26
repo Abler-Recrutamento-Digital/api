@@ -8,9 +8,7 @@ info:
     Nossos clientes podem utilizar nossa API para integrar a Abler com suas
     aplicações.
 
-
     ## Recursos
-
 
     - **Clientes**
       - Buscar, cadastrar, atualizar e deletar clientes
@@ -21,7 +19,6 @@ info:
       - Buscar, cadastrar, atualizar e deletar inscrições em webhooks
 
     # Autenticação
-
 
     O primeiro passo para iniciar a integração com a Abler é gerar o token de
     acesso. 
