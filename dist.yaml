@@ -713,56 +713,56 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca por query string
+          description: Busca porcessos seletivos por cargo ou ID
           schema:
             type: string
         - in: query
           name: created_at_from
-          description: Busca data de criação da vaga
+          description: Busca processos seletivos por data de criação inicial
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: created_at_to
-          description: Busca data de criação da vaga
+          description: Busca processos seletivos por data de criação final
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: forward_at_from
-          description: Busca data de encaminhamento da vaga
+          description: Busca processos seletivos por data de encaminhamento inicial
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: forward_at_to
-          description: Busca data de encaminhamento da vaga
+          description: Busca processos seletivos por data de encaminhamento final
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: finished_at_from
-          description: Busca data de fechamento da vaga
+          description: Busca processos seletivos por data de fechamento inicial
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: finished_at_to
-          description: Busca data de fechamento da vaga
+          description: Busca processos seletivos por data de fechamento final
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: released
-          description: Flag para ver se a vaga está publicada ou não
+          description: Busca processos seletivos que estejam publicados (aceitando candidaturas) ou não
           schema:
             type: string
             enum:
               - true
               - false
         - in: query
-          name: statuses
-          description: Status da vaga
+          name: statuses[]
+          description: Buscar processos seletivos pelo status
           schema:
             type: string
             enum:
@@ -801,12 +801,12 @@ paths:
               - analysts
         - in: query
           name: per_page
-          description: Registros por página
+          description: Quantidade de processo seletivos por página
           schema:
             type: string
         - in: query
           name: page
-          description: Página
+          description: Quantidade de páginas buscadas
           schema:
             type: string
       responses:
