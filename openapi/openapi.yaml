@@ -269,6 +269,14 @@ webhooks:
                   type: string
                 customer_contact_name: 
                   type: string
+                customer_cost_center_id:
+                  type: string
+                customer_cost_center_code:
+                  type: string
+                customer_cost_center_name:
+                  type: string
+                customer_cost_center_place:
+                  type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
