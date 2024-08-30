@@ -1,42 +1,46 @@
 openapi: 3.0.0
 info:
-  title: abler API
+  title: Abler API
   description: >-
     # Introdução
 
+
     Clientes abler podem utilizar nossa API para integrar suas aplicações.
+
 
     ## Casos de uso
 
+
     Os casos de uso mais comuns dos clientes abler, incluem:
 
+
     - **Consultorias de RH e Headhunters**
+      - Ao ganhar um negócio em seu CRM, cadastrar automaticamente um cliente na abler;
+      - Ao ganhar um negócio em seu CRM, iniciar o cadastro de um processo seletivo na abler;
+      - Ao mover um candidato para a etapa "Contratação", cadastrar o candidato em um software de folha de pagamento;
+      - Ao mover um candidato para a etapa "Contratação", criar uma nova fatura no ERP com dados da negociação referente ao processo seletivo;
+      E muito mais!
 
-    - Ao ganhar um negócio em seu CRM, cadastrar automaticamente um cliente na abler;
-    - Ao ganhar um negócio em seu CRM, iniciar o cadastro de um processo seletivo na abler;
-    - Ao mover um candidato para a etapa "Contratação", cadastrar o candidato em um software de folha de pagamento;
-    - Ao mover um candidato para a etapa "Contratação", criar uma nova fatura no ERP com dados da negociação referente ao processo seletivo;
-    - E muito mais!
-
-    - ** RHs corporativos**
-
-    - Ao mover um candidato para a etapa "Contratação", cadastrar o candidato em um software de folha de pagamento;
-    - Ao mover um candidato para a etapa "Contratação", cadastrar o candidato em um software de admissão;
-    - Ao receber uma candidatura, cadastrar o candidato em seu WhatsApp ou ferramenta de e-mail marketing;
-    - Ao finalizar o processo de admissão na abler, cadastrar o candidato em um software de folha de pagamento; 
-    - E muito mais!
+    - **RHs corporativos**
+      - Ao mover um candidato para a etapa "Contratação", cadastrar o candidato em um software de folha de pagamento;
+      - Ao mover um candidato para a etapa "Contratação", cadastrar o candidato em um software de admissão;
+      - Ao receber uma candidatura, cadastrar o candidato em seu WhatsApp ou ferramenta de e-mail marketing;
+      - Ao finalizar o processo de admissão na abler, cadastrar o candidato em um software de folha de pagamento; 
+      E muito mais!
 
     ## Recursos
 
+
     - **Clientes**
-    - Buscar, cadastrar, atualizar e deletar clientes;
+      - Buscar, cadastrar, atualizar e deletar clientes;
     - **Vagas**
-    - Buscar, cadastrar, atualizar e deletar vagas;
-    - Buscar e cadastrar candidatos;
+      - Buscar, cadastrar, atualizar e deletar vagas;
+      - Buscar e cadastrar candidatos;
     - **Webhook**
-    - Buscar, cadastrar, atualizar e deletar inscrições em webhooks;
+      - Buscar, cadastrar, atualizar e deletar inscrições em webhooks;
 
     # Autenticação
+
 
     O primeiro passo para iniciar a integração com a Abler é gerar o token de
     acesso. 
@@ -337,6 +341,14 @@ webhooks:
                 customer_cnpj:
                   type: string
                 customer_contact_name:
+                  type: string
+                customer_cost_center_id:
+                  type: string
+                customer_cost_center_code:
+                  type: string
+                customer_cost_center_name:
+                  type: string
+                customer_cost_center_place:
                   type: string
       responses:
         '200':
@@ -731,56 +743,56 @@ paths:
       parameters:
         - in: query
           name: q
-          description: Busca porcessos seletivos por cargo ou ID
+          description: Busca por query string
           schema:
             type: string
         - in: query
           name: created_at_from
-          description: Busca processos seletivos por data de criação inicial
+          description: Busca data de criação da vaga
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: created_at_to
-          description: Busca processos seletivos por data de criação final
+          description: Busca data de criação da vaga
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: forward_at_from
-          description: Busca processos seletivos por data de encaminhamento inicial
+          description: Busca data de encaminhamento da vaga
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: forward_at_to
-          description: Busca processos seletivos por data de encaminhamento final
+          description: Busca data de encaminhamento da vaga
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: finished_at_from
-          description: Busca processos seletivos por data de fechamento inicial
+          description: Busca data de fechamento da vaga
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: finished_at_to
-          description: Busca processos seletivos por data de fechamento final
+          description: Busca data de fechamento da vaga
           schema:
             type: string
             format: DD/MM/YYYY
         - in: query
           name: released
-          description: Busca processos seletivos que estejam publicados (aceitando candidaturas) ou não
+          description: Flag para ver se a vaga está publicada ou não
           schema:
             type: string
             enum:
               - true
               - false
         - in: query
-          name: statuses[]
-          description: Buscar processos seletivos pelo status
+          name: statuses
+          description: Status da vaga
           schema:
             type: string
             enum:
@@ -819,12 +831,12 @@ paths:
               - analysts
         - in: query
           name: per_page
-          description: Quantidade de processo seletivos por página
+          description: Registros por página
           schema:
             type: string
         - in: query
           name: page
-          description: Quantidade de páginas buscadas
+          description: Página
           schema:
             type: string
       responses:
