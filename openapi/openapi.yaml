@@ -26,10 +26,10 @@ tags:
       Em seguida serão exibidos a lista de eventos disponíveis.    
       "
 webhooks:
-  vacancy_created:  
+  vacancy_created:
     post:
       tags:
-        - Webhook      
+        - Webhook
       requestBody:
         description: Informação sobre o evento de criação de Vaga
         content:
@@ -37,11 +37,11 @@ webhooks:
             schema: 
               properties:
                 vacancy_id:
-                  type: integer                  
+                  type: integer
                 event:
                   type: string
                   enum: 
-                   - vacancy_created                  
+                   - vacancy_created
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
@@ -100,7 +100,47 @@ webhooks:
                 event:
                   type: string
                   enum: 
-                   - candidature_created                  
+                   - candidature_created
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
@@ -121,7 +161,47 @@ webhooks:
                 event:
                   type: string
                   enum: 
-                   - candidature_updated                  
+                   - candidature_updated
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
@@ -145,6 +225,48 @@ webhooks:
                    - candidature_disqualified   
                 disqualified_at:
                   type: datetime
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
+                motivation:
+                  type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
@@ -165,7 +287,47 @@ webhooks:
                 event:
                   type: string
                   enum: 
-                   - candidature_requalified                  
+                   - candidature_requalified        
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string          
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
@@ -277,6 +439,46 @@ webhooks:
                   type: string
                 customer_cost_center_place:
                   type: string
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
@@ -393,6 +595,161 @@ webhooks:
                         type: string
                       end_date:
                         type: string
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  vacancy_published:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de publicação de vaga
+        content:
+          application/json:
+            schema: 
+              properties:
+                id:
+                  type: integer
+                title:
+                  type: string
+                description:
+                  type: string
+                work_type:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                short_url:
+                  type: string
+                educational_level:
+                  type: string
+                salary:
+                  type: string
+                benefit:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                company:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  invite_to_process:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de convite para processo
+        content:
+          application/json:
+            schema: 
+              properties:
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+  email_sent:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de email enviado, em alguns casos, esse evento pode ser disparado sem as informações da vaga.
+        content:
+          application/json:
+            schema: 
+              properties:
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
+                    body:
+                      type: string
+      responses:
+        200:
+          description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
+
 paths:
   /customers:
     $ref: paths/customers/index_create.yaml  

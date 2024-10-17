@@ -467,6 +467,107 @@ webhooks:
                         type: string
                       end_date:
                         type: string
+  vacancy_published:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de publicação de vaga
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - vacancy_published
+                title:
+                  type: string
+                description:
+                  type: string
+                work_type:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                short_url:
+                  type: string
+                educational_level:
+                  type: string
+                salary:
+                  type: string
+                benefit:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                company:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+  invite_to_process:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: Informação sobre o evento de convite para processo
+        content:
+          application/json:
+            schema:
+              properties:
+                vacancy_id:
+                  type: integer
+                candidate_id:
+                  type: integer
+                event:
+                  type: string
+                  enum:
+                    - invite_to_process
+                title:
+                  type: string
+                description:
+                  type: string
+                work_type:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                short_url:
+                  type: string
+                educational_level:
+                  type: string
+                salary:
+                  type: string
+                benefit:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                company:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
+
 paths:
   /customers:
     get:
