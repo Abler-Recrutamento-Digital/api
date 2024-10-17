@@ -5,11 +5,11 @@ properties:
     properties: 
       email:
         type: string
-        description: Email do candidato        
+        description: Email do candidato
         example: candidato@gmail.com
       name:
         type: string
-        description: Nome do candidato        
+        description: Nome do candidato
         example: Nome
       cell_phone:
         type: string
@@ -17,6 +17,39 @@ properties:
       cpf:
         type: string
         description: CPF
+      source:
+        type: string
+        description: Origem
+        example: LinkedIn
+      area_of_interest_ids:
+        type: array
+        description: Área de interesse
+        items:
+          type: integer
+        example:
+          - [1, 2, 3]
+      level_of_interest_ids:
+        type: array
+        description: Nível de interesse
+        items:
+          type: integer
+        example:
+          - [1, 2, 3]
+      auto_hunting:
+        type: boolean
+        description: Auto hunting
+      cv_attachment:
+        type: File
+        description: Anexo de CV
+      salary_intended:
+        type: number
+        description: Salário pretendido
+      salary_intended_max:
+        type: number
+        description: Salário pretendido
+      source_url:
+        type: string
+        description: URL da origem
     required:
       - email
       - name
