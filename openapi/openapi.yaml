@@ -744,8 +744,8 @@ webhooks:
                       type: string
                     short_url:
                       type: string
-                    body:
-                      type: string
+                body:
+                  type: string
       responses:
         200:
           description: Deve ser retornado 200 para indicar que os dados foram recebidos corretamente
