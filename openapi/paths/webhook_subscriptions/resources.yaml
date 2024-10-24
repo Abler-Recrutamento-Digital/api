@@ -83,6 +83,8 @@ patch:
                     - candidature_requalified
                     - candidate_hired
                     - admission_finished
+                    - invite_to_process
+                    - email_sent
                 url:
                   type: string
                   required: false
