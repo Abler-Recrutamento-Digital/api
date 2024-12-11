@@ -553,6 +553,9 @@ webhooks:
                   type: string
                 salary_intended_max:
                   type: string
+                pdf:
+                  type: string
+                  description: Arquivo PDF (URL com o arquivo, salvar o arquivo no seu servidor)
                 area_of_interest:
                   type: array
                   items:
