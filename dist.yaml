@@ -635,6 +635,8 @@ webhooks:
                   type: array
                   items:
                     type: string
+                pdf:
+                  type: string
                 national_experiences:
                   type: array
                   items:
