@@ -294,7 +294,7 @@ webhooks:
                     - candidature_disqualified
                 disqualified_at:
                   type: datetime
-                                candidate:
+                candidate:
                   type: object
                   properties:
                     name:
@@ -359,7 +359,7 @@ webhooks:
                   type: string
                   enum:
                     - candidature_requalified
-                                candidate:
+                candidate:
                   type: object
                   properties:
                     name:
