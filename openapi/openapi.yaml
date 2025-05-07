@@ -556,6 +556,9 @@ webhooks:
                 pdf:
                   type: string
                   description: Arquivo PDF (URL com o arquivo, salvar o arquivo no seu servidor)
+                pdf_enpoint:
+                  type: string
+                  description: URL do arquivo PDF (URL com o arquivo)
                 area_of_interest:
                   type: array
                   items:
