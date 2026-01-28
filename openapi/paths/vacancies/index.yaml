@@ -56,6 +56,14 @@ get:
         - true
         - false
     - in: query
+      name: available_by_link
+      description: Flag para ver se a vaga está disponível apenas por link
+      schema:
+        type: string
+        enum: 
+        - true
+        - false
+    - in: query
       name: statuses
       description: Status da vaga
       schema:

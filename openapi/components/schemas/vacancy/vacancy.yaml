@@ -47,6 +47,7 @@ example:
       refusal_reason: Razão da não aprovação
       educational_level: graduacao
       educational_level_status: indiferente
+      available_by_link: false
       cnh: ab
       status: published
       additional_info: null
