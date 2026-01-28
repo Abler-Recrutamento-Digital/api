@@ -134,6 +134,9 @@ properties:
       additional_info:
         type: string
         description: Informações adicionais
+      available_by_link:
+        type: boolean
+        description: Vaga disponível por link
       salary: 
         description: Salário 
         oneOf:
