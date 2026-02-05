@@ -41,6 +41,7 @@ example:
         exclusive_pcd: false
         description: Descrição da vaga
         working_journey: Jornada de trabalho
+        available_by_link: false
         released: true
         show_progress_to_candidates: false
         available_for_change: false

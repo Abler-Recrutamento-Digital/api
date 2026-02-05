@@ -1162,6 +1162,14 @@ paths:
               - true
               - false
         - in: query
+          name: available_by_link
+          description: Flag para ver se a vaga está disponível apenas por link
+          schema:
+            type: string
+            enum:
+              - true
+              - false
+        - in: query
           name: statuses
           description: Status da vaga
           schema:
@@ -2648,6 +2656,7 @@ components:
               exclusive_pcd: false
               description: Descrição da vaga
               working_journey: Jornada de trabalho
+              available_by_link: false
               released: true
               show_progress_to_candidates: false
               available_for_change: false
@@ -2886,6 +2895,7 @@ components:
             refusal_reason: Razão da não aprovação
             educational_level: graduacao
             educational_level_status: indiferente
+            available_by_link: false
             cnh: ab
             status: published
             additional_info: null
@@ -4410,6 +4420,9 @@ components:
             additional_info:
               type: string
               description: Informações adicionais
+            available_by_link:
+              type: boolean
+              description: Vaga disponível por link
             salary:
               description: Salário
               oneOf:
