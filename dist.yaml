@@ -627,6 +627,11 @@ webhooks:
                   type: string
                 salary_intended_max:
                   type: string
+                pdf:
+                  type: string
+                  description: >-
+                    Arquivo PDF (URL com o arquivo, salvar o arquivo no seu
+                    servidor)
                 area_of_interest:
                   type: array
                   items:
@@ -635,8 +640,6 @@ webhooks:
                   type: array
                   items:
                     type: string
-                pdf:
-                  type: string
                 national_experiences:
                   type: array
                   items:
@@ -671,6 +674,11 @@ webhooks:
                         type: string
                       end_date:
                         type: string
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
   vacancy_published:
     post:
       tags:
@@ -681,12 +689,8 @@ webhooks:
           application/json:
             schema:
               properties:
-                vacancy_id:
+                id:
                   type: integer
-                event:
-                  type: string
-                  enum:
-                    - vacancy_published
                 title:
                   type: string
                 description:
@@ -730,48 +734,110 @@ webhooks:
           application/json:
             schema:
               properties:
-                vacancy_id:
-                  type: integer
-                candidate_id:
-                  type: integer
-                event:
-                  type: string
-                  enum:
-                    - invite_to_process
-                title:
-                  type: string
-                description:
-                  type: string
-                work_type:
-                  type: string
-                city:
-                  type: string
-                state:
-                  type: string
-                country:
-                  type: string
-                short_url:
-                  type: string
-                educational_level:
-                  type: string
-                salary:
-                  type: string
-                benefit:
+                candidate:
                   type: object
                   properties:
                     name:
                       type: string
-                company:
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
                   type: object
                   properties:
-                    name:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
                       type: string
       responses:
         '200':
           description: >-
             Deve ser retornado 200 para indicar que os dados foram recebidos
             corretamente
-
+  email_sent:
+    post:
+      tags:
+        - Webhook
+      requestBody:
+        description: >-
+          Informação sobre o evento de email enviado, em alguns casos, esse
+          evento pode ser disparado sem as informações da vaga.
+        content:
+          application/json:
+            schema:
+              properties:
+                candidate:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    cell_phone:
+                      type: string
+                      format: (00) 00000-0000
+                    linkedin_url:
+                      type: string
+                    cv_pdf:
+                      type: string
+                      format: binary
+                    salary_intended:
+                      type: string
+                    salary_intended_max:
+                      type: string
+                vacancy:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    educational_level:
+                      type: string
+                    description:
+                      type: string
+                    work_type:
+                      type: string
+                    city:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    salary:
+                      type: string
+                    short_url:
+                      type: string
+                body:
+                  type: string
+      responses:
+        '200':
+          description: >-
+            Deve ser retornado 200 para indicar que os dados foram recebidos
+            corretamente
 paths:
   /customers:
     get:
@@ -1623,6 +1689,8 @@ paths:
                         - candidature_requalified
                         - candidate_hired
                         - admission_finished
+                        - invite_to_process
+                        - email_sent
                     url:
                       type: string
                       required: true
@@ -1740,6 +1808,8 @@ paths:
                         - candidature_requalified
                         - candidate_hired
                         - admission_finished
+                        - invite_to_process
+                        - email_sent
                     url:
                       type: string
                       required: false
@@ -2574,6 +2644,7 @@ components:
               republished_at: '2021-04-06T11:07:58.530-03:00'
               forward_at: '2021-04-05T15:30:33.948-03:00'
               close_on: '2021-04-05T15:30:33.948-03:00'
+              finished_at: '2021-04-10T12:00:00.000-03:00'
               exclusive_pcd: false
               description: Descrição da vaga
               working_journey: Jornada de trabalho
@@ -2803,6 +2874,7 @@ components:
             republished_at: '2021-04-06T11:07:58.530-03:00'
             forward_at: '2021-04-05T15:30:33.948-03:00'
             close_on: '2021-04-05T15:30:33.948-03:00'
+            finished_at: '2021-04-10T12:00:00.000-03:00'
             exclusive_pcd: false
             description: Descrição da vaga
             working_journey: Jornada de trabalho
@@ -3984,29 +4056,33 @@ components:
               items:
                 type: integer
               example:
-                - [1, 2, 3]
+                - - 1
+                  - 2
+                  - 3
             level_of_interest_ids:
               type: array
               description: Nível de interesse
               items:
                 type: integer
               example:
-                - [1, 2, 3]
-              auto_hunting:
-                type: boolean
-                description: Auto hunting
-              cv_attachment:
-                type: File
-                description: Anexo de CV
-              salary_intended:
-                type: number
-                description: Salário pretendido
-              salary_intended_max:
-                type: number
-                description: Salário pretendido
-              source_url:
-                type: string
-                description: URL da origem
+                - - 1
+                  - 2
+                  - 3
+            auto_hunting:
+              type: boolean
+              description: Auto hunting
+            cv_attachment:
+              type: File
+              description: Anexo de CV
+            salary_intended:
+              type: number
+              description: Salário pretendido
+            salary_intended_max:
+              type: number
+              description: Salário pretendido
+            source_url:
+              type: string
+              description: URL da origem
           required:
             - email
             - name
@@ -4231,6 +4307,9 @@ components:
             close_on:
               type: datetime
               description: Data de fechamento
+            finished_at:
+              type: datetime
+              description: Data de finalização
             exclusive_pcd:
               type: boolean
               description: Vaga apenas PCD
