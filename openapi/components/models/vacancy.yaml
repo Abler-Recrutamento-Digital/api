@@ -34,6 +34,9 @@ properties:
       close_on:
         type: datetime
         description: Data de fechamento
+      finished_at:
+        type: datetime
+        description: Data de finalização
       exclusive_pcd:
         type: boolean
         description: Vaga apenas PCD
